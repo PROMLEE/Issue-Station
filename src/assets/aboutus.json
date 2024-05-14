@@ -1,0 +1,29 @@
+{
+  "members": [
+    {
+      "name": "박상훈",
+      "age": 0,
+      "email": "@naver.com"
+    },
+    {
+      "name": "이동훈",
+      "age": 26,
+      "email": "donghoon099@naver.com"
+    },
+    {
+      "name": "한동희",
+      "age": 0,
+      "email": "@naver.com"
+    },
+    {
+      "name": "민보욱",
+      "age": 0,
+      "email": "@naver.com"
+    },
+    {
+      "name": "전은진",
+      "age": 0,
+      "email": "@naver.com"
+    }
+  ]
+}

@@ -28,6 +28,10 @@ export const NavComponent = () => {
       <NavbarToggle />
       <NavbarCollapse>
         <NavbarLink href="/">Home</NavbarLink>
+        <NavbarLink href="/team">Team</NavbarLink>
+        <NavbarLink href="/projectlist" className="w-[100px]">
+          프로젝트 목록
+        </NavbarLink>
         <MegaMenuDropdown toggle={<>Company</>}>
           <ul className="grid grid-cols-3">
             <div className="space-y-4 p-4">
@@ -108,7 +112,6 @@ export const NavComponent = () => {
             </div>
           </ul>
         </MegaMenuDropdown>
-        <NavbarLink href="/team">Team</NavbarLink>
       </NavbarCollapse>
     </MegaMenu>
   );
