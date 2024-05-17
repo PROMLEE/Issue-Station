@@ -3,27 +3,42 @@
     {
       "name": "박상훈",
       "age": 0,
-      "email": "@naver.com"
+      "email": "@naver.com",
+      "part": "Backend-Database",
+      "image": "https://avatars.githubusercontent.com/u/168408335?v=4",
+      "github": "https://github.com/sanghuniolsida"
     },
     {
       "name": "이동훈",
       "age": 26,
-      "email": "donghoon099@naver.com"
+      "email": "donghoon099@naver.com",
+      "part": "Frontend-Web",
+      "image": "https://avatars.githubusercontent.com/u/80230701?v=4",
+      "github": "https://github.com/PROMLEE"
     },
     {
       "name": "한동희",
       "age": 0,
-      "email": "@naver.com"
+      "email": "@naver.com",
+      "part": "Backend-Server",
+      "image": "https://avatars.githubusercontent.com/u/132530028?v=4",
+      "github": "https://github.com/easthee"
     },
     {
       "name": "민보욱",
       "age": 0,
-      "email": "@naver.com"
+      "email": "@naver.com",
+      "part": "Backend-Server",
+      "image": "https://avatars.githubusercontent.com/u/129655108?v=4",
+      "github": "https://github.com/wook"
     },
     {
       "name": "전은진",
       "age": 0,
-      "email": "@naver.com"
+      "email": "@naver.com",
+      "part": "Frontend-GUI",
+      "image": "https://avatars.githubusercontent.com/u/67683170?v=4",
+      "github": "https://github.com/jeoneunjin"
     }
   ]
 }

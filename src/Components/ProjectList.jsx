@@ -1,7 +1,12 @@
+import projectlist from "../assets/projectlist_dump.json";
+import { ProjectCard } from "../Components/ProjectCard";
+
 export const ProjectList = () => {
   return (
     <div>
-      <h1>Project List</h1>
+      {projectlist.projectlist.map((project) => {
+        return <ProjectCard key={project.id} project={project} />;
+      })}
     </div>
   );
 };
