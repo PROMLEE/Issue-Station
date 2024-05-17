@@ -12,7 +12,12 @@ export const NavComponent = () => {
   return (
     <Navbar className="bg-slate-300">
       <NavbarBrand href="/">
-        <span className="self-center whitespace-nowrap text-xl font-semibold">
+        <img
+          src="/assets/logo.png"
+          alt="logo"
+          className="h-10 w-10 mr-4 rounded-md"
+        />
+        <span className="self-center whitespace-nowrap text-3xl font-bold">
           이슈역
         </span>
       </NavbarBrand>
