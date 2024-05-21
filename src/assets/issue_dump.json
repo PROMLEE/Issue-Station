@@ -1,32 +1,32 @@
 {
-  "title": "First issue",
-  "id": 1,
+  "name": "First issue",
+  "issueid": 1,
   "description": "This is the first issue",
   "comments": [
     {
       "id": 1,
-      "issue_id": 1,
+      "issueid": 1,
       "comment": "This is the first comment",
       "commenter": "PROME LEE",
-      "created_at": "2024-01-01 00:00:00"
+      "initdate": "2024-01-01 00:00:00"
     },
     {
       "id": 2,
-      "issue_id": 1,
+      "issueid": 1,
       "comment": "This is the second comment",
       "commenter": "PROME LEE",
-      "created_at": "2024-01-01 00:00:00"
+      "initdate": "2024-01-01 00:00:00"
     },
     {
       "id": 3,
-      "issue_id": 1,
+      "issueid": 1,
       "comment": "This is the third comment",
       "commenter": "PROME LEE",
-      "created_at": "2024-01-01 00:00:00"
+      "initdate": "2024-01-01 00:00:00"
     }
   ],
   "status": "NEW",
   "reporter": "PROME LEE",
   "assignee": "PROME LEE",
-  "created_at": "2024-01-01 00:00:00"
+  "initdate": "2024-01-01 00:00:00"
 }

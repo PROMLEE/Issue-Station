@@ -2,27 +2,30 @@
   "projectlist": [
     {
       "name": "First Project",
-      "id": 1,
-      "public": true,
+      "thumbnaillink": "https://picsum.photos/200",
+      "projectid": 1,
+      "private": true,
       "description": "This is the first project",
       "admin": "PROME LEE",
-      "created_at": "2024-01-01 00:00:00"
+      "initdate": "2024-01-01 00:00:00"
     },
     {
       "name": "Second Project",
-      "id": 2,
-      "public": false,
+      "thumbnaillink": "https://picsum.photos/200",
+      "projectid": 2,
+      "private": false,
       "description": "This is the first project",
       "admin": "PROME LEE",
-      "created_at": "2024-01-01 00:00:00"
+      "initdate": "2024-01-01 00:00:00"
     },
     {
       "name": "Third Project",
-      "id": 3,
-      "public": true,
+      "thumbnaillink": "https://picsum.photos/200",
+      "projectid": 3,
+      "private": true,
       "description": "This is the first project",
       "admin": "PROME LEE",
-      "created_at": "2024-01-01 00:00:00"
+      "initdate": "2024-01-01 00:00:00"
     }
   ]
 }

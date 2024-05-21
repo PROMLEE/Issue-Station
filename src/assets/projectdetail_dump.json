@@ -1,25 +1,24 @@
 {
-  "id": 1,
+  "projectid": 1,
   "title": "Project 1",
   "description": "This is project 1",
-  "public": true,
+  "isprivate": true,
   "participants": [
     {
-      "id": 1,
+      "userid": 1,
       "name": "User 1",
       "Role": "PL"
     },
     {
-      "id": 2,
+      "userid": 2,
       "name": "User 2",
       "Role": "Developer"
     },
     {
-      "id": 3,
+      "userid": 3,
       "name": "User 3",
       "Role": "Tester"
     }
   ],
-  "created_at": "2024-01-01",
-  "updated_at": "2024-01-01"
+  "initdate": "2024-01-01 00:00:00"
 }

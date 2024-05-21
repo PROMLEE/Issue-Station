@@ -7,6 +7,7 @@ import {
   NavbarLink,
   NavbarToggle,
 } from "flowbite-react";
+import { Link } from "react-router-dom";
 
 export const NavComponent = () => {
   return (
@@ -27,13 +28,15 @@ export const NavComponent = () => {
           content={
             <div className="w-64 text-sm text-gray-500 ">
               <div className="border-b border-gray-200 bg-gray-100 px-3 py-2 dark:border-gray-600 dark:bg-gray-700">
-                <h3 id="default-popover" className="text-gray-900 ">
+                <div id="default-popover" className="text-gray-900 ">
                   프로젝트 명 검색하기
-                </h3>
+                </div>
               </div>
               <div className="px-3 py-2 ">
                 <input className="h-7 w-5/6 border-2 border-gray-200 focus:outline-none" />
-                <button className="h-7 text-sm w-1/6 bg-gray-200">→</button>
+                <Link to="/projectlist">
+                  <button className="h-7 text-sm w-1/6 bg-gray-200">→</button>
+                </Link>
               </div>
             </div>
           }

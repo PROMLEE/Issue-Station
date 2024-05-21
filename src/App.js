@@ -1,14 +1,14 @@
-import { NavComponent } from "./Components/Navbar";
-import { Component } from "./Components/Footer";
+import { NavComponent } from "./Layout/Navbar";
+import { Component } from "./Layout/Footer";
 import { Route, Routes } from "react-router-dom";
-import { Home } from "./Components/Home";
-import { LoginComponent } from "./Components/Login";
-import { SignupComponent } from "./Components/Signup";
-import { ProjectList } from "./Components/ProjectList";
-import { Team } from "./Components/Team";
-import { AboutUs } from "./Components/AboutUs";
-import { Project } from "./Components/Project";
-import { Issue } from "./Components/Issue";
+import { Home } from "./Page/Home";
+import { LoginComponent } from "./Page/Login";
+import { SignupComponent } from "./Page/Signup";
+import { ProjectList } from "./Page/ProjectList";
+import { Team } from "./Page/Team";
+import { AboutUs } from "./Page/AboutUs";
+import { Project } from "./Page/Project";
+import { Issue } from "./Page/Issue";
 
 function App() {
   return (

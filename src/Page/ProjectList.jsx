@@ -3,9 +3,9 @@ import { ProjectCard } from "../Components/ProjectCard";
 
 export const ProjectList = () => {
   return (
-    <div>
+    <div className="flex flex-wrap">
       {projectlist.projectlist.map((project) => {
-        return <ProjectCard key={project.id} project={project} />;
+        return <ProjectCard key={project.projectid} project={project} />;
       })}
     </div>
   );
