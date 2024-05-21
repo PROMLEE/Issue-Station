@@ -4,7 +4,7 @@ import { Date } from "./Date";
 
 export function ProjectCard({ project }) {
   return (
-    <Card className="min-w-[20rem] m-5 flex-grow">
+    <Card className="md:min-w-[20rem] m-5 flex-grow">
       <div className="flex justify-end px-4 pt-4">
         <Dropdown inline label="">
           <DropdownItem>

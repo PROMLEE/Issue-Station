@@ -6,7 +6,7 @@ import { IssueCreate } from "../Layout/IssueCreate";
 export const Issue = () => {
   // const params = useParams();
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-2 md:w-2/3 mx-auto">
       {/* <div>Issue{params.id}</div> */}
       <div className="font-bold text-2xl">{issue.name}</div>
       <div className="text-slate-500">{issue.description}</div>
@@ -20,12 +20,12 @@ export const Issue = () => {
       {issue.comments.map((comment) => {
         return (
           <div
-            className="border-2 border-slate-200 my-2 p-2 rounded-md"
+            className="border-t-2  border-slate-200 p-2 flex flex-col gap-2"
             key={comment.commentid}
           >
-            <div>comment: {comment.comment}</div>
             <div>commenter: {comment.commenter}</div>
             <Date date={comment.initdate} />
+            <div className="text-slate-500">{comment.comment}</div>
           </div>
         );
       })}

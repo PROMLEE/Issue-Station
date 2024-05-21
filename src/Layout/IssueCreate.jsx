@@ -29,7 +29,7 @@ export function IssueCreate({ edit = false }) {
   }
   return (
     <>
-      <Button onClick={() => setOpenModal(true)}>
+      <Button onClick={() => setOpenModal(true)} className="h-10">
         {edit ? "Edit Issue" : "Create Issue"}
       </Button>
       <Modal show={openModal} size="md" onClose={onCloseModal} popup>
