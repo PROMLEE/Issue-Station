@@ -12,6 +12,8 @@ import java.util.Objects;
 public class AssigneeId implements Serializable {
     private int userid;
     private int issueid;
+    private int pid;
+    private int stateid;
 
     @Override
     public boolean equals(Object o) {

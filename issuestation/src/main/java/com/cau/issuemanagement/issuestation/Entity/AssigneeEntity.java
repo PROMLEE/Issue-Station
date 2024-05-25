@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity(name = "Assignee")
 @Table(name = "assignee")
+@IdClass(AssigneeId.class)
 public class AssigneeEntity {
     @Id
     @Column(name = "userid", nullable = false, columnDefinition = "NULL")

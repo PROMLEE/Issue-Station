@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity(name = "Reporter")
 @Table(name = "reporter")
+@IdClass(ReporterId.class)
 public class ReporterEntity {
     @Id
     @Column(name = "userid", nullable = false, columnDefinition = "NULL")
