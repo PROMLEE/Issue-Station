@@ -48,6 +48,6 @@ public class CommentEntity {
 
     @ManyToOne
     @JoinColumn(name = "issueid", referencedColumnName = "issueid", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "commentToIssueid"))
-    private IssueEntity issueEntity;
+    private IssueEntity issue;
 
 }
