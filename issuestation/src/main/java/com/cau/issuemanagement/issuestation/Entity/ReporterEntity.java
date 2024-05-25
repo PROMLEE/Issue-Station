@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity(name = "Assignee")
-@Table(name = "assignee")
+@Entity(name = "Reporter")
+@Table(name = "reporter")
 public class ReporterEntity {
     @Id
     @Column(name = "userid", nullable = false, columnDefinition = "NULL")

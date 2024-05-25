@@ -44,5 +44,5 @@ public class IssueEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stateid", referencedColumnName = "stateid", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "issueToStateid"))
-    private RoleEntity role;
+    private StateEntity state;
 }
