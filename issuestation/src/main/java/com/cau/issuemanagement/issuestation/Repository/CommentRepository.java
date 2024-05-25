@@ -1,4 +1,10 @@
 package com.cau.issuemanagement.issuestation.Repository;
 
-public interface CommentRepository {
+import com.cau.issuemanagement.issuestation.Entity.CommentEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface CommentRepository extends JpaRepository<CommentEntity,Integer> {
+
 }
