@@ -14,16 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity(name = "Assignee")
-@Table(name = "Assignee")
+@Table(name = "assignee")
 public class AssigneeEntity {
-    @Id
-    @Column(name = "userId", nullable = false)
-    private int userid;
 
-    @Column(name = "id", nullable = false, length = 20)
-    private String id;
-    @Column(name = "pw", nullable = false, length = 20)
-    private String pw;
-    @Column(name = "nickname", nullable = false, length = 20)
-    private String nickname;
 }

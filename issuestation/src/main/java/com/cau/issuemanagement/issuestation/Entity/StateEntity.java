@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "state")
 public class StateEntity {
     @Id
-    @Column(name = "id", nullable = false, columnDefinition = "NULL")
+    @Column(name = "stateid", nullable = false, columnDefinition = "NULL")
     private int id;
 
     @Column(name = "name", nullable = false, length = 10, columnDefinition = "NULL")
