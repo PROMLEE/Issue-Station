@@ -33,7 +33,7 @@ public class TeamEntity {
     private boolean isadmin;
 
     @Column(name = "role", nullable = false, length = 20, columnDefinition = "tester")
-    private String role;
+    private String roleinfo; //column 명으로 이용해야함
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pid", referencedColumnName = "pid", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "teamToPid"))
@@ -41,5 +41,5 @@ public class TeamEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "roleid", referencedColumnName = "roleid", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "teamToRoleid"))
-    private RoleEntity roleEntity;
+    private RoleEntity role;
 }
