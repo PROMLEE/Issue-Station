@@ -1,5 +1,4 @@
 package com.cau.issuemanagement.issuestation.Entity;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

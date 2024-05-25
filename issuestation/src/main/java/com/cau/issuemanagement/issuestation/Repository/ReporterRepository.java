@@ -1,4 +1,7 @@
 package com.cau.issuemanagement.issuestation.Repository;
 
-public interface ReporterRepository {
+import com.cau.issuemanagement.issuestation.Entity.ReporterEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ReporterRepository extends JpaRepository<ReporterEntity, Integer> {
 }
