@@ -16,7 +16,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @Entity(name = "Project")
-@Table(name = "Project")
+@Table(name = "project")
 public class ProjectEntity {
     @Id
     @Column(name = "pid", nullable = false, columnDefinition = "NULL")
