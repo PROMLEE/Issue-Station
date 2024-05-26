@@ -1,5 +1,6 @@
 package com.cau.issuemanagement.issuestation.Entity;
 
+import com.cau.issuemanagement.issuestation.Dto.SignupDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -26,4 +27,10 @@ public class UserEntity {
     private String pw;
     @Column(name = "nickname", nullable = false, length = 20, columnDefinition = "NULL")
     private String nickname;
+
+    public UserEntity(SignupDto dto) {
+        this.id = dto.getId();
+        this.pw = dto.getPassword();
+        this.nickname = dto.getNickname();
+    }
 }
