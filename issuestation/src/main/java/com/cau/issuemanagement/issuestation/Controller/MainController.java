@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/")
 public class MainController {
     @GetMapping("")
-    @CrossOrigin(originPatterns = "http://localhost:9231") //React에서 포트번호 9231 쓰면안됨
+    @CrossOrigin(originPatterns = "http://localhost:3000") //React에서 포트번호 9231 쓰면안됨
     public String hello() {
         return "Connection Success";
     }
