@@ -12,4 +12,5 @@ public class SignupDto {
     private String id;
     private String nickname;
     private String password;
+    private String passwordCheck;
 }
