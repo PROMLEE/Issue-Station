@@ -1,9 +1,6 @@
 package com.cau.issuemanagement.issuestation.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,21 +16,22 @@ import java.util.Date;
 @Table(name = "project")
 public class ProjectEntity {
     @Id
-    @Column(name = "pid", nullable = false, columnDefinition = "NULL")
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //이거 넣어줘야 전달받지않은 데이터인데 db에서 자동으로 증가됨 내가 db에 Auto_INCREMENT넣어놨음 속성
+    @Column(name = "pid", nullable = false)
     private int pid;
 
-    @Column(name = "pname", nullable = false, length = 20, columnDefinition = "NULL")
+    @Column(name = "pname", nullable = false, length = 20)
     private String pname;
 
-    @Column(name = "isprivate", nullable = false, columnDefinition = "0")
+    @Column(name = "isprivate", nullable = false)
     private boolean isprivate;
 
-    @Column(name = "description", columnDefinition = "NULL")
+    @Column(name = "description")
     private String description;
 
-    @Column(name = "thumbnaillink", length = 255, nullable = true, columnDefinition = "thumbnail")
+    @Column(name = "thumbnaillink", length = 255, nullable = true)
     private String thumbnaillink;
 
-    @Column(name = "initdate", nullable = false, columnDefinition = "NULL")
+    @Column(name = "initdate", nullable = false)
     private Date initdate;
 }
