@@ -6,6 +6,7 @@ import com.cau.issuemanagement.issuestation.Dto.ResponseDto;
 import com.cau.issuemanagement.issuestation.Dto.SignupDto;
 import com.cau.issuemanagement.issuestation.Entity.UserEntity;
 import com.cau.issuemanagement.issuestation.Repository.UserRepository;
+import com.cau.issuemanagement.issuestation.Security.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +14,8 @@ import java.util.Optional;
 
 @Service
 public class AuthService {
-    @Autowired
-    private UserRepository userRepository;
+    @Autowired private UserRepository userRepository;
+    @Autowired private TokenProvider tokenProvider;
 
     public ResponseDto<String> signUp(SignupDto signupDto) {
         // ID 중복 확인
@@ -38,17 +39,27 @@ public class AuthService {
     public ResponseDto<LoginResponseDto> login(LoginDto dto) {
         String id = dto.getId();
         String password = dto.getPw();
-        boolean existed = userRepository.existsByIdAndPw(id, password);
+        try {
+            boolean existed = userRepository.existsByIdAndPw(id, password);
 
-        if(!existed) {
-            return ResponseDto.setFailed("Login Info is Wrong", null);
+            if(!existed) {
+                return ResponseDto.setFailed("Login Info is Wrong", null);
+            }
+        } catch (Exception e) {
+            return ResponseDto.setFailed("Database Error", null);
         }
 
-        UserEntity userEntity = userRepository.findById(id).get();
+        UserEntity userEntity = null;
+        try {
+            // 값이 존재하면
+            userEntity = userRepository.findById(id).get(); // 사용자 id을 가져옴
+        } catch(Exception e) {
+            return ResponseDto.setFailed("Database Error", null);
+        }
 
-        //userEntity.setPw("");
+        userEntity.setPw("");
 
-        String token = "";
+        String token = tokenProvider.createJwt(id);
         int exprTime = 3600000; //한 시간
 
         LoginResponseDto loginResponseDto = new LoginResponseDto(token, exprTime, userEntity);
