@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "user")
 public class UserEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "userid", nullable = false)
     private int userid;
 
@@ -26,9 +27,9 @@ public class UserEntity {
     private String nickname;
 
     public UserEntity(SignupDto dto) {
-        this.userid = dto.getUserid();
+        //this.userid = dto.getUserid();
         this.id = dto.getId();
-        this.pw = dto.getPassword();
+        this.pw = dto.getPw();
         this.nickname = dto.getNickname();
     }
 }

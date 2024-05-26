@@ -57,7 +57,7 @@ public class AuthService {
             return ResponseDto.setFailed("Database Error", null);
         }
 
-        userEntity.setPw("");
+        //userEntity.setPw("");
 
         String token = tokenProvider.createJwt(id);
         int exprTime = 3600000; //한 시간
