@@ -1,6 +1,7 @@
 package com.cau.issuemanagement.issuestation.Service;
 
-
+import com.cau.issuemanagement.issuestation.Dto.LoginDto;
+import com.cau.issuemanagement.issuestation.Dto.LoginResponseDto;
 import com.cau.issuemanagement.issuestation.Dto.ResponseDto;
 import com.cau.issuemanagement.issuestation.Dto.SignupDto;
 import com.cau.issuemanagement.issuestation.Entity.UserEntity;
@@ -32,5 +33,26 @@ public class AuthService {
         UserEntity userEntity = new UserEntity(signupDto);
         userRepository.save(userEntity);
         return ResponseDto.setSuccess("User registered successfully", null);
+    }
+
+    public ResponseDto<LoginResponseDto> login(LoginDto dto) {
+        String id = dto.getId();
+        String password = dto.getPw();
+        boolean existed = userRepository.existsByIdAndPw(id, password);
+
+        if(!existed) {
+            return ResponseDto.setFailed("Login Info is Wrong", null);
+        }
+
+        UserEntity userEntity = userRepository.findById(id).get();
+
+        //userEntity.setPw("");
+
+        String token = "";
+        int exprTime = 3600000; //한 시간
+
+        LoginResponseDto loginResponseDto = new LoginResponseDto(token, exprTime, userEntity);
+        return ResponseDto.setSuccess("Login Success", loginResponseDto);
+
     }
 }
