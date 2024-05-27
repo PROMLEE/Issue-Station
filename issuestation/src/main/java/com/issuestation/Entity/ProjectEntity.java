@@ -1,12 +1,15 @@
 package com.issuestation.Entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.issuestation.Entity.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -14,7 +17,7 @@ import java.util.Date;
 @Builder
 @Entity(name = "Project")
 @Table(name = "project")
-public class ProjectEntity {
+public class ProjectEntity extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //이거 넣어줘야 전달받지않은 데이터인데 db에서 자동으로 증가됨 내가 db에 Auto_INCREMENT넣어놨음 속성
     @Column(name = "pid", nullable = false)
@@ -24,14 +27,11 @@ public class ProjectEntity {
     private String pname;
 
     @Column(name = "isprivate", nullable = false)
-    private boolean isprivate;
+    private Boolean isprivate;
 
     @Column(name = "description")
     private String description;
 
     @Column(name = "thumbnaillink", length = 255, nullable = true)
     private String thumbnaillink;
-
-    @Column(name = "initdate", nullable = false)
-    private Date initdate;
 }
