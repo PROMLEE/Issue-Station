@@ -39,7 +39,7 @@ class Ui_Dialog(object):
         self.widget_2.setStyleSheet("background-color:#fff;")
         self.widget_2.setObjectName("widget_2")
         self.pushButton_2 = QtWidgets.QPushButton(self.widget_2)
-        self.pushButton_2.setGeometry(QtCore.QRect(70, 480, 121, 23))
+        self.pushButton_2.setGeometry(QtCore.QRect(130, 490, 191, 21))
         font = QtGui.QFont()
         font.setFamily("맑은 고딕")
         font.setUnderline(True)
@@ -59,7 +59,7 @@ class Ui_Dialog(object):
 "")
         self.pushButton_2.setObjectName("pushButton_2")
         self.pushButton = QtWidgets.QPushButton(self.widget_2)
-        self.pushButton.setGeometry(QtCore.QRect(80, 410, 281, 61))
+        self.pushButton.setGeometry(QtCore.QRect(80, 400, 281, 61))
         font = QtGui.QFont()
         font.setFamily("Open Sans")
         font.setPointSize(15)
@@ -87,22 +87,22 @@ class Ui_Dialog(object):
 "")
         self.pushButton.setObjectName("pushButton")
         self.lineEdit = QtWidgets.QLineEdit(self.widget_2)
-        self.lineEdit.setGeometry(QtCore.QRect(80, 240, 281, 40))
+        self.lineEdit.setGeometry(QtCore.QRect(80, 230, 281, 40))
         self.lineEdit.setMinimumSize(QtCore.QSize(0, 40))
         self.lineEdit.setMaximumSize(QtCore.QSize(16777215, 40))
-        self.lineEdit.setStyleSheet("backgroud-color:rgba(0,0,0,0);\n"
+        self.lineEdit.setStyleSheet("background-color:rgba(0,0,0,0);\n"
 "border:none;\n"
 "border-bottom:2px solid rgba(46,82,101,200);\n"
 "color:rgba(0,0,0,240);\n"
 "padding-bottom:7px;\n"
-"\n"
 "")
+        self.lineEdit.setText("")
         self.lineEdit.setObjectName("lineEdit")
         self.lineEdit_2 = QtWidgets.QLineEdit(self.widget_2)
-        self.lineEdit_2.setGeometry(QtCore.QRect(80, 320, 281, 40))
+        self.lineEdit_2.setGeometry(QtCore.QRect(80, 310, 281, 40))
         self.lineEdit_2.setMinimumSize(QtCore.QSize(0, 40))
         self.lineEdit_2.setMaximumSize(QtCore.QSize(16777215, 40))
-        self.lineEdit_2.setStyleSheet("backgroud-color:rgba(0,0,0,0);\n"
+        self.lineEdit_2.setStyleSheet("background-color:rgba(0,0,0,0);\n"
 "border:none;\n"
 "border-bottom:2px solid rgba(46,82,101,200);\n"
 "color:rgba(0,0,0,240);\n"
@@ -111,7 +111,7 @@ class Ui_Dialog(object):
 "")
         self.lineEdit_2.setObjectName("lineEdit_2")
         self.label_3 = QtWidgets.QLabel(self.widget_2)
-        self.label_3.setGeometry(QtCore.QRect(80, 120, 261, 61))
+        self.label_3.setGeometry(QtCore.QRect(90, 120, 261, 61))
         font = QtGui.QFont()
         font.setFamily("Open Sans")
         font.setPointSize(35)
@@ -123,7 +123,7 @@ class Ui_Dialog(object):
         self.label_3.setAlignment(QtCore.Qt.AlignCenter)
         self.label_3.setObjectName("label_3")
         self.pushButton_3 = QtWidgets.QPushButton(self.widget_2)
-        self.pushButton_3.setGeometry(QtCore.QRect(300, 480, 75, 23))
+        self.pushButton_3.setGeometry(QtCore.QRect(140, 530, 171, 31))
         font = QtGui.QFont()
         font.setFamily("맑은 고딕")
         font.setUnderline(True)
@@ -147,15 +147,16 @@ class Ui_Dialog(object):
 
         self.retranslateUi(Dialog)
         self.pushButton_2.clicked.connect(Dialog.go_to_main) # type: ignore
+        self.pushButton_3.clicked.connect(Dialog.go_to_signup) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
-        self.pushButton_2.setText(_translate("Dialog", "다시 메인 화면으로"))
+        self.pushButton_2.setText(_translate("Dialog", "로그인 없이 메인 화면으로"))
         self.pushButton.setText(_translate("Dialog", "Log In"))
-        self.lineEdit.setPlaceholderText(_translate("Dialog", "UserName"))
+        self.lineEdit.setPlaceholderText(_translate("Dialog", "ID"))
         self.lineEdit_2.setPlaceholderText(_translate("Dialog", "Password"))
         self.label_3.setText(_translate("Dialog", "Log In"))
-        self.pushButton_3.setText(_translate("Dialog", "회원가입"))
+        self.pushButton_3.setText(_translate("Dialog", "계정이 없나요? 계정 만들기"))
 import resource_rc
