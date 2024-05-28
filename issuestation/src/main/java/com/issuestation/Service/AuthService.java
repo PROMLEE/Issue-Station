@@ -7,6 +7,8 @@ import com.issuestation.Dto.LoginDto;
 import com.issuestation.Dto.LoginResponseDto;
 import com.issuestation.Dto.SignupDto;
 import com.issuestation.Entity.User;
+import com.issuestation.apiPayload.code.status.ErrorStatus;
+import com.issuestation.apiPayload.exception.handler.TempHandler;
 import com.issuestation.converter.UserConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,13 +24,15 @@ public class AuthService {
         // ID 중복 확인
         Optional<User> existingUserById = userRepository.findByLoginId(signupDto.getLoginId());
         if (existingUserById.isPresent()) {
-            return ResponseDto.setFailed("ID already exists", null);
+            throw new TempHandler(ErrorStatus.LOGIN_ERROR_ID);
+//            return ResponseDto.setFailed("ID already exists", null);
         }
 
         // Nickname 중복 확인
         Optional<User> existingUserByNickname = userRepository.findByNickname(signupDto.getNickname());
         if (existingUserByNickname.isPresent()) {
-            return ResponseDto.setFailed("Nickname already exists", null);
+            throw new TempHandler(ErrorStatus.LOGIN_ERROR_NICKNAME);
+//            return ResponseDto.setFailed("Nickname already exists", null);
         }
 
         // 유저 생성 및 저장

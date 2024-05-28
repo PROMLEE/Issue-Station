@@ -4,6 +4,7 @@ import com.issuestation.Entity.Temp.IssueId;
 import com.issuestation.Entity.common.BaseTimeEntity;
 import com.issuestation.Entity.enums.Status;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.Date;
@@ -24,7 +25,7 @@ public class Issue extends BaseTimeEntity {
     @Column(nullable = false, length = 100)
     private String description;
 
-    @Column(nullable = false)
+    @NotNull
     private Status status;
 
     @ManyToOne(fetch = FetchType.LAZY)
