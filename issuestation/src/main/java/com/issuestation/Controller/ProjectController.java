@@ -3,7 +3,7 @@
 //import com.issuestation.Dto.ResponseDto;
 //import com.issuestation.Security.TokenProvider;
 //import com.issuestation.Service.Temp.ProjectService;
-//import com.issuestation.Dto.ProjectRequestDto;
+//import com.issuestation.Dto.Project.ProjectRequestDto;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.web.bind.annotation.*;
 //
@@ -35,18 +35,19 @@
 //}
 package com.issuestation.Controller;
 
-import com.issuestation.Dto.ProjectRequestDto;
-import com.issuestation.Dto.ProjectResponseDto;
+import com.issuestation.Dto.Project.ProjectRequestDto;
+import com.issuestation.Dto.Project.ProjectResponseDto;
 import com.issuestation.Entity.Project;
+import com.issuestation.Security.TokenProvider;
 import com.issuestation.Service.ProjectService.ProjectCreateService;
 import com.issuestation.apiPayload.ApiResponse;
+import com.issuestation.apiPayload.code.status.ErrorStatus;
+import com.issuestation.apiPayload.exception.handler.TempHandler;
 import com.issuestation.converter.ProjectCreateConverter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -54,9 +55,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProjectController {
 
     private final ProjectCreateService projectService;
+    @Autowired  private TokenProvider tokenProvider;
 
     @PostMapping("/create")
-    public ApiResponse<ProjectResponseDto.JoinProjectCreateResponseDto> join(@RequestBody @Valid ProjectRequestDto.JoinProjectCreateRequestDto request) {
+    public ApiResponse<ProjectResponseDto.JoinProjectCreateResponseDto> join(@RequestHeader("Authorization") String token, @RequestBody @Valid ProjectRequestDto.JoinProjectCreateRequestDto request) {
+        String jwtToken = token.replace("Bearer ", "");
+
+        //토큰 검증
+        String loginId;
+        try {
+            loginId = tokenProvider.validateJwt(jwtToken);
+        } catch (Exception e) {
+            throw new TempHandler(ErrorStatus.TEMP_EXCEPTION);
+        }
         Project project = projectService.joinProject(request);
         return ApiResponse.onSuccess(ProjectCreateConverter.toProjectDto(project));
     }
