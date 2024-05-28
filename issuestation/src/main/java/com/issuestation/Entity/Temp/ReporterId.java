@@ -1,4 +1,4 @@
-package com.issuestation.Entity;
+package com.issuestation.Entity.Temp;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,22 +9,22 @@ import java.util.Objects;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentId implements Serializable {
-    private int commentid;
-    private int pid;
+public class ReporterId implements Serializable {
+    private int userid;
     private int issueid;
+    private int pid;
     private int stateid;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CommentId commentId = (CommentId) o;
-        return (commentid == commentId.commentid) && (pid == commentId.pid) && (issueid == commentId.issueid) && (stateid == commentId.stateid);
+        ReporterId reporterId = (ReporterId) o;
+        return (userid == reporterId.userid) && (issueid == reporterId.issueid);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(commentid, issueid);
+        return Objects.hash(userid, issueid);
     }
 }

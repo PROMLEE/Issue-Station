@@ -1,4 +1,4 @@
-package com.issuestation.Entity;
+package com.issuestation.Entity.Temp;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

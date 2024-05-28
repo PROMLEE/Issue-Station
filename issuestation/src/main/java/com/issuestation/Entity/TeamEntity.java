@@ -1,5 +1,6 @@
 package com.issuestation.Entity;
 
+import com.issuestation.Entity.Temp.TeamId;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

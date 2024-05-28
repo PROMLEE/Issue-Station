@@ -1,32 +1,29 @@
-package com.issuestation.Entity;
+package com.issuestation.Entity.Temp;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.io.Serializable;
 import java.util.Objects;
-
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AssigneeId implements Serializable {
-    private int userid;
-    private int issueid;
+public class TeamId implements Serializable {
+    private int teamid;
     private int pid;
-    private int stateid;
+    private int roleid;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AssigneeId assigneeId = (AssigneeId) o;
-        return (userid == assigneeId.userid) && (issueid == assigneeId.issueid);
+        TeamId teamId = (TeamId) o;
+        return teamid == teamId.teamid && pid == teamId.pid && roleid == teamId.roleid;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userid, issueid);
+        return Objects.hash(teamid, pid, roleid);
     }
 }
