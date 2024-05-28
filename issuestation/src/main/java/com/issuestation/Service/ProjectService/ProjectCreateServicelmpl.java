@@ -1,6 +1,6 @@
 package com.issuestation.Service.ProjectService;
 
-import com.issuestation.Dto.ProjectRequestDto;
+import com.issuestation.Dto.Project.ProjectRequestDto;
 import com.issuestation.Entity.Project;
 import com.issuestation.Repository.ProjectRepository;
 import com.issuestation.converter.ProjectCreateConverter;
