@@ -26,6 +26,13 @@ public class IssueResponseDto {
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
+    public static class JoinIssueDeleteResponseDto{
+        Long id;
+    }
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class JoinIssueStateResponseDto{
         Status status;
     }
