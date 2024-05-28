@@ -1,4 +1,4 @@
-package com.issuestation.Dto;
+package com.issuestation.Dto.UserDto.Signup;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

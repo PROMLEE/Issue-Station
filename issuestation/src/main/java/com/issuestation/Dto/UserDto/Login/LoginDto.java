@@ -1,4 +1,4 @@
-package com.issuestation.Dto;
+package com.issuestation.Dto.UserDto.Login;
 
 
 import jakarta.validation.constraints.NotBlank;
