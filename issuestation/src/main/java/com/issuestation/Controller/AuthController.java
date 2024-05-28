@@ -18,6 +18,7 @@ public class AuthController {
         System.out.println(result.toString());
         return result;
     }
+
     @PostMapping("/login")
     public ResponseDto<LoginResponseDto> login(@RequestBody LoginDto requestBody) {
         ResponseDto<LoginResponseDto> result = authService.login(requestBody);

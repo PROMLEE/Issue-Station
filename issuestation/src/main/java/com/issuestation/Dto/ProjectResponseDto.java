@@ -12,7 +12,7 @@ public class ProjectResponseDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class JoinProjectCreateResponseDto{
-        Integer pid;
+        Long id;
 //        String thumbnaillink;
     }
 }
