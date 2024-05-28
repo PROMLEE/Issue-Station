@@ -2,6 +2,7 @@ package com.issuestation.Dto.Issue;
 
 import com.issuestation.Entity.enums.Status;
 import lombok.Getter;
+import lombok.Setter;
 
 public class IssueRequestDto {
 
