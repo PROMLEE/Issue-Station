@@ -64,9 +64,10 @@ public class ProjectController {
         //토큰 검증
         var getToken = token.getHeader("Authorization");
         String jwtToken = getToken.replace("Bearer ", "");
-        String loginId;
+        long loginId;
         try {
-            loginId = tokenProvider.validateJwt(jwtToken);
+            loginId = Long.parseLong(tokenProvider.validateJwt(jwtToken));
+            System.out.println("user id: "+loginId);
         } catch (Exception e) {
             throw new TempHandler(ErrorStatus._UNAUTHORIZED);
         }
