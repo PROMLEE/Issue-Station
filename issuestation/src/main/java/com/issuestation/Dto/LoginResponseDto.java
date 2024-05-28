@@ -1,7 +1,7 @@
 package com.issuestation.Dto;
 
 
-import com.issuestation.Entity.UserEntity;
+import com.issuestation.Entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 public class LoginResponseDto {
     private String token;
     private int exprTime;
-    private UserEntity user;
+    private User user;
 }

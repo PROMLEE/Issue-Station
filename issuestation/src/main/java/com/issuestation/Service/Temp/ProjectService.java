@@ -1,21 +1,19 @@
 package com.issuestation.Service.Temp;
 
-import com.issuestation.Dto.ProjectCreateRequestDto;
+import com.issuestation.Dto.ProjectRequestDto;
 import com.issuestation.Dto.ResponseDto;
 import com.issuestation.Repository.ProjectRepository;
-import com.issuestation.Entity.ProjectEntity;
+import com.issuestation.Entity.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
 
 @Service
 public class ProjectService {
     @Autowired private ProjectRepository projectRepository;
 
-    public ResponseDto<?> createProject(ProjectCreateRequestDto projectCreateDto, String userId) {
+    public ResponseDto<?> createProject(ProjectRequestDto projectCreateDto, String userId) {
         // 프로젝트 생성 로직 구현
-        ProjectEntity project = new ProjectEntity(); //객체 하나 만들어서 여기에 담는거임
+        Project project = new Project(); //객체 하나 만들어서 여기에 담는거임
 //        project.setPname(projectCreateDto.getPname());
 //        project.setIsprivate(projectCreateDto.isIsprivate());
 //        project.setDescription(projectCreateDto.getDescription());

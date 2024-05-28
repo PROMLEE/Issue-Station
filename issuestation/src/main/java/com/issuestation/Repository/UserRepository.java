@@ -1,15 +1,15 @@
 package com.issuestation.Repository;
 
-import com.issuestation.Entity.UserEntity;
+import com.issuestation.Entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity, Integer> {
-    Optional<UserEntity> findById(String id);
-    Optional<UserEntity> findByNickname(String nickname);
+public interface UserRepository extends JpaRepository<User, Integer> {
+    Optional<User> findByLoginId(String loginId);
+    Optional<User> findByNickname(String nickname);
 
-    public boolean existsByIdAndPw(String id, String pw);
+    boolean existsByLoginIdAndLoginPw(String id, String pw);
 }

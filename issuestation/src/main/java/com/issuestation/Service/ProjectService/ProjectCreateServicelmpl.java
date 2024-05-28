@@ -1,7 +1,7 @@
 package com.issuestation.Service.ProjectService;
 
-import com.issuestation.Dto.ProjectCreateRequestDto;
-import com.issuestation.Entity.ProjectEntity;
+import com.issuestation.Dto.ProjectRequestDto;
+import com.issuestation.Entity.Project;
 import com.issuestation.Repository.ProjectRepository;
 import com.issuestation.converter.ProjectCreateConverter;
 import lombok.RequiredArgsConstructor;
@@ -11,14 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class ProjectCreateCommandServicelmpl implements ProjectCreateCommandService{
+public class ProjectCreateServicelmpl implements ProjectCreateService {
+
     private final ProjectRepository projectRepository;
 
     @Override
     @Transactional
-    public ProjectEntity joinProject(ProjectCreateRequestDto.JoinProjectCreateRequestDto requset) {
-        ProjectEntity newProject = ProjectCreateConverter.toProjectEntity(requset);
-
+    public Project joinProject(ProjectRequestDto.JoinProjectCreateRequestDto requset) {
+        Project newProject = ProjectCreateConverter.toProjectEntity(requset);
         return projectRepository.save(newProject);
     }
 }

@@ -1,5 +1,5 @@
 package com.issuestation.Entity.enums;
 
-public enum commentTag {
+public enum CommentTag {
     NEW, SETASSIGNEE, CLOSED, NORMAL
 }

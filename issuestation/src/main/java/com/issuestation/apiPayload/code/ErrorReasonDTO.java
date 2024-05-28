@@ -1,6 +1,5 @@
 package com.issuestation.apiPayload.code;
 
-import com.issuestation.apiPayload.code.status.SuccessStatus;
 import lombok.*;
 import org.springframework.http.HttpStatus;
 

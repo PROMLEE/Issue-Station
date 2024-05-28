@@ -2,13 +2,14 @@ package com.issuestation.Dto;
 
 import lombok.Getter;
 
-public class ProjectCreateRequestDto {
+public class ProjectRequestDto {
 
     @Getter
     public static class JoinProjectCreateRequestDto {
         String pname;
         String description;
-        Boolean isprivate;
+        Boolean isPrivate;
 //        String thumbnaillink;
     }
+
 }

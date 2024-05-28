@@ -3,7 +3,7 @@
 //import com.issuestation.Dto.ResponseDto;
 //import com.issuestation.Security.TokenProvider;
 //import com.issuestation.Service.Temp.ProjectService;
-//import com.issuestation.Dto.ProjectCreateRequestDto;
+//import com.issuestation.Dto.ProjectRequestDto;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.web.bind.annotation.*;
 //
@@ -15,7 +15,7 @@
 //    @Autowired private TokenProvider tokenProvider; //토큰 가져와야함 여기서
 //
 //    @PostMapping("/create")
-//    public ResponseDto<?> createProject(@RequestHeader("Authorization") String token, @RequestBody ProjectCreateRequestDto projectCreateRequestDto) {
+//    public ResponseDto<?> createProject(@RequestHeader("Authorization") String token, @RequestBody ProjectRequestDto projectCreateRequestDto) {
 //        //Bearer 토큰에서 값 추출
 //        String jwtToken = token.replace("Bearer ", "");
 //
@@ -35,10 +35,10 @@
 //}
 package com.issuestation.Controller;
 
-import com.issuestation.Dto.ProjectCreateRequestDto;
-import com.issuestation.Dto.ProjectCreateResponseDto;
-import com.issuestation.Entity.ProjectEntity;
-import com.issuestation.Service.ProjectService.ProjectCreateCommandService;
+import com.issuestation.Dto.ProjectRequestDto;
+import com.issuestation.Dto.ProjectResponseDto;
+import com.issuestation.Entity.Project;
+import com.issuestation.Service.ProjectService.ProjectCreateService;
 import com.issuestation.apiPayload.ApiResponse;
 import com.issuestation.converter.ProjectCreateConverter;
 import jakarta.validation.Valid;
@@ -53,12 +53,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/project")
 public class ProjectController {
 
-    private final ProjectCreateCommandService projectService;
+    private final ProjectCreateService projectService;
 
     @PostMapping("/create")
-    public ApiResponse<ProjectCreateResponseDto.JoinProjectCreateResponseDto> join(@RequestBody @Valid ProjectCreateRequestDto.JoinProjectCreateRequestDto request) {
-        ProjectEntity project = projectService.joinProject(request);
-        return ApiResponse.onSuccess(ProjectCreateConverter.toJoinProjectCreateResponseDto(project));
+    public ApiResponse<ProjectResponseDto.JoinProjectCreateResponseDto> join(@RequestBody @Valid ProjectRequestDto.JoinProjectCreateRequestDto request) {
+        Project project = projectService.joinProject(request);
+        return ApiResponse.onSuccess(ProjectCreateConverter.toProjectDto(project));
     }
 
 }

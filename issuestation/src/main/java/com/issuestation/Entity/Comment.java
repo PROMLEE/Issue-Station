@@ -1,7 +1,7 @@
 package com.issuestation.Entity;
 
 import com.issuestation.Entity.common.BaseTimeEntity;
-import com.issuestation.Entity.enums.commentTag;
+import com.issuestation.Entity.enums.CommentTag;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -17,17 +17,17 @@ public class Comment extends BaseTimeEntity {
     private Long id;
 
     @NotNull
-    private commentTag tag;
+    private CommentTag tag;
 
     @NotNull
     @Column(columnDefinition = "TEXT")
     private String comment;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userid")
-    private UserEntity user;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "issueid")
-    private IssueEntity issue;
+    @JoinColumn(name = "issue_id")
+    private Issue issue;
 }

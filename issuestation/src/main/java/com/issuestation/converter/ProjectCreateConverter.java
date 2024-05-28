@@ -1,24 +1,21 @@
 package com.issuestation.converter;
 
-import com.issuestation.Dto.ProjectCreateRequestDto;
-import com.issuestation.Dto.ProjectCreateResponseDto;
-import com.issuestation.Entity.ProjectEntity;
-
-import java.time.LocalDate;
+import com.issuestation.Dto.ProjectRequestDto;
+import com.issuestation.Dto.ProjectResponseDto;
+import com.issuestation.Entity.Project;
 
 public class ProjectCreateConverter {
-    public static ProjectCreateResponseDto.JoinProjectCreateResponseDto toJoinProjectCreateResponseDto(ProjectEntity project) {
-
-        return ProjectCreateResponseDto.JoinProjectCreateResponseDto.builder()
-                .pid(project.getPid())
+    public static ProjectResponseDto.JoinProjectCreateResponseDto toProjectDto(Project project) {
+        return ProjectResponseDto.JoinProjectCreateResponseDto.builder()
+//                .pid(project.getId())
                 .build();
     }
 
-    public static ProjectEntity toProjectEntity(ProjectCreateRequestDto.JoinProjectCreateRequestDto request) {
-        return ProjectEntity.builder()
-                .pname(request.getPname())
+    public static Project toProjectEntity(ProjectRequestDto.JoinProjectCreateRequestDto request) {
+        return Project.builder()
+                .name(request.getPname())
                 .description(request.getDescription())
-                .isprivate(request.getIsprivate())
+                .isPrivate(request.getIsPrivate())
                 .build();
     }
 }
