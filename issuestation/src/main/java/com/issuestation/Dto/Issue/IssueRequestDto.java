@@ -1,5 +1,6 @@
 package com.issuestation.Dto.Issue;
 
+import com.issuestation.Entity.enums.Status;
 import lombok.Getter;
 
 public class IssueRequestDto {
@@ -8,6 +9,10 @@ public class IssueRequestDto {
     public static class JoinIssueCreateRequestDto {
         String name;
         String description;
+    }
+    @Getter
+    public static class JoinIssueStateRequestDto {
+        Status status;
     }
 
 }

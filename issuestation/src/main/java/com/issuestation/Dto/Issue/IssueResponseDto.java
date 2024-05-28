@@ -1,5 +1,6 @@
 package com.issuestation.Dto.Issue;
 
+import com.issuestation.Entity.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,5 +14,12 @@ public class IssueResponseDto {
     @AllArgsConstructor
     public static class JoinIssueCreateResponseDto{
         Long id;
+    }
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class JoinIssueStateResponseDto{
+        Status status;
     }
 }
