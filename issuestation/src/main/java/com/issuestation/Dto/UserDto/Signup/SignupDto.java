@@ -1,4 +1,4 @@
-package com.issuestation.Dto;
+package com.issuestation.Dto.UserDto.Signup;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,5 +12,4 @@ public class SignupDto {
     private String loginId;
     private String nickname;
     private String loginPw;
-    private String passwordCheck;
 }

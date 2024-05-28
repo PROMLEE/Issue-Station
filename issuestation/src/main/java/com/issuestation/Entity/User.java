@@ -22,11 +22,4 @@ public class User {
     @Column(nullable = false, length = 20)
     private String nickname;
 
-//    public User(SignupDto dto) {
-//        //this.userid = dto.getUserid();
-//        this.loginId = dto.getLoginId();
-//        this.loginPw = dto.getLoginPw();
-//        this.nickname = dto.getNickname();
-//    }
-
 }

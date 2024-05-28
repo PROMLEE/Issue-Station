@@ -1,10 +1,6 @@
 package com.issuestation.converter;
 
-import com.issuestation.Dto.LoginDto;
-import com.issuestation.Dto.ProjectRequestDto;
-import com.issuestation.Dto.ProjectResponseDto;
-import com.issuestation.Dto.SignupDto;
-import com.issuestation.Entity.Project;
+import com.issuestation.Dto.UserDto.Signup.SignupDto;
 import com.issuestation.Entity.User;
 
 public class UserConverter {

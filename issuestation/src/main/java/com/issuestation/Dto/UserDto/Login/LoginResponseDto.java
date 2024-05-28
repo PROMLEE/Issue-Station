@@ -1,4 +1,4 @@
-package com.issuestation.Dto;
+package com.issuestation.Dto.UserDto.Login;
 
 
 import com.issuestation.Entity.User;
