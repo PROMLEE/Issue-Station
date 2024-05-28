@@ -1,7 +1,7 @@
 package com.issuestation.converter;
 
-import com.issuestation.Dto.ProjectRequestDto;
-import com.issuestation.Dto.ProjectResponseDto;
+import com.issuestation.Dto.Project.ProjectRequestDto;
+import com.issuestation.Dto.Project.ProjectResponseDto;
 import com.issuestation.Entity.Project;
 
 public class ProjectCreateConverter {

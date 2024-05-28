@@ -25,8 +25,4 @@ public class Project extends BaseTimeEntity {
     private String description;
 
     private String thumbnaillink;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "team_id")
-    private Team team;
 }

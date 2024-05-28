@@ -1,4 +1,4 @@
-package com.issuestation.Dto;
+package com.issuestation.Dto.Project;
 
 import lombok.Getter;
 

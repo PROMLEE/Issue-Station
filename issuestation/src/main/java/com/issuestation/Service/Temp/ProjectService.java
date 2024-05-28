@@ -1,6 +1,6 @@
 package com.issuestation.Service.Temp;
 
-import com.issuestation.Dto.ProjectRequestDto;
+import com.issuestation.Dto.Project.ProjectRequestDto;
 import com.issuestation.Dto.ResponseDto;
 import com.issuestation.Repository.ProjectRepository;
 import com.issuestation.Entity.Project;
