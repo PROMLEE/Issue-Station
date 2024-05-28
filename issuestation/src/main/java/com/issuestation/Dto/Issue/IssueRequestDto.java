@@ -12,6 +12,10 @@ public class IssueRequestDto {
         String description;
     }
     @Getter
+    public static class JoinIssueDeleteRequestDto {
+        Long id;
+    }
+    @Getter
     public static class JoinIssueStateRequestDto {
         Status status;
     }
