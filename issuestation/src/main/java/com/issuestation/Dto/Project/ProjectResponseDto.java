@@ -15,4 +15,12 @@ public class ProjectResponseDto {
         Long id;
 //        String thumbnaillink;
     }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class JoinTeamResponseDto{
+        Long id;
+    }
 }

@@ -40,10 +40,12 @@ import com.issuestation.Dto.Project.ProjectResponseDto;
 import com.issuestation.Entity.Project;
 import com.issuestation.Security.TokenProvider;
 import com.issuestation.Service.ProjectService.ProjectCreateService;
+import com.issuestation.Service.ProjectService.TeamJoinService;
 import com.issuestation.apiPayload.ApiResponse;
 import com.issuestation.apiPayload.code.status.ErrorStatus;
 import com.issuestation.apiPayload.exception.handler.TempHandler;
-import com.issuestation.converter.ProjectCreateConverter;
+import com.issuestation.converter.ProjectConverter;
+import com.issuestation.converter.TeamConverter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -56,6 +58,7 @@ import org.springframework.web.bind.annotation.*;
 public class ProjectController {
 
     private final ProjectCreateService projectService;
+    private final TeamJoinService teamJoinService;
     @Autowired  TokenProvider tokenProvider;
 
     @PostMapping("/create")
@@ -72,6 +75,21 @@ public class ProjectController {
             throw new TempHandler(ErrorStatus._UNAUTHORIZED);
         }
         Project project = projectService.joinProject(request);
-        return ApiResponse.onSuccess(ProjectCreateConverter.toProjectDto(project));
+        return ApiResponse.onSuccess(ProjectConverter.toProjectDto(project));
+    }
+
+    @PostMapping("/team/{id}")
+    public ApiResponse<ProjectResponseDto.JoinTeamResponseDto> joinTeam(HttpServletRequest token, @PathVariable("id") long id, @RequestBody @Valid ProjectRequestDto.JoinTeamRequestDto request) {
+        //토큰 검증
+        var getToken = token.getHeader("Authorization");
+        String jwtToken = getToken.replace("Bearer ", "");
+        long loginId;
+        try {
+            loginId = Long.parseLong(tokenProvider.validateJwt(jwtToken));
+            System.out.println("user id: "+loginId);
+        } catch (Exception e) {
+            throw new TempHandler(ErrorStatus._UNAUTHORIZED);
+        }
+        return ApiResponse.onSuccess(TeamConverter.toTeamDto(teamJoinService.joinTeam(request, id)));
     }
 }

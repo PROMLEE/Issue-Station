@@ -20,6 +20,7 @@ public class Team {
     private boolean isAdmin;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @ManyToOne(fetch = FetchType.LAZY)
