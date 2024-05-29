@@ -3,7 +3,6 @@ package com.issuestation.Controller;
 import com.issuestation.Dto.Issue.IssueRequestDto;
 import com.issuestation.Dto.Issue.IssueResponseDto;
 import com.issuestation.Entity.Issue;
-import com.issuestation.Entity.Project;
 import com.issuestation.Security.TokenProvider;
 import com.issuestation.Service.IssueService.IssueCreateService;
 import com.issuestation.Service.IssueService.IssueDeleteService;
@@ -27,6 +26,7 @@ public class IssueController {
     private final IssueInfoService issueInfoService;
     private final IssueCreateService issueCreateService;
     private final IssueDeleteService issueDeleteService;
+    private final IssueStateService issueStateService;
 
     @Autowired
     TokenProvider tokenProvider;
@@ -68,6 +68,16 @@ public class IssueController {
         checkToken(token);
         Issue issue = issueInfoService.infoIssue(issueId);
         return ApiResponse.onSuccess(IssueInfoConverter.toIssueDto(issue));
+    }
+
+    @PostMapping("/state/{id}")
+    public ApiResponse<IssueResponseDto.JoinIssueStateResponseDto> changeState(HttpServletRequest token, @PathVariable("id") long issueId, @RequestBody @Valid IssueRequestDto.JoinIssueStateRequestDto request) {
+
+        //토큰 검증
+        checkToken(token);
+
+        Issue issue = issueStateService.changeIssueState(request, issueId);
+        return ApiResponse.onSuccess(IssueStateConverter.toIssueDto(issue));
     }
 
 
