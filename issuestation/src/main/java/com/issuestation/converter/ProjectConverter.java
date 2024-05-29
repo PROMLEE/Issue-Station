@@ -3,8 +3,11 @@ package com.issuestation.converter;
 import com.issuestation.Dto.Project.ProjectRequestDto;
 import com.issuestation.Dto.Project.ProjectResponseDto;
 import com.issuestation.Entity.Project;
+import org.springframework.stereotype.Component;
 
-public class ProjectCreateConverter {
+@Component
+public class ProjectConverter {
+
     public static ProjectResponseDto.JoinProjectCreateResponseDto toProjectDto(Project project) {
         return ProjectResponseDto.JoinProjectCreateResponseDto.builder()
                 .id(project.getId())
