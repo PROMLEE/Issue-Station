@@ -17,7 +17,7 @@ public class IssueRequestDto {
     }
     @Getter
     public static class JoinIssueStateRequestDto {
-        Status status;
+        private Status status;
     }
     @Getter
     public static class JoinIssueModifyRequestDto {
