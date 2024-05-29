@@ -1,6 +1,6 @@
 package com.issuestation.Controller;
 
-import com.issuestation.Dto.TempResponse;
+import com.issuestation.Dto.Temp.TempResponse;
 import com.issuestation.Service.TempService.TempQueryServiceImpl;
 import com.issuestation.apiPayload.ApiResponse;
 import com.issuestation.converter.TempConverter;

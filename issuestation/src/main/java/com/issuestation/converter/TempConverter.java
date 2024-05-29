@@ -1,6 +1,6 @@
 package com.issuestation.converter;
 
-import com.issuestation.Dto.TempResponse;
+import com.issuestation.Dto.Temp.TempResponse;
 
 public class TempConverter {
 

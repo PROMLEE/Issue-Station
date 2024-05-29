@@ -5,6 +5,7 @@ import com.issuestation.Dto.Project.ProjectResponseDto;
 import com.issuestation.Entity.Project;
 import org.springframework.stereotype.Component;
 
+
 @Component
 public class ProjectConverter {
 
@@ -20,5 +21,17 @@ public class ProjectConverter {
                 .description(request.getDescription())
                 .isPrivate(request.getIsPrivate())
                 .build();
+    }
+
+    public static ProjectResponseDto.MyProjectResponseDto toMyProjectDto(Project project) {
+        return new ProjectResponseDto.MyProjectResponseDto(
+                project.getId(),
+                project.getName(),
+                project.getIsPrivate(),
+                project.getDescription(),
+                project.getThumbnaillink(),
+                project.getInitdate(),
+                project.getModdate()
+        );
     }
 }
