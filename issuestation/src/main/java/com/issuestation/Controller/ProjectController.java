@@ -40,6 +40,7 @@ import com.issuestation.Dto.Project.ProjectResponseDto;
 import com.issuestation.Entity.Project;
 import com.issuestation.Security.TokenProvider;
 import com.issuestation.Service.ProjectService.ProjectCreateService;
+import com.issuestation.Service.ProjectService.ProjectSearchService;
 import com.issuestation.Service.ProjectService.TeamJoinService;
 import com.issuestation.apiPayload.ApiResponse;
 import com.issuestation.apiPayload.code.status.ErrorStatus;
@@ -50,15 +51,20 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/project")
 public class ProjectController {
 
-    private final ProjectCreateService projectService;
+    private final ProjectCreateService projectCreateService;
     private final TeamJoinService teamJoinService;
+    private final ProjectSearchService projectSearchService;
     @Autowired  TokenProvider tokenProvider;
 
     @PostMapping("/create")
@@ -74,7 +80,7 @@ public class ProjectController {
         } catch (Exception e) {
             throw new TempHandler(ErrorStatus._UNAUTHORIZED);
         }
-        Project project = projectService.joinProject(request);
+        Project project = projectCreateService.joinProject(request);
         return ApiResponse.onSuccess(ProjectConverter.toProjectDto(project));
     }
 
@@ -91,5 +97,20 @@ public class ProjectController {
             throw new TempHandler(ErrorStatus._UNAUTHORIZED);
         }
         return ApiResponse.onSuccess(TeamConverter.toTeamDto(teamJoinService.joinTeam(request, id)));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Project>> searchProjects(
+            @RequestParam(required = false) String name) {
+
+        List<Project> projects;
+
+        if (name != null) {
+            projects = projectSearchService.searchProjectsByName(name);
+        }  else {
+            projects = projectSearchService.searchAllProjects();
+        }
+
+        return new ResponseEntity<>(projects, HttpStatus.OK);
     }
 }

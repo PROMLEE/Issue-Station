@@ -18,8 +18,6 @@ public class ProjectCreateServicelmpl implements ProjectCreateService {
     @Override
     @Transactional
     public Project joinProject(ProjectRequestDto.JoinProjectCreateRequestDto requset) {
-
-
         Project newProject = ProjectConverter.toProjectEntity(requset);
         return projectRepository.save(newProject);
     }
