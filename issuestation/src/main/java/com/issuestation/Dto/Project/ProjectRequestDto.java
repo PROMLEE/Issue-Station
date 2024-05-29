@@ -14,8 +14,8 @@ public class ProjectRequestDto {
     }
 
     @Getter
-    public static class JoinTeamRequestDto{
-//        Long projectId;  요거는 파라미터로 받아야함
+    public static class JoinTeamRequestDto {
+        //        Long projectId;  요거는 파라미터로 받아야함
         String nickname;
         Boolean isAdmin;
         Role role;
