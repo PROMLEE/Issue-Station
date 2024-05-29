@@ -25,6 +25,7 @@ public class Issue extends BaseTimeEntity {
     @Column(nullable = false, length = 100)
     private String description;
 
+    @Enumerated(EnumType.STRING)
     @NotNull
     private Status status;
 
