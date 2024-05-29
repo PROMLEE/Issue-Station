@@ -9,15 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class IssueDeleteServicelmpl implements IssueDeleteService {
-
+public class IssueInfoServiceImpl implements IssueInfoService {
     private final IssueRepository issueRepository;
 
     @Override
-    @Transactional
-    public void deleteIssue(long issueId) {
-        Issue issue = issueRepository.findById(issueId)
+    public Issue infoIssue(long issueId) {
+        return issueRepository.findById(issueId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid issue ID"));
-        issueRepository.delete(issue);
     }
 }

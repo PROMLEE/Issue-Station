@@ -6,5 +6,5 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface IssueDeleteService {
     @Transactional
-    Issue joinIssueDelete(IssueRequestDto.JoinIssueDeleteRequestDto requset);
+    void deleteIssue(long issueId);
 }

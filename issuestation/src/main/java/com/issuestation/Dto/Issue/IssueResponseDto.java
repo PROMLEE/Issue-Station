@@ -1,10 +1,9 @@
 package com.issuestation.Dto.Issue;
 
 import com.issuestation.Entity.enums.Status;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.Date;
 
 public class IssueResponseDto {
 
@@ -27,7 +26,7 @@ public class IssueResponseDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class JoinIssueDeleteResponseDto{
-        Long id;
+        Long id; //삭제된 Id는 반환해주니까 냅둠
     }
     @Builder
     @Getter
@@ -35,5 +34,18 @@ public class IssueResponseDto {
     @AllArgsConstructor
     public static class JoinIssueStateResponseDto{
         Status status;
+    }
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class JoinIssueInfoResponseDto {
+        Long id;
+        String name;
+        String description;
+        Status status;
+        Long projectId;
+        String initDate;
+        String modDate;
     }
 }
