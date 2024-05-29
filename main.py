@@ -1,11 +1,16 @@
 import sys
 import json
 import webbrowser
+import requests
 from PyQt5 import QtGui, uic
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt
 from IssueMgmt_ui import Ui_MainWindow
 from login_ui import Ui_Dialog
+
+
+##http 요청 url
+url = 'http://43.203.47.111:8080'
 
 ##json file 데이터 읽어오기
 def getJsonData(local_url):
@@ -192,10 +197,54 @@ class SignupScreen(QDialog):
         self.setWindowTitle('Signup')
         self.setWindowFlag(Qt.FramelessWindowHint)
         self.show()
+    
+        self.pushButton.clicked.connect(self.nickname_check)
+        self.canname = False
+        self.canid = False
+        self.getname = ""
+        self.getid = ""
     ##계정 만들기 X -> 로그인 화면으로
     def back_to_login(self):
         self.close()
     ##계정 만들기 O -> 로그인 화면으로
+    
+    ##닉네임 중복 확인
+    def nickname_check(self):
+        self.getname = str(self.user_name.text())
+        ##이름 작성 안 했을 경우
+        if self.getname == "" :
+            self.name_check.setText('이름을 입력해주세요')
+        else :
+            res = requests.post(f'{url}/user/nickname', json={"nickname": self.getname})
+            if res:
+                self.name_check.setText('사용 가능한 이름입니다.')
+            else :
+                self.name_check.setText('이미 존재하는 이름입니다.')
+                self.canname = True
+    ##아이디 중복 확인
+    def _id_check(self):
+        self.getid = str(self.user_id.text())
+        ##이름 작성 안 했을 경우
+        if self.getid == "" :
+            self.id_check.setText('아이디를 입력해주세요.')
+        else :
+            res = requests.post(f'{url}/user/id', json={"id": self.getid})
+            if res:
+                self.id_check.setText('사용 가능한 이름입니다.')
+            else :
+                self.id_check.setText('이미 존재하는 이름입니다.')
+                self.canid = True
+    ##유효한 값인지 확인 + 계정 만들기
+    def create_account(self):
+        getpw = str(self.user_pw.text())
+        if getpw != "" and self.canname and self.canid :
+            res = requests.post(f'{url}/user/signup', json={"nickname": self.getname,"id":self.getid,"pw":getpw})
+            if res:
+                self.back_to_login
+        elif getpw == "":
+            self.pw_check.setText('비밀번호를 입력하세요.')
+        else:
+            self.label_4.setText('뭔가 예외가 있나봐')
 ##==============================================================================
 ##project detail 화면
 class ProjDetailScreen(QDialog):

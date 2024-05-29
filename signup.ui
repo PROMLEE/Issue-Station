@@ -84,8 +84,8 @@
       <property name="geometry">
        <rect>
         <x>90</x>
-        <y>440</y>
-        <width>281</width>
+        <y>490</y>
+        <width>271</width>
         <height>61</height>
        </rect>
       </property>
@@ -125,9 +125,9 @@ QPushButton#create_btn:pressed{
      <widget class="QPushButton" name="back_btn">
       <property name="geometry">
        <rect>
-        <x>110</x>
-        <y>530</y>
-        <width>241</width>
+        <x>100</x>
+        <y>570</y>
+        <width>251</width>
         <height>21</height>
        </rect>
       </property>
@@ -156,19 +156,108 @@ QPushButton#back_btn:pressed{
        <string>이미 계정이 있나요? 다시 로그인 화면으로</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="pushButton">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>260</y>
+        <width>91</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>맑은 고딕</family>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton#pushButton{
+	border: 1px solid rgba(46,82,101,200);
+	border-radius: 10px;
+	background-color: 'white';
+}
+QPushButton#pushButton:hover{
+	border-radius: 10px;
+	color: 'white';
+	background-color: rgba(46,82,101,200);
+}
+QPushButton#pushButton:pressed{
+	border-radius: 10px;
+	color: 'white';
+	background-color: rgba(46,82,101,200);
+}</string>
+      </property>
+      <property name="text">
+       <string>이름 중복확인</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_2">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>370</y>
+        <width>101</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>맑은 고딕</family>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton#pushButton_2{
+	border: 1px solid rgba(46,82,101,200);
+	border-radius: 10px;
+	background-color: 'white';
+}
+QPushButton#pushButton_2:hover{
+	border-radius: 10px;
+	color: 'white';
+	background-color: rgba(46,82,101,200);
+}
+QPushButton#pushButton_2:pressed{
+	border-radius: 10px;
+	color: 'white';
+	background-color: rgba(46,82,101,200);
+}</string>
+      </property>
+      <property name="text">
+       <string>아이디 중복확인</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>80</y>
+        <width>56</width>
+        <height>12</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <italic>false</italic>
+        <underline>true</underline>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: 'red';</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
      <widget class="QWidget" name="">
       <property name="geometry">
        <rect>
-        <x>90</x>
+        <x>110</x>
         <y>190</y>
-        <width>281</width>
-        <height>221</height>
+        <width>231</width>
+        <height>63</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
-       <property name="spacing">
-        <number>20</number>
-       </property>
        <item>
         <widget class="QLineEdit" name="user_name">
          <property name="minimumSize">
@@ -201,6 +290,30 @@ padding-bottom:7px;
         </widget>
        </item>
        <item>
+        <widget class="QLabel" name="name_check">
+         <property name="font">
+          <font>
+           <family>맑은 고딕</family>
+          </font>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>300</y>
+        <width>231</width>
+        <height>63</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
         <widget class="QLineEdit" name="user_id">
          <property name="minimumSize">
           <size>
@@ -232,6 +345,30 @@ padding-bottom:7px;
         </widget>
        </item>
        <item>
+        <widget class="QLabel" name="id_check">
+         <property name="font">
+          <font>
+           <family>맑은 고딕</family>
+          </font>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>410</y>
+        <width>231</width>
+        <height>60</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
         <widget class="QLineEdit" name="user_pw">
          <property name="minimumSize">
           <size>
@@ -256,6 +393,13 @@ padding-bottom:7px;
          </property>
          <property name="placeholderText">
           <string>Password</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="pw_check">
+         <property name="text">
+          <string/>
          </property>
         </widget>
        </item>
