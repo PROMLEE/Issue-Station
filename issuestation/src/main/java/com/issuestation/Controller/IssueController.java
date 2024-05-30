@@ -2,8 +2,10 @@ package com.issuestation.Controller;
 
 import com.issuestation.Dto.Issue.IssueRequestDto;
 import com.issuestation.Dto.Issue.IssueResponseDto;
+import com.issuestation.Entity.Assignee;
 import com.issuestation.Entity.Comment;
 import com.issuestation.Entity.Issue;
+import com.issuestation.Entity.Reporter;
 import com.issuestation.Entity.enums.Status;
 import com.issuestation.Security.TokenProvider;
 import com.issuestation.Service.IssueService.*;
@@ -33,7 +35,7 @@ public class IssueController {
     private final IssueStateService issueStateService;
     private final CommentCreateService commentCreateService;
     private final IssueSearchService issueSearchService;
-
+    private final SetAssigneeService assigneeService;
     @Autowired
     TokenProvider tokenProvider;
 
@@ -69,6 +71,7 @@ public class IssueController {
         issueDeleteService.deleteIssue(issueId);
         return ApiResponse.onSuccess(new IssueResponseDto.JoinIssueDeleteResponseDto(issueId));
     }
+
     @GetMapping("/search/{id}")
     public ResponseEntity<List<IssueResponseDto.JoinIssueSearchResponseDto>> searchIssues(HttpServletRequest token,
                                                                                           @PathVariable("id") long projectId,
@@ -91,6 +94,7 @@ public class IssueController {
         }
         return new ResponseEntity<>(issues, HttpStatus.OK);
     }
+
     @GetMapping("/info/{id}")
     public ApiResponse<IssueResponseDto.JoinIssueInfoResponseDto> info(HttpServletRequest token, @PathVariable("id") long issueId) {
         checkToken(token);
@@ -109,7 +113,7 @@ public class IssueController {
     }
 
     @PostMapping("/comment/create/{id}")
-    public ApiResponse<IssueResponseDto.JoinCommentCreateResponseDto> createComment(HttpServletRequest token,@PathVariable("id") long issueId, @RequestBody @Valid IssueRequestDto.JoinCommentCreateRequestDto request) {
+    public ApiResponse<IssueResponseDto.JoinCommentCreateResponseDto> createComment(HttpServletRequest token, @PathVariable("id") long issueId, @RequestBody @Valid IssueRequestDto.JoinCommentCreateRequestDto request) {
         checkToken(token);
         var getToken = token.getHeader("Authorization");
         String jwtToken = getToken.replace("Bearer ", "");
@@ -117,38 +121,15 @@ public class IssueController {
         return ApiResponse.onSuccess(CommentCreateConverter.toCommentDto(comment));
     }
 
+    @PostMapping("/assignee/{id}")
+    public ApiResponse<IssueResponseDto.JoinAssigneeCreateResponseDto> assignAssigneeToIssue(@PathVariable long id, @RequestBody IssueRequestDto.JoinAssigneeRequestDto request) {
+        Assignee assignee = assigneeService.assignAssignee(id, request);
+        return ApiResponse.onSuccess(JoinAssigneeConverter.toIssueDto(assignee));
+    }
 
-
-//    private final IssueCreateService issueCreateService;
-//    private final IssueStateService issueStateService;
-//    private final IssueModifyService issueModifyService;
-//    private final IssueDeleteService issueDeleteService;
-//
-//    @PostMapping("/create")
-//    public ApiResponse<IssueResponseDto.JoinIssueCreateResponseDto> join(@RequestBody @Valid IssueRequestDto.JoinIssueCreateRequestDto request) {
-//        Issue issue = issueCreateService.joinIssue(request);
-//        return ApiResponse.onSuccess(IssueCreateConverter.toIssueDto(issue));
-//    }
-//    @PostMapping("/state")
-//    public ApiResponse<IssueResponseDto.JoinIssueStateResponseDto> join(@RequestBody @Valid IssueRequestDto.JoinIssueStateRequestDto request) {
-//        Issue issue = issueStateService.joinIssueState(request);
-//        return ApiResponse.onSuccess(IssueStateConverter.toIssueDto(issue));
-//    }
-//
-//    @PutMapping("/modify")
-//    public ApiResponse<IssueResponseDto.JoinIssueModifyResponseDto> join(@RequestBody @Valid IssueRequestDto.JoinIssueModifyRequestDto request) {
-//        Issue issue = issueModifyService.joinIssueModify(request);
-//        return ApiResponse.onSuccess(IssueModifyConverter.toIssueDto(issue));
-//    }
-//    @DeleteMapping("/delete")
-//    public ApiResponse<IssueResponseDto.JoinIssueDeleteResponseDto> join(@RequestBody @Valid IssueRequestDto.JoinIssueDeleteRequestDto request) {
-//        Issue issue = issueDeleteService.joinIssueDelete(request);
-//        return ApiResponse.onSuccess(IssueDeleteConverter.toIssueDto(issue));
-//    }
-
-
+    @PostMapping("/reporter/{id}")
+    public ApiResponse<IssueResponseDto.JoinAssigneeCreateResponseDto> assignReporterToIssue(@PathVariable long id, @RequestBody IssueRequestDto.JoinAssigneeRequestDto request) {
+        Reporter reporter = assigneeService.assignReporter(id, request);
+        return ApiResponse.onSuccess(JoinAssigneeConverter.toReporterDto(reporter));
+    }
 }
-
-
-
-

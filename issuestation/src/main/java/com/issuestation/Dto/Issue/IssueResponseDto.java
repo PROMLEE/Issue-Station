@@ -11,30 +11,34 @@ public class IssueResponseDto {
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class JoinIssueCreateResponseDto{
+    public static class JoinIssueCreateResponseDto {
         Long id;
     }
+
     @Builder
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class JoinIssueModifyResponseDto{
+    public static class JoinIssueModifyResponseDto {
         Long id;
     }
+
     @Builder
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class JoinIssueDeleteResponseDto{
+    public static class JoinIssueDeleteResponseDto {
         Long id; //삭제된 Id는 반환해주니까 냅둠
     }
+
     @Builder
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class JoinIssueStateResponseDto{
+    public static class JoinIssueStateResponseDto {
         Status status;
     }
+
     @Builder
     @Getter
     @NoArgsConstructor
@@ -48,6 +52,7 @@ public class IssueResponseDto {
         String initDate;
         String modDate;
     }
+
     @Builder
     @Getter
     @NoArgsConstructor
@@ -69,4 +74,16 @@ public class IssueResponseDto {
     public static class JoinCommentCreateResponseDto {
         Long id; //작성된 코멘트 아이디 반환
     }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class JoinAssigneeCreateResponseDto {
+        //        private Long id;
+        //        private Long userId;
+        private String nickname;
+//        private Long issueId;
+    }
+
 }

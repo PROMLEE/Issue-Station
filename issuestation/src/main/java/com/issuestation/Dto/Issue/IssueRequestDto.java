@@ -11,15 +11,18 @@ public class IssueRequestDto {
         String name;
         String description;
     }
+
     @Getter
     public static class JoinIssueStateRequestDto {
         private Status status;
     }
+
     @Getter
     public static class JoinIssueSearchRequestDto {
         private String name;
         private Status status;
     }
+
     @Getter
     public static class JoinIssueModifyRequestDto {
         String name;
@@ -32,4 +35,9 @@ public class IssueRequestDto {
         String tag;
     }
 
+    @Getter
+    @Setter
+    public static class JoinAssigneeRequestDto {
+        private String nickname;
+    }
 }
