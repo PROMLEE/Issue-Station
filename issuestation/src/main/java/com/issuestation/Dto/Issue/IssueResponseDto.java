@@ -1,5 +1,6 @@
 package com.issuestation.Dto.Issue;
 
+import com.issuestation.Entity.enums.CommentTag;
 import com.issuestation.Entity.enums.Status;
 import lombok.*;
 
@@ -86,6 +87,18 @@ public class IssueResponseDto {
         //        private Long userId;
         private String nickname;
 //        private Long issueId;
+    }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class GetCommentResponseDto {
+        private Long id;
+        private String comment;
+        private CommentTag tag;
+        private String nickname;
+        private String modDate;
     }
 
 }
