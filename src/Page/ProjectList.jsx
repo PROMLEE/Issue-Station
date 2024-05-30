@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { ProjectCard } from "../Components/ProjectCard";
 import { SearchProject, MyProject } from "../apis/project";
 import { useLocation } from "react-router-dom";
-
+import isLogin from "../util/checklogin";
+import { useNavigate } from "react-router-dom";
 export const ProjectList = ({ my = false }) => {
   const [projectlist, setProjectlist] = useState([]);
   const { state } = useLocation();
-
+  const nav = useNavigate();
   useEffect(() => {
     if (my) {
       getMyProject();
@@ -14,6 +15,13 @@ export const ProjectList = ({ my = false }) => {
       getProjectList();
     }
   }, [state, my]);
+
+  useEffect(() => {
+    if (!isLogin() && !my) {
+      alert("로그인이 필요합니다.");
+      nav("/login");
+    }
+  }, []);
 
   const getProjectList = async () => {
     const response = await SearchProject(state === null ? "" : state.search);

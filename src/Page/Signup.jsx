@@ -52,6 +52,7 @@ export function SignupComponent() {
       alert("아이디 중복");
     }
   };
+
   const handleCheckNickname = async (e) => {
     e.preventDefault();
     if (signup.nickname === "") {
@@ -66,6 +67,7 @@ export function SignupComponent() {
       alert("닉네임 중복");
     }
   };
+
   return (
     <form
       className="flex max-w-md flex-col gap-4 mx-auto"

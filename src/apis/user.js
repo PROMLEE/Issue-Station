@@ -1,4 +1,4 @@
-import { baseAPI } from "./customApi";
+import { authAPI, baseAPI } from "./customApi";
 
 const Login = async (request) => {
   try {
@@ -43,4 +43,15 @@ const CheckNickname = async (request) => {
     alert("닉네임 중복 확인 에러");
   }
 };
-export { Login, Signup, CheckId, CheckNickname };
+
+const TokenCheck = async () => {
+  try {
+    const response = await authAPI.get(`user/check`);
+    console.log(response);
+    return response;
+  } catch (e) {
+    console.log(e);
+    alert("토큰 만료. 로그아웃");
+  }
+};
+export { Login, Signup, CheckId, CheckNickname, TokenCheck };

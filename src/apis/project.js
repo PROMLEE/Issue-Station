@@ -11,7 +11,7 @@ const JoinTeam = async (id, request) => {
   }
 };
 
-const JoitProject = async (request) => {
+const JoinProject = async (request) => {
   try {
     const response = await authAPI.post(`project/create`, request);
     console.log(response);
@@ -56,4 +56,4 @@ const ProjectDetail = async (id) => {
     alert("프로젝트 조회 에러");
   }
 };
-export { JoinTeam, JoitProject, SearchProject, MyProject, ProjectDetail };
+export { JoinTeam, JoinProject, SearchProject, MyProject, ProjectDetail };

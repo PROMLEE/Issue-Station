@@ -14,11 +14,18 @@ import { Link, useNavigate } from "react-router-dom";
 import { loginstate } from "../recoil/user";
 import { useRecoilState } from "recoil";
 import { useState, useEffect } from "react";
+import { TokenCheck } from "../apis/user";
 
 export const NavComponent = () => {
   const [user, setuser] = useRecoilState(loginstate);
   const [search, setSearch] = useState("");
   const nav = useNavigate();
+  const accessToken = localStorage.getItem("accessToken");
+  const [token, setToken] = useState(accessToken);
+
+  useEffect(() => {
+    setToken(accessToken);
+  }, [accessToken]);
 
   const logout = () => {
     localStorage.removeItem("accessToken");
@@ -28,11 +35,23 @@ export const NavComponent = () => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
+    getNickname();
+  }, [token]);
+
+  const getNickname = async () => {
     if (token) {
-      setuser({ islogin: true, nickname: user.nickname });
+      try {
+        const response = await TokenCheck();
+        setuser({ islogin: true, nickname: response.data.data.nickname });
+      } catch (e) {
+        localStorage.removeItem("accessToken");
+        setuser({ islogin: false, nickname: "" });
+        alert("로그아웃 되었습니다.");
+        nav("/");
+        console.log(e);
+      }
     }
-  }, [setuser, user.nickname]);
+  };
 
   const HanddleSearch = (e) => {
     e.preventDefault();
@@ -139,11 +158,11 @@ export const NavComponent = () => {
           </Link>
         </NavbarLink>
       </NavbarCollapse>
-      <MegaMenuDropdown className="ml-auto md:w-full">
+      <MegaMenuDropdown className="md:ml-auto w-full">
         <div className="md:ml-auto md:w-80 mt-6 border-y border-gray-200 bg-white shadow-sm  rounded-sm">
           <div className="mx-auto grid max-w-screen-xl px-4 py-2 text-sm text-gray-500 dark:text-gray-400 md:grid-cols-2">
             <ul
-              className="mb-4 hidden space-y-4 md:mb-0 md:block"
+              className="mb-4  space-y-4 md:mb-0 md:block"
               aria-labelledby="mega-menu-full-image-button"
             >
               <li>
