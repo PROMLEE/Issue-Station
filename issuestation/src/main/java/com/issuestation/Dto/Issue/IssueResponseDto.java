@@ -52,6 +52,20 @@ public class IssueResponseDto {
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
+    public static class JoinIssueSearchResponseDto {
+        Long id;
+        String name;
+        String description;
+        Status status;
+        Long projectId;
+        String modDate;
+    }
+
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class JoinCommentCreateResponseDto {
         Long id; //작성된 코멘트 아이디 반환
     }

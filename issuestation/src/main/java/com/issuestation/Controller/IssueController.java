@@ -4,6 +4,7 @@ import com.issuestation.Dto.Issue.IssueRequestDto;
 import com.issuestation.Dto.Issue.IssueResponseDto;
 import com.issuestation.Entity.Comment;
 import com.issuestation.Entity.Issue;
+import com.issuestation.Entity.enums.Status;
 import com.issuestation.Security.TokenProvider;
 import com.issuestation.Service.IssueService.*;
 import com.issuestation.apiPayload.ApiResponse;
@@ -14,7 +15,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,6 +32,7 @@ public class IssueController {
     private final IssueDeleteService issueDeleteService;
     private final IssueStateService issueStateService;
     private final CommentCreateService commentCreateService;
+    private final IssueSearchService issueSearchService;
 
     @Autowired
     TokenProvider tokenProvider;
@@ -61,6 +68,28 @@ public class IssueController {
 
         issueDeleteService.deleteIssue(issueId);
         return ApiResponse.onSuccess(new IssueResponseDto.JoinIssueDeleteResponseDto(issueId));
+    }
+    @GetMapping("/search/{id}")
+    public ResponseEntity<List<IssueResponseDto.JoinIssueSearchResponseDto>> searchIssues(HttpServletRequest token,
+                                                                                          @PathVariable("id") long projectId,
+                                                                                          @RequestParam(required = false) String name,
+                                                                                          @RequestParam(required = false) Status status) {
+        // 토큰 검증
+        checkToken(token);
+
+        List<IssueResponseDto.JoinIssueSearchResponseDto> issues;
+        if (name != null && status != null) {
+            issues = issueSearchService.searchIssuesByProjectIdNameAndStatus(projectId, name, status);
+        } else if (name == null && status == null) {
+            issues = issueSearchService.searchIssuesByProjectId(projectId);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if (issues.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(issues, HttpStatus.OK);
     }
     @GetMapping("/info/{id}")
     public ApiResponse<IssueResponseDto.JoinIssueInfoResponseDto> info(HttpServletRequest token, @PathVariable("id") long issueId) {

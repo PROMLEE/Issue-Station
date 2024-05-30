@@ -16,6 +16,11 @@ public class IssueRequestDto {
         private Status status;
     }
     @Getter
+    public static class JoinIssueSearchRequestDto {
+        private String name;
+        private Status status;
+    }
+    @Getter
     public static class JoinIssueModifyRequestDto {
         String name;
         String description;
