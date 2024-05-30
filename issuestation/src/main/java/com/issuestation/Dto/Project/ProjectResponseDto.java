@@ -1,9 +1,7 @@
 package com.issuestation.Dto.Project;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.issuestation.Entity.enums.Role;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -50,5 +48,15 @@ public class ProjectResponseDto {
         private String thumbnaillink;
         private LocalDateTime initdate;
         private LocalDateTime moddate;
+    }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class TeamMemberDTO {
+        private Boolean isAdmin;
+        private Role role;
+        private String nickname;
     }
 }

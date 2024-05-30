@@ -3,6 +3,7 @@ package com.issuestation.Controller;
 import com.issuestation.Dto.Project.ProjectRequestDto;
 import com.issuestation.Dto.Project.ProjectResponseDto;
 import com.issuestation.Entity.Project;
+import com.issuestation.Entity.Team;
 import com.issuestation.Security.TokenProvider;
 import com.issuestation.Service.ProjectService.*;
 import com.issuestation.apiPayload.ApiResponse;
@@ -30,6 +31,8 @@ public class ProjectController {
     private final ProjectSearchService projectSearchService;
     private final ProjectInfoService projectInfoService;
     private final MyProjectService myProjectService;
+    private final TeamMemberService teamMemberService;
+
     @Autowired
     TokenProvider tokenProvider;
 
@@ -60,6 +63,11 @@ public class ProjectController {
         //토큰 검증
         CheckToken(token);
         return ApiResponse.onSuccess(TeamConverter.toTeamDto(teamJoinService.joinTeam(request, id)));
+    }
+
+    @GetMapping("/team/member/{id}")
+    public ResponseEntity<List<ProjectResponseDto.TeamMemberDTO>> getTeamsByProject(@PathVariable long id) {
+        return teamMemberService.getTeamsByProjectId(id);
     }
 
     @GetMapping("/search")

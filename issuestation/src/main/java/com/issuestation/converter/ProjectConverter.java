@@ -3,6 +3,7 @@ package com.issuestation.converter;
 import com.issuestation.Dto.Project.ProjectRequestDto;
 import com.issuestation.Dto.Project.ProjectResponseDto;
 import com.issuestation.Entity.Project;
+import com.issuestation.Entity.Team;
 import org.springframework.stereotype.Component;
 
 
@@ -32,6 +33,14 @@ public class ProjectConverter {
                 project.getThumbnaillink(),
                 project.getInitdate(),
                 project.getModdate()
+        );
+    }
+
+    public static ProjectResponseDto.TeamMemberDTO toTeamMemberDto(Team team) {
+        return new ProjectResponseDto.TeamMemberDTO(
+                team.getIsAdmin(),
+                team.getRole(),
+                team.getUser().getNickname()
         );
     }
 }
