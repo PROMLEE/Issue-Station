@@ -1,14 +1,14 @@
 import { Badge } from "flowbite-react";
 
 const TagList = {
-  new: "info",
-  fixed: "warning",
-  resolved: "success",
-  closed: "indigo",
-  reopened: "Failure",
+  NEW: "info",
+  FIXED: "warning",
+  RESOLVED: "success",
+  CLOSED: "indigo",
+  REOPENED: "Failure",
   PL: "purple",
-  Tester: "gray",
-  Developer: "pink",
+  TESTER: "gray",
+  DEVELOPER: "pink",
 };
 
 export const Tag = ({ status }) => {

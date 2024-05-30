@@ -1,32 +1,32 @@
-import {
-  Button,
-  Checkbox,
-  Label,
-  Modal,
-  TextInput,
-  Textarea,
-} from "flowbite-react";
+import { Button, Label, Modal, TextInput, Textarea } from "flowbite-react";
 import { useState } from "react";
-
+import { CreateIssue } from "../apis/issue";
 const defaultIssue = {
   title: "기존 이슈 제목",
   description: "기존 이슈 설명...",
   private: true,
 };
 
-export function IssueCreate({ edit = false }) {
+export function IssueCreate({ edit = false, pid }) {
   const [openModal, setOpenModal] = useState(false);
   const [title, settitle] = useState(edit ? defaultIssue["title"] : "");
   const [description, setdescription] = useState(
     edit ? defaultIssue["description"] : ""
   );
-  const [privateval, setprivate] = useState(
-    edit ? defaultIssue["private"] : false
-  );
   function onCloseModal() {
     setOpenModal(false);
-    // settitle("");
   }
+
+  const handleCreateIssue = async () => {
+    CreateIssue(pid, {
+      name: title,
+      description: description,
+    });
+    settitle("");
+    setdescription("");
+    onCloseModal();
+  };
+
   return (
     <>
       <Button onClick={() => setOpenModal(true)} className="h-10">
@@ -64,18 +64,8 @@ export function IssueCreate({ edit = false }) {
                 rows={4}
               />
             </div>
-            <div className="flex justify-between">
-              <div className="flex items-center gap-2">
-                <Checkbox
-                  id="Private"
-                  checked={privateval}
-                  onChange={(event) => setprivate(event.target.checked)}
-                />
-                <Label htmlFor="Private">Private</Label>
-              </div>
-            </div>
             <div className="w-full">
-              <Button>complete</Button>
+              <Button onClick={handleCreateIssue}>complete</Button>
             </div>
           </div>
         </Modal.Body>

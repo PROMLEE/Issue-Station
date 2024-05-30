@@ -16,9 +16,9 @@ export const IssueCard = ({ issue }) => {
         <div>status: </div>
         <Tag status={issue.status} />
       </div>
-      <div className="">reporter: {issue.reporter}</div>
-      <div className="">assignee: {issue.assignee}</div>
-      {/* <Date date={issue.initdate} /> */}
+      {/* <div className="">reporter: {issue.reporter}</div>
+      <div className="">assignee: {issue.assignee}</div> */}
+      <Date date={issue.modDate} />
       <Link to={`/issue/${issue.id}`} className="w-full">
         <Button className="w-full">
           Read more

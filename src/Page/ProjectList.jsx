@@ -10,18 +10,16 @@ export const ProjectList = ({ my = false }) => {
   const nav = useNavigate();
   useEffect(() => {
     if (my) {
+      if (!isLogin()) {
+        alert("로그인이 필요합니다.");
+        nav("/login");
+        return;
+      }
       getMyProject();
     } else {
       getProjectList();
     }
   }, [state, my]);
-
-  useEffect(() => {
-    if (!isLogin() && !my) {
-      alert("로그인이 필요합니다.");
-      nav("/login");
-    }
-  }, []);
 
   const getProjectList = async () => {
     const response = await SearchProject(state === null ? "" : state.search);

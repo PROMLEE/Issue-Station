@@ -56,4 +56,23 @@ const ProjectDetail = async (id) => {
     alert("프로젝트 조회 에러");
   }
 };
-export { JoinTeam, JoinProject, SearchProject, MyProject, ProjectDetail };
+
+const GetMember = async (id) => {
+  try {
+    const response = await baseAPI.get(`project/team/member/${id}`);
+    console.log(response);
+    return response;
+  } catch (e) {
+    console.log(e);
+    alert("프로젝트 멤버 조회 에러");
+  }
+};
+
+export {
+  JoinTeam,
+  JoinProject,
+  SearchProject,
+  MyProject,
+  ProjectDetail,
+  GetMember,
+};
