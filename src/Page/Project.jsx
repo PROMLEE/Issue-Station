@@ -13,13 +13,16 @@ import { ProjectDetail } from "../apis/project";
 export const Project = () => {
   const params = useParams();
   const [detail, setDetail] = useState({});
+
   useEffect(() => {
     getProjectDetail();
   }, []);
+
   const getProjectDetail = async () => {
     const response = await ProjectDetail(params.id);
     setDetail(response.data.result);
   };
+
   return (
     <div className="md:w-2/3 md:mx-auto">
       <div className="flex flex-col md:flex-row md:justify-between gap-2">
@@ -37,7 +40,7 @@ export const Project = () => {
             );
           })} */}
         </div>
-        <IssueCreate />
+        <IssueCreate pid={params.id} />
       </div>
       <div
         id="default-popover"
