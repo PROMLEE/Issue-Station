@@ -17,7 +17,7 @@ public class Team {
 
     @NotNull
     @Column(columnDefinition = "BOOL DEFAULT FALSE")
-    private boolean isAdmin;
+    private Boolean isAdmin;
 
     @NotNull
     @Enumerated(EnumType.STRING)
