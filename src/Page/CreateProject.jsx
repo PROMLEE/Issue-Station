@@ -29,12 +29,14 @@ export const CreateProject = () => {
   const [userList, setUserList] = useState([]);
   const [state, setState] = useState("PL");
   const user = useRecoilValue(loginstate);
+
   useEffect(() => {
     if (!isLogin()) {
       alert("로그인이 필요합니다.");
       nav("/login");
     }
   }, []);
+
   const handleNext = (e) => {
     e.preventDefault();
     sendJoinProject(e);
@@ -153,15 +155,14 @@ export const CreateProject = () => {
               </Dropdown.Item>
             </Dropdown>
             <Button className="w-2/6" type="submit">
-              중복확인
+              추가
             </Button>
           </form>
           {userList.map((user) => {
             return (
-              <>
-                {user.nickname}
-                {user.role}
-              </>
+              <div>
+                {user.nickname}-{user.role}
+              </div>
             );
           })}
           <Button onClick={handleComplete}>Complete</Button>
