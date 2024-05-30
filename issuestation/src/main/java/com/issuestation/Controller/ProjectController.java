@@ -4,6 +4,7 @@ import com.issuestation.Dto.Project.ProjectRequestDto;
 import com.issuestation.Dto.Project.ProjectResponseDto;
 import com.issuestation.Entity.Project;
 import com.issuestation.Entity.Team;
+import com.issuestation.Entity.enums.Role;
 import com.issuestation.Security.TokenProvider;
 import com.issuestation.Service.ProjectService.*;
 import com.issuestation.apiPayload.ApiResponse;
@@ -32,6 +33,7 @@ public class ProjectController {
     private final ProjectInfoService projectInfoService;
     private final MyProjectService myProjectService;
     private final TeamMemberService teamMemberService;
+    private final MyRoleService myRoleService;
 
     @Autowired
     TokenProvider tokenProvider;
@@ -96,5 +98,12 @@ public class ProjectController {
         String jwtToken = getToken.replace("Bearer ", "");
         List<ProjectResponseDto.MyProjectResponseDto> projects = myProjectService.getProjectsByUserToken(jwtToken);
         return ResponseEntity.ok(projects);
+    }
+
+    @GetMapping("/role/{id}")
+    public ResponseEntity<ApiResponse<Role>> getMyRoleInProject(HttpServletRequest token, @PathVariable long id) {
+        //토큰 검증
+        long loginId = CheckToken(token);
+        return ResponseEntity.ok(new ApiResponse<>(true, "200", "Role retrieved successfully", myRoleService.findUserRoleInProject(id, loginId)));
     }
 }
