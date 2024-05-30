@@ -32,4 +32,11 @@ public class Issue extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id")
     private Project project;
+
+
+
+    //이거 이슈 상태가 바뀔 때, initdate가 null이 되어버려서 강제로 이렇게 해버렸는데 상관없나?
+    public void updateStatus(Status newStatus) {
+        this.status = newStatus;
+    }
 }
