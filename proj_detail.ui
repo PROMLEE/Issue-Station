@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>619</width>
-    <height>715</height>
+    <width>643</width>
+    <height>797</height>
    </rect>
   </property>
   <property name="font">
@@ -220,7 +220,7 @@
          </spacer>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_5">
+         <widget class="QPushButton" name="delete_issue">
           <property name="font">
            <font>
             <family>Open Sans</family>
@@ -231,22 +231,82 @@
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QPushButton" name="pushButton_4">
-          <property name="font">
-           <font>
-            <family>Open Sans</family>
-           </font>
-          </property>
-          <property name="text">
-           <string>Add Issue</string>
-          </property>
-         </widget>
-        </item>
        </layout>
       </item>
       <item>
-       <widget class="QListWidget" name="listWidget_2"/>
+       <widget class="QWidget" name="widget_2" native="true">
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>Name :</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="issue_name"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_5">
+           <property name="text">
+            <string>Description :</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="issue_description"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="add_issue">
+           <property name="font">
+            <font>
+             <family>Open Sans</family>
+            </font>
+           </property>
+           <property name="text">
+            <string>Add Issue</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTableWidget" name="tableWidget">
+        <attribute name="horizontalHeaderDefaultSectionSize">
+         <number>150</number>
+        </attribute>
+        <attribute name="horizontalHeaderStretchLastSection">
+         <bool>true</bool>
+        </attribute>
+        <attribute name="verticalHeaderShowSortIndicator" stdset="0">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="verticalHeaderStretchLastSection">
+         <bool>false</bool>
+        </attribute>
+        <column>
+         <property name="text">
+          <string>Name</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>State</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Description</string>
+         </property>
+        </column>
+       </widget>
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -276,7 +336,7 @@
          </spacer>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_6">
+         <widget class="QPushButton" name="delete_comment">
           <property name="font">
            <font>
             <family>Open Sans</family>
@@ -287,22 +347,44 @@
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QPushButton" name="pushButton">
-          <property name="font">
-           <font>
-            <family>Open Sans</family>
-           </font>
-          </property>
-          <property name="text">
-           <string>Add Comment</string>
-          </property>
-         </widget>
-        </item>
        </layout>
       </item>
       <item>
-       <widget class="QListWidget" name="listWidget"/>
+       <widget class="QWidget" name="widget_3" native="true">
+        <layout class="QHBoxLayout" name="horizontalLayout_8">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="label_9">
+           <property name="text">
+            <string>comment :</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="comment"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="add_comment">
+           <property name="font">
+            <font>
+             <family>Open Sans</family>
+            </font>
+           </property>
+           <property name="text">
+            <string>Add Comment</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTableWidget" name="tableWidget_2"/>
       </item>
      </layout>
     </widget>

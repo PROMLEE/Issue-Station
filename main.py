@@ -30,18 +30,25 @@ class MainWindow(QMainWindow):
         self.ui.icon_only_widget.hide()
         self.ui.stackedWidget.setCurrentIndex(0)
         self.ui.homeButton_2.setChecked(True)
+        self.ui.add_widget.hide()
         
+        ## 유저 데이터,토큰
         self.user_data = ""
+        self.uwer_token=""
+        
         self.ui.loginorout.setText('Login')
         self.ui.user_name.setText('Unknown')
         self.ui.userBtn.clicked.connect(self.setUserWidget)
         self.ui.user_widget.hide()
         ## 검색 키워드
-        self.search_keyword = None
+        self.search_keyword = ""
+        self.ui.update_btn.clicked.connect(self.update_project)
         ## 로그인 화면 
         self.login = False
         ## track of uwer_widget hidden or not
         self.user_widget_hidden = True
+        ## project 생성
+        self.ui.add_btn_2.clicked.connect(self.create_project)
     ## Function for user_widget
     def setUserWidget(self):
         if self.user_widget_hidden :
@@ -59,6 +66,7 @@ class MainWindow(QMainWindow):
             self.search_keyword = search_text
             ## 스크린 이동
             self.go_to_project_screen()
+            self.ui.searchInput.setText("")
         if not search_text :
             self.ui.label_31.setText("검색어를 입력해주세요.")
 ##===================Project Screen===============================##
@@ -69,38 +77,84 @@ class MainWindow(QMainWindow):
             
     ## proj detail screen 
     def go_to_projdetail(self,dict):
+        ##if dict['isPrivate']:  
         self.detail = ProjDetailScreen(dict,self)
+        ##user data 사용하기 위함
+        self.detail.set_main_window(self)
         self.detail.exec()
 
     ## Fuction for setting project data
     def setDataTable(self):
-        ## search keyword가 있을 경우
-        if self.search_keyword:
-            keyword = self.search_keyword
         table_widget = self.ui.project_table
-        json_data = getJsonData('./assets/projectlist_dump.json')
-        proj_list = json_data['projectlist']
-        table_widget.setRowCount(len(proj_list))
-        table_widget.setColumnCount(7)
-        for row in range(len(proj_list)) :
-            ##issue 버튼 생성
-            button_name = 'issue_btn_' + str(row)
-            self.button = QPushButton("Open", self)
-            self.button.setAccessibleName(button_name)
-            self.button.clicked.connect(lambda _, dict = proj_list[row] : self.go_to_projdetail(dict))
- 
-            ##setting table data
-            table_widget.setItem(row,0,QTableWidgetItem(str(proj_list[row]['projectid'])))
-            table_widget.setItem(row,1,QTableWidgetItem(proj_list[row]['name']))
-            if proj_list[row]['private'] :
-                table_widget.setItem(row,2,QTableWidgetItem("private"))
-            else :
-                table_widget.setItem(row,2,QTableWidgetItem("public"))
-            table_widget.setItem(row,3,QTableWidgetItem(proj_list[row]['admin']))            
-            table_widget.setCellWidget(row,4,self.button) 
-            table_widget.setItem(row,5,QTableWidgetItem(proj_list[row]['initdate']))
-            table_widget.setItem(row,6,QTableWidgetItem(proj_list[row]['description']))  
+        ## search keyword가 있을 경우
+        keyword = ""
+        res = None
+        if self.ui.checkBox.isChecked():
+            if self.user_token != "":
+                ## 헤더 설정
+                headers = {
+                    "Authorization": f"Bearer {self.user_token}"
+                }
+                res = requests.get(f'{url}/project/my', headers=headers)
+            else:
+                self.ui.label_2.setText('권한이 없습니다. 체크 표시를 없애주세요.')
+        else : 
+            keyword = self.search_keyword
+            ##search btn 클릭 > 한번 조회 > 다시 검색 키워드 없는 걸로 세팅
+            if self.search_keyword != "":
+                self.search_keyword = ""
+            res = requests.get(f'{url}/project/search', params={"name":keyword})
+        if res != None :
+            proj_list = res.json()
+            table_widget.setRowCount(len(proj_list))
+            table_widget.setColumnCount(7)
+            for row in range(len(proj_list)) :
+                ##issue 버튼 생성
+                button_name = 'issue_btn_' + str(row)
+                self.button = QPushButton("Open", self)
+                self.button.setAccessibleName(button_name)
+                self.button.clicked.connect(lambda _, dict = proj_list[row] : self.go_to_projdetail(dict))
+    
+                ##setting table data
+                table_widget.setItem(row,0,QTableWidgetItem(str(proj_list[row]['id'])))
+                table_widget.setItem(row,1,QTableWidgetItem(proj_list[row]['name']))
+                if proj_list[row]['isPrivate'] :
+                    table_widget.setItem(row,2,QTableWidgetItem("private"))
+                else :
+                    table_widget.setItem(row,2,QTableWidgetItem("public"))
+                table_widget.setItem(row,3,QTableWidgetItem(proj_list[row]['description']))        
+                table_widget.setCellWidget(row,4,self.button) 
+                table_widget.setItem(row,5,QTableWidgetItem(proj_list[row]['moddate']))
+                table_widget.setItem(row,6,QTableWidgetItem(proj_list[row]['initdate']))  
+    
+    def update_project(self):
+        ## 기존 데이터 삭제 
+        self.ui.project_table.setRowCount(0)
+        ## 새로운 데이터로 다시 목록 생성
+        self.setDataTable()
         
+    def create_project(self):
+        selected_value = self.ui.comboBox.currentText()
+        if selected_value == "private":
+            selected_value = True
+        elif selected_value == "public":
+            selected_value = False
+        name = self.ui.project_name.text()
+        discription = self.ui.project_comment.text()
+        
+        ##입력 값이 있고 token이 주어진 유저야함
+        if name != "" and discription != "" and self.user_token != "":
+            headers = {
+                "Authorization": self.user_token,
+            }
+            res = requests.post(f'{url}/project/create', json={"name": name, "description": discription, "isPrivate": selected_value},headers=headers)
+            result = res.json()
+            if result['isSuccess']:
+                res2 = requests.post(f'{url}/project/team/{result['id']}', json={"nickname":self.user_data['user']['nickname'], "is_admin": True})
+                result2 = res2.json()
+                if result2['isSuccess']:
+                    self.update_project()
+                
 ##===========================================================================================
 
 ##===========================================================================================
@@ -164,6 +218,8 @@ class MainWindow(QMainWindow):
     def go_to_login(self):
         self.hide()
         self.login = LoginScreen()
+        
+        ##user data 사용하기 위함
         self.login.set_main_window(self)      
         self.login.exec()
         self.show()
@@ -172,6 +228,8 @@ class MainWindow(QMainWindow):
         self.ui.user_name.setText(result_data['data']['user']['nickname'])
         self.ui.loginorout.setText('Logout')
         self.user_data = result_data
+        self.user_token = self.user_data['data']['token']
+
 ##====================================================================================
     
 ##로그인 화면
@@ -291,10 +349,31 @@ class ProjDetailScreen(QDialog):
         self.setWindowTitle(dict['name'])
         self.setWindowIcon(QtGui.QIcon('Logo_11.png'))
         self.show()
-        self.ui.project_id.setText(str(dict['projectid']))
+        self.ui.project_id.setText(str(dict['id']))
         self.ui.project_name.setText(dict['name'])
         self.ui.description.setText(dict['description'])
+        self.ui.add_issue.clicked.connect(self.create_issue)
         
+    ##user data 가져오는 역할
+    def set_main_window(self, main_window):
+        self.set_main_window = main_window
+    
+    ##이슈 목록 업데이트/조회
+    def update_issue(self):
+        return
+    ##이슈 생성
+    def create_issue(self):
+        data = self.set_main_window.user_data
+        ##if 로그인X,이슈 생성 X
+        if data != "":
+            name = self.ui.issue_name.text()
+            description = self.ui.issue_name.text()
+            id = data['data']['user']['loginId']
+            res = requests.post(f'{url}/isuue/create/{id}', json={"name": name, "description": description})
+            result = res.json()
+            if result['isSuccess']:
+                self.update_issue()
+                
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     ## loading style file
