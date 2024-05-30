@@ -1,7 +1,9 @@
 package com.issuestation.Service.IssueService;
 
 import com.issuestation.Dto.Issue.IssueResponseDto;
+import com.issuestation.Entity.Assignee;
 import com.issuestation.Entity.Issue;
+import com.issuestation.Entity.Reporter;
 import com.issuestation.Repository.AssigneeRepository;
 import com.issuestation.Repository.IssueRepository;
 import com.issuestation.Repository.ReporterRepository;
@@ -11,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class IssueInfoServiceImpl {
@@ -31,13 +35,18 @@ public class IssueInfoServiceImpl {
     public IssueResponseDto.JoinIssueInfoResponseDto getIssueDetails(Long issueId) {
         Issue issue = issueRepository.findById(issueId).orElseThrow(() -> new RuntimeException("Issue not found"));
 
-        Long assigneeId = assigneeRepository.findDistinctFirstByIssueId(issueId).getId();
+        Assignee assigneeId = assigneeRepository.findDistinctFirstByIssueId(issueId).orElse(null);
 
-        Long reporterId = reporterRepository.findDistinctFirstByIssueId(issueId).getId();
+        Reporter reporterId = reporterRepository.findDistinctFirstByIssueId(issueId).orElse(null);
 
-        String assigneeNickname = userRepository.findById(assigneeId).get().getNickname();
-
-        String reporterNickname = userRepository.findById(reporterId).get().getNickname();
+        String assigneeNickname = "not assigned";
+        String reporterNickname = "not reported";
+        if (assigneeId != null) {
+            assigneeNickname = userRepository.findById(Objects.requireNonNull(assigneeId).getId()).get().getNickname();
+        }
+        if (reporterId != null) {
+            reporterNickname = userRepository.findById(Objects.requireNonNull(reporterId).getId()).get().getNickname();
+        }
 
         return new IssueResponseDto.JoinIssueInfoResponseDto(
                 issue.getId(),
@@ -46,7 +55,7 @@ public class IssueInfoServiceImpl {
                 issue.getStatus(),
                 issue.getProject().getId(),
                 String.valueOf(issue.getInitdate()),
-                String.valueOf(issue.getInitdate()),
+                String.valueOf(issue.getModdate()),
                 assigneeNickname,
                 reporterNickname
         );

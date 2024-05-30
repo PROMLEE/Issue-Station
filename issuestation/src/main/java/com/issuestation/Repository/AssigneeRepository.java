@@ -4,7 +4,9 @@ import com.issuestation.Entity.Assignee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface AssigneeRepository extends JpaRepository<Assignee, Integer> {
-    Assignee findDistinctFirstByIssueId(Long id);
+    Optional<Assignee> findDistinctFirstByIssueId(Long id);
 }

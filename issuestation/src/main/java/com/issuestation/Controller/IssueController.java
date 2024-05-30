@@ -2,11 +2,9 @@ package com.issuestation.Controller;
 
 import com.issuestation.Dto.Issue.IssueRequestDto;
 import com.issuestation.Dto.Issue.IssueResponseDto;
-import com.issuestation.Entity.Assignee;
-import com.issuestation.Entity.Comment;
-import com.issuestation.Entity.Issue;
-import com.issuestation.Entity.Reporter;
+import com.issuestation.Entity.*;
 import com.issuestation.Entity.enums.Status;
+import com.issuestation.Repository.ProjectRepository;
 import com.issuestation.Security.TokenProvider;
 import com.issuestation.Service.IssueService.*;
 import com.issuestation.apiPayload.ApiResponse;
@@ -28,7 +26,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/issue")
 public class IssueController {
-
+    private final ProjectRepository projectRepository;
     private final IssueInfoServiceImpl issueInfoService;
     private final IssueCreateService issueCreateService;
     private final IssueDeleteService issueDeleteService;
@@ -36,6 +34,8 @@ public class IssueController {
     private final CommentCreateService commentCreateService;
     private final IssueSearchService issueSearchService;
     private final SetAssigneeService assigneeService;
+    private final CommentListService commentService;
+
     @Autowired
     TokenProvider tokenProvider;
 
@@ -78,8 +78,14 @@ public class IssueController {
                                                                                           @RequestParam(required = false) String name,
                                                                                           @RequestParam(required = false) Status status) {
         // 토큰 검증
-        checkToken(token);
-
+//        checkToken(token);
+//        Project project = projectRepository.findById(projectId).orElseThrow(() -> new RuntimeException("Project not found"));
+//        if (project.getIsPrivate()){
+//            long loginId = checkToken(token);
+//            if (project.().getId() != loginId){
+//                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+//            }
+//        }
         List<IssueResponseDto.JoinIssueSearchResponseDto> issues;
         if (name != null && status != null) {
             issues = issueSearchService.searchIssuesByProjectIdNameAndStatus(projectId, name, status);
@@ -130,5 +136,10 @@ public class IssueController {
     public ApiResponse<IssueResponseDto.JoinAssigneeCreateResponseDto> assignReporterToIssue(@PathVariable long id, @RequestBody IssueRequestDto.JoinAssigneeRequestDto request) {
         Reporter reporter = assigneeService.assignReporter(id, request);
         return ApiResponse.onSuccess(JoinAssigneeConverter.toReporterDto(reporter));
+    }
+
+    @GetMapping("/comment/{id}")
+    public List<IssueResponseDto.GetCommentResponseDto> getCommentsByIssueId(@PathVariable Long id) {
+        return commentService.getCommentsByIssueId(id);
     }
 }
