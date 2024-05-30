@@ -8,6 +8,7 @@ import com.issuestation.Dto.UserDto.Login.LoginResponseDto;
 import com.issuestation.Dto.UserDto.Nickname.NicknameDto;
 import com.issuestation.Dto.UserDto.Nickname.NicknameResponseDto;
 import com.issuestation.Dto.UserDto.Signup.SignupDto;
+import com.issuestation.Dto.UserDto.Token.TokenResponseDto;
 import com.issuestation.Repository.UserRepository;
 import com.issuestation.Security.TokenProvider;
 import com.issuestation.Entity.User;
@@ -88,5 +89,17 @@ public class AuthService {
             // 중복된 아이디가 없을 경우
             return ResponseDto.setSuccess("Id not duplicate", response);
         }
+    }
+
+    public ResponseDto<TokenResponseDto> token(String token) {
+        long userId;
+        try {
+            userId = Long.parseLong(tokenProvider.validateJwt(token));
+        } catch (Exception e) {
+            throw new TempHandler(ErrorStatus.TEMP_EXCEPTION);
+        }
+        User userEntity = userRepository.findById(userId).get(); // 사용자 id을 가져옴
+        TokenResponseDto tokenResponseDto = new TokenResponseDto(userId, userEntity.getLoginId(), userEntity.getNickname());
+        return ResponseDto.setSuccess("Token is valid", tokenResponseDto);
     }
 }
