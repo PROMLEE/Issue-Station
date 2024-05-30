@@ -25,7 +25,7 @@ export function ProjectCard({ project }) {
           </DropdownItem>
         </Dropdown>
       </div>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center gap-3">
         <img
           alt="thumbnail"
           src={project.thumbnaillink || "/assets/logo.png"}
@@ -39,13 +39,13 @@ export function ProjectCard({ project }) {
         <span className="text-sm text-gray-500 dark:text-gray-400">
           {project.description}
         </span>
-        <div className="text-xs text-slate-400 mt-1">
+        {/* <div className="text-xs text-slate-400 mt-1">
           Admin: {project.admin}
-        </div>
+        </div> */}
         <Date date={project.initdate} style={`text-xs text-slate-400`} />
         <div className="mt-4 flex space-x-3 lg:mt-6">
           <Link
-            to={`/project/${project.projectid}`}
+            to={`/project/${project.id}`}
             className="inline-flex items-center rounded-lg bg-cyan-700 px-4 py-2 text-center text-sm font-medium text-white hover:bg-cyan-800 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
           >
             View Detail

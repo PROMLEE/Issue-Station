@@ -6,7 +6,7 @@ export function Date({ date, style }) {
     <div className="flex gap-2 items-center">
       <div className={style}>Created at: </div>
       <Badge color="gray" icon={HiClock} className="px-2">
-        {date}
+        {("" + date).substr(0, 10)}
       </Badge>
     </div>
   );

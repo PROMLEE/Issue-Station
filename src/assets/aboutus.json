@@ -5,7 +5,7 @@
       "age": 26,
       "email": "p0526000@gmail.com",
       "part": "Backend-Database",
-      "image": "https://avatars.githubusercontent.com/u/168408335?v=4",
+      "image": "/assets/Park.png",
       "github": "https://github.com/sanghuniolsida"
     },
     {
@@ -13,7 +13,7 @@
       "age": 24,
       "email": "donghoon099@naver.com",
       "part": "Frontend-Web",
-      "image": "https://avatars.githubusercontent.com/u/80230701?v=4",
+      "image": "/assets/Lee.png",
       "github": "https://github.com/PROMLEE"
     },
     {
@@ -21,7 +21,7 @@
       "age": 24,
       "email": "ark182818@gmail.com",
       "part": "Backend-Server",
-      "image": "https://avatars.githubusercontent.com/u/132530028?v=4",
+      "image": "/assets/Han.png",
       "github": "https://github.com/easthee"
     },
     {
@@ -29,7 +29,7 @@
       "age": 24,
       "email": "bowook316@gmail.com",
       "part": "Backend-Server",
-      "image": "https://avatars.githubusercontent.com/u/129655108?v=4",
+      "image": "/assets/Min.png",
       "github": "https://github.com/wook"
     },
     {
@@ -37,7 +37,7 @@
       "age": 22,
       "email": "pengom0809@gmail.com",
       "part": "Frontend-GUI",
-      "image": "https://avatars.githubusercontent.com/u/67683170?v=4",
+      "image": "/assets/Jeoun.png",
       "github": "https://github.com/jeoneunjin"
     }
   ]
