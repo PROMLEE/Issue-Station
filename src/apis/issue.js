@@ -33,16 +33,27 @@ const SetIssueState = async (id, request) => {
   }
 };
 
-// const SearchIssue = async () => {
-//   try {
-//     const response = await authAPI.get(`issue`);
-//     // console.log(response);
-//     return response;
-//   } catch (e) {
-//     console.log(e);
-//     alert("이슈 조회 에러");
-//   }
-// };
+const CommentIssue = async (id, comment) => {
+  try {
+    const response = await authAPI.post(`issue/comment/create/${id}`, comment);
+    console.log(response);
+    return response;
+  } catch (e) {
+    console.log(e);
+    alert("댓글 작성 에러");
+  }
+};
+
+const SearchIssue = async (id, params) => {
+  try {
+    const response = await authAPI.get(`issue/search/${id}`, { params });
+    console.log(response);
+    return response;
+  } catch (e) {
+    console.log(e);
+    alert("이슈 조회 에러");
+  }
+};
 
 const DeleteIssue = async (id) => {
   try {
@@ -55,4 +66,23 @@ const DeleteIssue = async (id) => {
   }
 };
 
-export { CreateIssue, IssueDetail, DeleteIssue, SetIssueState };
+const CommentList = async (id) => {
+  try {
+    const response = await authAPI.get(`issue/comment/${id}`);
+    console.log(response);
+    return response;
+  } catch (e) {
+    console.log(e);
+    alert("댓글 조회 에러");
+  }
+};
+
+export {
+  CreateIssue,
+  IssueDetail,
+  DeleteIssue,
+  SetIssueState,
+  CommentIssue,
+  SearchIssue,
+  CommentList,
+};

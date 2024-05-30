@@ -14,7 +14,7 @@ import { CheckNickname } from "../apis/user";
 import { loginstate } from "../recoil/user";
 import { useRecoilValue } from "recoil";
 import isLogin from "../util/checklogin";
-
+import { Tag } from "../Components/Tag";
 export const CreateProject = () => {
   const nav = useNavigate();
 
@@ -141,11 +141,12 @@ export const CreateProject = () => {
               type="id"
               required
               shadow
+              value={searchNickname}
               onChange={(e) => {
                 setSearchNickname(e.target.value);
               }}
             />
-            <Dropdown label={state} inline>
+            <Dropdown label={state} inline value={state}>
               <Dropdown.Item onClick={() => setState("PL")}>PL</Dropdown.Item>
               <Dropdown.Item onClick={() => setState("TESTER")}>
                 TESTER
@@ -160,8 +161,8 @@ export const CreateProject = () => {
           </form>
           {userList.map((user) => {
             return (
-              <div>
-                {user.nickname}-{user.role}
+              <div className="flex gap-3">
+                {user.nickname} <Tag status={user.role}>{user.role}</Tag>
               </div>
             );
           })}

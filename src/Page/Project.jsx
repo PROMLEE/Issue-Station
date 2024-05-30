@@ -1,7 +1,5 @@
 import { Select } from "flowbite-react";
 // import { useParams } from "react-router-dom";
-import detail from "../assets/projectdetail_dump.json";
-import issuelist from "../assets/issuelist_dump.json";
 import { IssueCard } from "../Components/IssueCard";
 import { Tag } from "../Components/Tag";
 import { Date } from "../Components/Date";
@@ -9,18 +7,34 @@ import { Link } from "react-router-dom";
 import { IssueCreate } from "../Layout/IssueCreate";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { ProjectDetail } from "../apis/project";
+import { ProjectDetail, GetMember } from "../apis/project";
+import { SearchIssue } from "../apis/issue";
+
 export const Project = () => {
   const params = useParams();
   const [detail, setDetail] = useState({});
+  const [issuelist, setIssuelist] = useState([]);
+  const [member, setMember] = useState([]);
 
   useEffect(() => {
     getProjectDetail();
+    getIssueList();
+    getMember();
   }, []);
 
   const getProjectDetail = async () => {
     const response = await ProjectDetail(params.id);
     setDetail(response.data.result);
+  };
+
+  const getIssueList = async () => {
+    const response = await SearchIssue(params.id);
+    setIssuelist(response.data);
+  };
+
+  const getMember = async () => {
+    const response = await GetMember(params.id);
+    setMember(response.data);
   };
 
   return (
@@ -31,14 +45,15 @@ export const Project = () => {
           <div className="text-3xl font-bold">{detail.name}</div>
           <div className="font-bold">{detail.description}</div>
           <Date date={detail.initdate} />
-          <div>{detail.isprisvate ? "private" : "public"} Project</div>
-          {/* {detail.participants.map((member) => {
+          <div>{detail.isPrivate ? "private" : "public"} Project</div>
+          <div className="text-2xl font-bold mt-3">Project Member</div>
+          {member.map((member, i) => {
             return (
-              <div className="flex gap-2 my-1" key={member.userid}>
-                {member.name}: <Tag status={member.Role} />
+              <div className="flex gap-2 my-1" key={i}>
+                {member.nickname}: <Tag status={member.role} />
               </div>
             );
-          })} */}
+          })}
         </div>
         <IssueCreate pid={params.id} />
       </div>
@@ -65,9 +80,10 @@ export const Project = () => {
         </div>
       </div>
       <div className="flex flex-wrap">
-        {issuelist.issuelist.map((issue) => {
-          return <IssueCard issue={issue} key={issue.issuesid} />;
-        })}
+        {issuelist.length &&
+          issuelist.map((issue) => {
+            return <IssueCard issue={issue} key={issue.id} />;
+          })}
       </div>
     </div>
   );
