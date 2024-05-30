@@ -21,4 +21,10 @@ public class IssueRequestDto {
         String description;
     }
 
+    @Getter
+    public static class JoinCommentCreateRequestDto {
+        String comment;
+        String tag;
+    }
+
 }

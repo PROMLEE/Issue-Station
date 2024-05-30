@@ -48,4 +48,11 @@ public class IssueResponseDto {
         String initDate;
         String modDate;
     }
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class JoinCommentCreateResponseDto {
+        Long id; //작성된 코멘트 아이디 반환
+    }
 }
