@@ -31,6 +31,7 @@ class MainWindow(QMainWindow):
         self.ui.stackedWidget.setCurrentIndex(0)
         self.ui.homeButton_2.setChecked(True)
         
+        self.user_data = ""
         self.ui.loginorout.setText('Login')
         self.ui.user_name.setText('Unknown')
         self.ui.userBtn.clicked.connect(self.setUserWidget)
@@ -162,9 +163,15 @@ class MainWindow(QMainWindow):
     ##로그인 안 된 상태에서의 로그인 화면으로 전환
     def go_to_login(self):
         self.hide()
-        self.login = LoginScreen()      
+        self.login = LoginScreen()
+        self.login.set_main_window(self)      
         self.login.exec()
         self.show()
+    def status_login(self, result_data):
+        print(result_data)
+        self.ui.user_name.setText(result_data['data']['user']['nickname'])
+        self.ui.loginorout.setText('Logout')
+        self.user_data = result_data
 ##====================================================================================
     
 ##로그인 화면
@@ -177,7 +184,12 @@ class LoginScreen(QDialog):
         self.setWindowTitle('Login')
         self.setWindowFlag(Qt.FramelessWindowHint)
         self.show()
+        self.ui.pushButton.clicked.connect(self.login)
         self.signup = False
+        self.main_window = None
+    
+    def set_main_window(self, main_window):
+        self.main_window = main_window
     ##로그인 X -> 메인 화면으로
     def go_to_main(self):
         self.close()
@@ -186,6 +198,26 @@ class LoginScreen(QDialog):
         self.signup = SignupScreen()
         self.signup.exec()
         self.show()
+        self.getid =""
+        self.getpw = ""
+    ##로그인
+    def login(self):
+        self.getid = str(self.ui.lineEdit.text())
+        self.getpw = str(self.ui.lineEdit_2.text())
+        if self.getid == "":
+            self.ui.label_2.setText('아이디를 입력해주세요.')
+        if self.getpw == "":
+            self.ui.label_4.setText('비밀번호를 입력해주세요.')
+        if self.getid != "" and self.getid != "":
+            res = requests.post(f'{url}/user/login', json={"id": self.getid,"pw": self.getpw})
+            result = res.json()
+            if result['result']:
+                self.main_window.status_login(result)
+                self.go_to_main()
+            else:
+                self.ui.label_5.setText('계정이 없거나 올바르지 않은 입력입니다.')
+
+            
 
 ##================================================================================
 ##계정만들기 화면
@@ -199,6 +231,8 @@ class SignupScreen(QDialog):
         self.show()
     
         self.pushButton.clicked.connect(self.nickname_check)
+        self.pushButton_2.clicked.connect(self._id_check)
+        self.create_btn.clicked.connect(self.create_account)
         self.canname = False
         self.canid = False
         self.getname = ""
@@ -213,38 +247,41 @@ class SignupScreen(QDialog):
         self.getname = str(self.user_name.text())
         ##이름 작성 안 했을 경우
         if self.getname == "" :
-            self.name_check.setText('이름을 입력해주세요')
+            self.ui.name_check.setText('이름을 입력해주세요')
         else :
             res = requests.post(f'{url}/user/nickname', json={"nickname": self.getname})
-            if res:
-                self.name_check.setText('사용 가능한 이름입니다.')
-            else :
-                self.name_check.setText('이미 존재하는 이름입니다.')
+            result = res.json()
+            if result['result']:
+                self.ui.name_check.setText('사용 가능한 이름입니다.')
                 self.canname = True
+            else :
+                self.ui.name_check.setText('이미 존재하는 이름입니다.')
     ##아이디 중복 확인
     def _id_check(self):
         self.getid = str(self.user_id.text())
         ##이름 작성 안 했을 경우
         if self.getid == "" :
-            self.id_check.setText('아이디를 입력해주세요.')
+            self.ui.id_check.setText('아이디를 입력해주세요.')
         else :
             res = requests.post(f'{url}/user/id', json={"id": self.getid})
-            if res:
-                self.id_check.setText('사용 가능한 이름입니다.')
-            else :
-                self.id_check.setText('이미 존재하는 이름입니다.')
+            result = res.json()
+            if result['result']:
+                self.ui.id_check.setText('사용 가능한 아이디입니다.')
                 self.canid = True
+            else :
+                self.ui.id_check.setText('이미 존재하는 아이디입니다.')
     ##유효한 값인지 확인 + 계정 만들기
     def create_account(self):
         getpw = str(self.user_pw.text())
         if getpw != "" and self.canname and self.canid :
-            res = requests.post(f'{url}/user/signup', json={"nickname": self.getname,"id":self.getid,"pw":getpw})
-            if res:
-                self.back_to_login
+            res = requests.post(f'{url}/user/signup', json={"loginId": self.getid,"nickname":self.getname,"loginPw":getpw})
+            result  = res.json()
+            if result['result'] :
+                self.ui.label_4.setText('가입이 완료되었습니다.')
         elif getpw == "":
-            self.pw_check.setText('비밀번호를 입력하세요.')
+            self.ui.pw_check.setText('비밀번호를 입력하세요.')
         else:
-            self.label_4.setText('뭔가 예외가 있나봐')
+            self.ui.label_4.setText('가입에 실패하였습니다.')
 ##==============================================================================
 ##project detail 화면
 class ProjDetailScreen(QDialog):

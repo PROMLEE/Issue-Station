@@ -50,36 +50,6 @@
      <property name="styleSheet">
       <string notr="true">background-color: '#fff';</string>
      </property>
-     <widget class="QLabel" name="label_3">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>100</y>
-        <width>441</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Open Sans</family>
-        <pointsize>30</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color:rgba(0,0,0,240);</string>
-      </property>
-      <property name="text">
-       <string>Create an account</string>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
      <widget class="QPushButton" name="create_btn">
       <property name="geometry">
        <rect>
@@ -126,7 +96,7 @@ QPushButton#create_btn:pressed{
       <property name="geometry">
        <rect>
         <x>100</x>
-        <y>570</y>
+        <y>560</y>
         <width>251</width>
         <height>21</height>
        </rect>
@@ -153,7 +123,7 @@ QPushButton#back_btn:pressed{
 </string>
       </property>
       <property name="text">
-       <string>이미 계정이 있나요? 다시 로그인 화면으로</string>
+       <string>다시 로그인 화면으로</string>
       </property>
      </widget>
      <widget class="QPushButton" name="pushButton">
@@ -226,29 +196,7 @@ QPushButton#pushButton_2:pressed{
        <string>아이디 중복확인</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_4">
-      <property name="geometry">
-       <rect>
-        <x>50</x>
-        <y>80</y>
-        <width>56</width>
-        <height>12</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <italic>false</italic>
-        <underline>true</underline>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: 'red';</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>110</x>
@@ -303,7 +251,7 @@ padding-bottom:7px;
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>110</x>
@@ -358,13 +306,13 @@ padding-bottom:7px;
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>110</x>
         <y>410</y>
         <width>231</width>
-        <height>60</height>
+        <height>62</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -398,6 +346,58 @@ padding-bottom:7px;
        </item>
        <item>
         <widget class="QLabel" name="pw_check">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>100</y>
+        <width>364</width>
+        <height>80</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="font">
+          <font>
+           <family>Open Sans</family>
+           <pointsize>30</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color:rgba(0,0,0,240);</string>
+         </property>
+         <property name="text">
+          <string>Create an account</string>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_4">
+         <property name="font">
+          <font>
+           <italic>false</italic>
+           <underline>true</underline>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: 'red';</string>
+         </property>
          <property name="text">
           <string/>
          </property>

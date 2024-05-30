@@ -429,6 +429,13 @@ class Ui_MainWindow(object):
         self.gridLayout_12 = QtWidgets.QGridLayout(self.page_7)
         self.gridLayout_12.setObjectName("gridLayout_12")
         self.widget_8 = QtWidgets.QWidget(self.page_7)
+        self.widget_8.setStyleSheet("QWidget#widget_8 QPushButton{\n"
+"    background-color: rgba(240,240,240,240);\n"
+"    border-radius: 10px;\n"
+"    margin: 5px;\n"
+"    border: none;\n"
+"    height:20px;\n"
+"}")
         self.widget_8.setObjectName("widget_8")
         self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.widget_8)
         self.verticalLayout_5.setObjectName("verticalLayout_5")
@@ -468,6 +475,9 @@ class Ui_MainWindow(object):
         self.verticalLayout_21 = QtWidgets.QVBoxLayout()
         self.verticalLayout_21.setObjectName("verticalLayout_21")
         self.label_42 = QtWidgets.QLabel(self.widget_8)
+        self.label_42.setText("")
+        self.label_42.setPixmap(QtGui.QPixmap(":/res/res/보옥.png"))
+        self.label_42.setScaledContents(True)
         self.label_42.setObjectName("label_42")
         self.verticalLayout_21.addWidget(self.label_42)
         self.label_43 = QtWidgets.QLabel(self.widget_8)
@@ -486,6 +496,9 @@ class Ui_MainWindow(object):
         self.verticalLayout_22 = QtWidgets.QVBoxLayout()
         self.verticalLayout_22.setObjectName("verticalLayout_22")
         self.label_46 = QtWidgets.QLabel(self.widget_8)
+        self.label_46.setText("")
+        self.label_46.setPixmap(QtGui.QPixmap(":/res/res/상훈.png"))
+        self.label_46.setScaledContents(True)
         self.label_46.setObjectName("label_46")
         self.verticalLayout_22.addWidget(self.label_46)
         self.label_47 = QtWidgets.QLabel(self.widget_8)
@@ -504,6 +517,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_23 = QtWidgets.QVBoxLayout()
         self.verticalLayout_23.setObjectName("verticalLayout_23")
         self.label_50 = QtWidgets.QLabel(self.widget_8)
+        self.label_50.setText("")
+        self.label_50.setPixmap(QtGui.QPixmap(":/res/res/동훈.png"))
         self.label_50.setScaledContents(True)
         self.label_50.setObjectName("label_50")
         self.verticalLayout_23.addWidget(self.label_50)
@@ -523,6 +538,9 @@ class Ui_MainWindow(object):
         self.verticalLayout_24 = QtWidgets.QVBoxLayout()
         self.verticalLayout_24.setObjectName("verticalLayout_24")
         self.label_54 = QtWidgets.QLabel(self.widget_8)
+        self.label_54.setText("")
+        self.label_54.setPixmap(QtGui.QPixmap(":/res/res/동희.png"))
+        self.label_54.setScaledContents(True)
         self.label_54.setObjectName("label_54")
         self.verticalLayout_24.addWidget(self.label_54)
         self.label_55 = QtWidgets.QLabel(self.widget_8)
@@ -813,7 +831,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(2)
+        self.stackedWidget.setCurrentIndex(1)
         self.homeButton_1.toggled['bool'].connect(self.homeButton_2.setChecked) # type: ignore
         self.teamButton_1.toggled['bool'].connect(self.teamButton_2.setChecked) # type: ignore
         self.projectButton_1.toggled['bool'].connect(self.projectButton_2.setChecked) # type: ignore
@@ -860,22 +878,18 @@ class Ui_MainWindow(object):
         self.label_40.setText(_translate("MainWindow", "학번 : 20210117"))
         self.label_41.setText(_translate("MainWindow", "역할 : GUI 개발"))
         self.member_btn_6.setText(_translate("MainWindow", "GitHub 보러가기"))
-        self.label_42.setText(_translate("MainWindow", "TextLabel"))
         self.label_43.setText(_translate("MainWindow", "이름 : 민보옥"))
         self.label_44.setText(_translate("MainWindow", "학번 : "))
         self.label_45.setText(_translate("MainWindow", "역할 : 백엔드 개발 "))
         self.member_btn_7.setText(_translate("MainWindow", "GitHub 보러가기"))
-        self.label_46.setText(_translate("MainWindow", "TextLabel"))
         self.label_47.setText(_translate("MainWindow", "이름 : 박상훈"))
         self.label_48.setText(_translate("MainWindow", "학번 : "))
         self.label_49.setText(_translate("MainWindow", "역할 :백엔드 개발 "))
         self.member_btn_8.setText(_translate("MainWindow", "GitHub 보러가기"))
-        self.label_50.setText(_translate("MainWindow", "TextLabel"))
         self.label_51.setText(_translate("MainWindow", "이름 : 이동훈"))
         self.label_52.setText(_translate("MainWindow", "학번 : "))
         self.label_53.setText(_translate("MainWindow", "역할 : 웹 개발 "))
         self.member_btn_9.setText(_translate("MainWindow", "GitHub 보러가기"))
-        self.label_54.setText(_translate("MainWindow", "TextLabel"))
         self.label_55.setText(_translate("MainWindow", "이름 : 한동희"))
         self.label_56.setText(_translate("MainWindow", "학번 : "))
         self.label_57.setText(_translate("MainWindow", "역할 : 백엔드 개발"))

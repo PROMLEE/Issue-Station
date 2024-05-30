@@ -86,30 +86,6 @@ class Ui_Dialog(object):
 "\n"
 "")
         self.pushButton.setObjectName("pushButton")
-        self.lineEdit = QtWidgets.QLineEdit(self.widget_2)
-        self.lineEdit.setGeometry(QtCore.QRect(80, 230, 281, 40))
-        self.lineEdit.setMinimumSize(QtCore.QSize(0, 40))
-        self.lineEdit.setMaximumSize(QtCore.QSize(16777215, 40))
-        self.lineEdit.setStyleSheet("background-color:rgba(0,0,0,0);\n"
-"border:none;\n"
-"border-bottom:2px solid rgba(46,82,101,200);\n"
-"color:rgba(0,0,0,240);\n"
-"padding-bottom:7px;\n"
-"")
-        self.lineEdit.setText("")
-        self.lineEdit.setObjectName("lineEdit")
-        self.lineEdit_2 = QtWidgets.QLineEdit(self.widget_2)
-        self.lineEdit_2.setGeometry(QtCore.QRect(80, 310, 281, 40))
-        self.lineEdit_2.setMinimumSize(QtCore.QSize(0, 40))
-        self.lineEdit_2.setMaximumSize(QtCore.QSize(16777215, 40))
-        self.lineEdit_2.setStyleSheet("background-color:rgba(0,0,0,0);\n"
-"border:none;\n"
-"border-bottom:2px solid rgba(46,82,101,200);\n"
-"color:rgba(0,0,0,240);\n"
-"padding-bottom:7px;\n"
-"\n"
-"")
-        self.lineEdit_2.setObjectName("lineEdit_2")
         self.label_3 = QtWidgets.QLabel(self.widget_2)
         self.label_3.setGeometry(QtCore.QRect(90, 120, 261, 61))
         font = QtGui.QFont()
@@ -141,6 +117,54 @@ class Ui_Dialog(object):
 "    font-weight: bold;\n"
 "}")
         self.pushButton_3.setObjectName("pushButton_3")
+        self.label_5 = QtWidgets.QLabel(self.widget_2)
+        self.label_5.setGeometry(QtCore.QRect(80, 200, 281, 16))
+        self.label_5.setText("")
+        self.label_5.setObjectName("label_5")
+        self.widget1 = QtWidgets.QWidget(self.widget_2)
+        self.widget1.setGeometry(QtCore.QRect(80, 230, 281, 60))
+        self.widget1.setObjectName("widget1")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.widget1)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.lineEdit = QtWidgets.QLineEdit(self.widget1)
+        self.lineEdit.setMinimumSize(QtCore.QSize(0, 40))
+        self.lineEdit.setMaximumSize(QtCore.QSize(16777215, 40))
+        self.lineEdit.setStyleSheet("background-color:rgba(0,0,0,0);\n"
+"border:none;\n"
+"border-bottom:2px solid rgba(46,82,101,200);\n"
+"color:rgba(0,0,0,240);\n"
+"padding-bottom:7px;\n"
+"")
+        self.lineEdit.setText("")
+        self.lineEdit.setObjectName("lineEdit")
+        self.verticalLayout.addWidget(self.lineEdit)
+        self.label_2 = QtWidgets.QLabel(self.widget1)
+        self.label_2.setText("")
+        self.label_2.setObjectName("label_2")
+        self.verticalLayout.addWidget(self.label_2)
+        self.widget2 = QtWidgets.QWidget(self.widget_2)
+        self.widget2.setGeometry(QtCore.QRect(80, 310, 281, 60))
+        self.widget2.setObjectName("widget2")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.widget2)
+        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.lineEdit_2 = QtWidgets.QLineEdit(self.widget2)
+        self.lineEdit_2.setMinimumSize(QtCore.QSize(0, 40))
+        self.lineEdit_2.setMaximumSize(QtCore.QSize(16777215, 40))
+        self.lineEdit_2.setStyleSheet("background-color:rgba(0,0,0,0);\n"
+"border:none;\n"
+"border-bottom:2px solid rgba(46,82,101,200);\n"
+"color:rgba(0,0,0,240);\n"
+"padding-bottom:7px;\n"
+"\n"
+"")
+        self.lineEdit_2.setObjectName("lineEdit_2")
+        self.verticalLayout_2.addWidget(self.lineEdit_2)
+        self.label_4 = QtWidgets.QLabel(self.widget2)
+        self.label_4.setText("")
+        self.label_4.setObjectName("label_4")
+        self.verticalLayout_2.addWidget(self.label_4)
         self.horizontalLayout.addWidget(self.widget_2)
         self.gridLayout.addLayout(self.horizontalLayout, 0, 0, 1, 1)
         self.gridLayout_2.addWidget(self.widget, 0, 0, 1, 1)
@@ -155,8 +179,8 @@ class Ui_Dialog(object):
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
         self.pushButton_2.setText(_translate("Dialog", "로그인 없이 메인 화면으로"))
         self.pushButton.setText(_translate("Dialog", "Log In"))
-        self.lineEdit.setPlaceholderText(_translate("Dialog", "ID"))
-        self.lineEdit_2.setPlaceholderText(_translate("Dialog", "Password"))
         self.label_3.setText(_translate("Dialog", "Log In"))
         self.pushButton_3.setText(_translate("Dialog", "계정이 없나요? 계정 만들기"))
+        self.lineEdit.setPlaceholderText(_translate("Dialog", "ID"))
+        self.lineEdit_2.setPlaceholderText(_translate("Dialog", "Password"))
 import resource_rc
