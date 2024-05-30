@@ -2,12 +2,10 @@ package com.issuestation.Controller;
 
 import com.issuestation.Dto.Issue.IssueRequestDto;
 import com.issuestation.Dto.Issue.IssueResponseDto;
+import com.issuestation.Entity.Comment;
 import com.issuestation.Entity.Issue;
 import com.issuestation.Security.TokenProvider;
-import com.issuestation.Service.IssueService.IssueCreateService;
-import com.issuestation.Service.IssueService.IssueDeleteService;
-import com.issuestation.Service.IssueService.IssueInfoService;
-import com.issuestation.Service.IssueService.IssueStateService;
+import com.issuestation.Service.IssueService.*;
 import com.issuestation.apiPayload.ApiResponse;
 import com.issuestation.apiPayload.code.status.ErrorStatus;
 import com.issuestation.apiPayload.exception.handler.TempHandler;
@@ -27,6 +25,7 @@ public class IssueController {
     private final IssueCreateService issueCreateService;
     private final IssueDeleteService issueDeleteService;
     private final IssueStateService issueStateService;
+    private final CommentCreateService commentCreateService;
 
     @Autowired
     TokenProvider tokenProvider;
@@ -78,6 +77,15 @@ public class IssueController {
 
         Issue issue = issueStateService.changeIssueState(request, issueId);
         return ApiResponse.onSuccess(IssueStateConverter.toIssueDto(issue));
+    }
+
+    @PostMapping("/comment/create/{id}")
+    public ApiResponse<IssueResponseDto.JoinCommentCreateResponseDto> createComment(HttpServletRequest token,@PathVariable("id") long issueId, @RequestBody @Valid IssueRequestDto.JoinCommentCreateRequestDto request) {
+        checkToken(token);
+        var getToken = token.getHeader("Authorization");
+        String jwtToken = getToken.replace("Bearer ", "");
+        Comment comment = commentCreateService.createComment(request, issueId, jwtToken);
+        return ApiResponse.onSuccess(CommentCreateConverter.toCommentDto(comment));
     }
 
 
