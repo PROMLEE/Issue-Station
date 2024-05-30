@@ -1,5 +1,10 @@
 package com.issuestation.Entity.enums;
 
 public enum CommentTag {
-    NEW, SETASSIGNEE, CLOSED, NORMAL
+    ISSUE_CREATED,
+    SET_ASSIGNEE,
+    SET_FIXED,
+    SET_CLOSED,
+    SET_REOPENED,
+    OTHERS
 }

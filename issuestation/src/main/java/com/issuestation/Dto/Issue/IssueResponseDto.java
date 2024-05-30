@@ -51,6 +51,8 @@ public class IssueResponseDto {
         Long projectId;
         String initDate;
         String modDate;
+        String assignee;
+        String reporter;
     }
 
     @Builder

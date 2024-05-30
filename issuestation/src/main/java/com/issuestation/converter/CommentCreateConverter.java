@@ -17,7 +17,7 @@ public class CommentCreateConverter {
     public static Comment toCommentEntity(IssueRequestDto.JoinCommentCreateRequestDto request, Issue issue, User userId) {
         return Comment.builder()
                 .comment(request.getComment())
-                .tag(CommentTag.valueOf(request.getTag()))
+                .tag(request.getTag())
                 .issue(issue)
                 .user(userId)
                 .build();
