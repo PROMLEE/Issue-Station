@@ -1,5 +1,6 @@
 package com.issuestation.Dto.Issue;
 
+import com.issuestation.Entity.enums.CommentTag;
 import com.issuestation.Entity.enums.Status;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,7 +33,7 @@ public class IssueRequestDto {
     @Getter
     public static class JoinCommentCreateRequestDto {
         String comment;
-        String tag;
+        CommentTag tag;
     }
 
     @Getter

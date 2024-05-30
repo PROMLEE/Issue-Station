@@ -29,7 +29,7 @@ import java.util.List;
 @RequestMapping("/issue")
 public class IssueController {
 
-    private final IssueInfoService issueInfoService;
+    private final IssueInfoServiceImpl issueInfoService;
     private final IssueCreateService issueCreateService;
     private final IssueDeleteService issueDeleteService;
     private final IssueStateService issueStateService;
@@ -96,10 +96,9 @@ public class IssueController {
     }
 
     @GetMapping("/info/{id}")
-    public ApiResponse<IssueResponseDto.JoinIssueInfoResponseDto> info(HttpServletRequest token, @PathVariable("id") long issueId) {
-        checkToken(token);
-        Issue issue = issueInfoService.infoIssue(issueId);
-        return ApiResponse.onSuccess(IssueInfoConverter.toIssueDto(issue));
+    public ApiResponse<IssueResponseDto.JoinIssueInfoResponseDto> info(HttpServletRequest token, @PathVariable long id) {
+//        checkToken(token);
+        return ApiResponse.onSuccess(issueInfoService.getIssueDetails(id));
     }
 
     @PostMapping("/state/{id}")
@@ -113,11 +112,11 @@ public class IssueController {
     }
 
     @PostMapping("/comment/create/{id}")
-    public ApiResponse<IssueResponseDto.JoinCommentCreateResponseDto> createComment(HttpServletRequest token, @PathVariable("id") long issueId, @RequestBody @Valid IssueRequestDto.JoinCommentCreateRequestDto request) {
+    public ApiResponse<IssueResponseDto.JoinCommentCreateResponseDto> createComment(HttpServletRequest token, @PathVariable long id, @RequestBody @Valid IssueRequestDto.JoinCommentCreateRequestDto request) {
         checkToken(token);
         var getToken = token.getHeader("Authorization");
         String jwtToken = getToken.replace("Bearer ", "");
-        Comment comment = commentCreateService.createComment(request, issueId, jwtToken);
+        Comment comment = commentCreateService.createComment(request, id, jwtToken);
         return ApiResponse.onSuccess(CommentCreateConverter.toCommentDto(comment));
     }
 
