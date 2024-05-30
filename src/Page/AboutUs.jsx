@@ -27,6 +27,12 @@ export const AboutUs = () => {
               <div>Part: {member.part}</div>
               <div>Age: {member.age}</div>
               <div>E-mail: {member.email}</div>
+              <div>
+                Github:{" "}
+                <a href={member.github} className="text-blue-500">
+                  {member.github}
+                </a>
+              </div>
             </div>
           </div>
         );

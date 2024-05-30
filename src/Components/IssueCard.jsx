@@ -18,7 +18,7 @@ export const IssueCard = ({ issue }) => {
       </div>
       <div className="">reporter: {issue.reporter}</div>
       <div className="">assignee: {issue.assignee}</div>
-      <Date date={issue.initdate} />
+      {/* <Date date={issue.initdate} /> */}
       <Link to={`/issue/${issue.id}`} className="w-full">
         <Button className="w-full">
           Read more

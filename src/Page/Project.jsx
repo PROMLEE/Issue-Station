@@ -7,24 +7,35 @@ import { Tag } from "../Components/Tag";
 import { Date } from "../Components/Date";
 import { Link } from "react-router-dom";
 import { IssueCreate } from "../Layout/IssueCreate";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { ProjectDetail } from "../apis/project";
 export const Project = () => {
-  // const params = useParams();
+  const params = useParams();
+  const [detail, setDetail] = useState({});
+  useEffect(() => {
+    getProjectDetail();
+  }, []);
+  const getProjectDetail = async () => {
+    const response = await ProjectDetail(params.id);
+    setDetail(response.data.result);
+  };
   return (
     <div className="md:w-2/3 md:mx-auto">
       <div className="flex flex-col md:flex-row md:justify-between gap-2">
         {/* <div>Project{params.id}</div> */}
         <div className="flex flex-col gap-2">
-          <div className="text-3xl font-bold">{detail.title}</div>
+          <div className="text-3xl font-bold">{detail.name}</div>
           <div className="font-bold">{detail.description}</div>
           <Date date={detail.initdate} />
           <div>{detail.isprisvate ? "private" : "public"} Project</div>
-          {detail.participants.map((member) => {
+          {/* {detail.participants.map((member) => {
             return (
               <div className="flex gap-2 my-1" key={member.userid}>
                 {member.name}: <Tag status={member.Role} />
               </div>
             );
-          })}
+          })} */}
         </div>
         <IssueCreate />
       </div>
