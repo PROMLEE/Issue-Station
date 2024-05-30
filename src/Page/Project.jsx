@@ -10,20 +10,22 @@ import { IssueCreate } from "../Layout/IssueCreate";
 export const Project = () => {
   // const params = useParams();
   return (
-    <>
-      <div className="flex flex-col gap-2">
+    <div className="md:w-2/3 md:mx-auto">
+      <div className="flex flex-col md:flex-row md:justify-between gap-2">
         {/* <div>Project{params.id}</div> */}
-        <div className="text-xl font-bold">제목: {detail.title}</div>
-        <div className="font-bold">설명: {detail.description}</div>
-        <Date date={detail.initdate} />
-        <div>{detail.isprisvate ? "private" : "public"} Project</div>
-        {detail.participants.map((member) => {
-          return (
-            <div className="flex gap-2 my-1" key={member.userid}>
-              {member.name}: <Tag status={member.Role} />
-            </div>
-          );
-        })}
+        <div className="flex flex-col gap-2">
+          <div className="text-3xl font-bold">{detail.title}</div>
+          <div className="font-bold">{detail.description}</div>
+          <Date date={detail.initdate} />
+          <div>{detail.isprisvate ? "private" : "public"} Project</div>
+          {detail.participants.map((member) => {
+            return (
+              <div className="flex gap-2 my-1" key={member.userid}>
+                {member.name}: <Tag status={member.Role} />
+              </div>
+            );
+          })}
+        </div>
         <IssueCreate />
       </div>
       <div
@@ -53,6 +55,6 @@ export const Project = () => {
           return <IssueCard issue={issue} key={issue.issuesid} />;
         })}
       </div>
-    </>
+    </div>
   );
 };

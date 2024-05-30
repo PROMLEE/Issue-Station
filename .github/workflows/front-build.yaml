@@ -40,8 +40,8 @@ jobs:
 
       - name: react build
         run: npm run build
-        # env:
-        #   REACT_APP_API_URL: ${{ secrets.REACT_APP_SERVER_IP }}
+        env:
+          REACT_APP_URI: ${{ secrets.REACT_APP_URI }}
         #   REACT_APP_REST_API_KEY_Kakao: ${{ secrets.REACT_APP_REST_API_KAKAO }}
         #   REACT_APP_REDIRECT_URL_Kakao: ${{ secrets.REACT_APP_REDIRECT_URL_Kakao }}
         #   REACT_APP_NAVER_MAP: ${{ secrets.REACT_APP_NAVER_MAP }}
