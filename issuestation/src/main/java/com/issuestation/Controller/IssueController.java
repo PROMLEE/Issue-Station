@@ -76,7 +76,7 @@ public class IssueController {
     public ResponseEntity<List<IssueResponseDto.JoinIssueSearchResponseDto>> searchIssues(HttpServletRequest token,
                                                                                           @PathVariable("id") long projectId,
                                                                                           @RequestParam(required = false) String name,
-                                                                                          @RequestParam(required = false) Status status) {
+                                                                                          @RequestParam(required = false) String status) {
         // 토큰 검증
 //        checkToken(token);
 //        Project project = projectRepository.findById(projectId).orElseThrow(() -> new RuntimeException("Project not found"));
@@ -87,16 +87,10 @@ public class IssueController {
 //            }
 //        }
         List<IssueResponseDto.JoinIssueSearchResponseDto> issues;
-        if (name != null && status != null) {
+        if (name != null || status != null) {
             issues = issueSearchService.searchIssuesByProjectIdNameAndStatus(projectId, name, status);
-        } else if (name == null && status == null) {
-            issues = issueSearchService.searchIssuesByProjectId(projectId);
         } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        if (issues.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            issues = issueSearchService.searchIssuesByProjectId(projectId);
         }
         return new ResponseEntity<>(issues, HttpStatus.OK);
     }

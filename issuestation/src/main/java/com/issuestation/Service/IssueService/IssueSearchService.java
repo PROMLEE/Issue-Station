@@ -9,17 +9,26 @@ import org.springframework.stereotype.Service;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
 public class IssueSearchService {
 
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     @Autowired
     private IssueRepository issueRepository;
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    public List<IssueResponseDto.JoinIssueSearchResponseDto> searchIssuesByProjectIdNameAndStatus(Long projectId, String name, Status status) {
-        List<Issue> issues = issueRepository.findByProjectIdAndNameAndStatus(projectId, name, status);
-        return issues.stream().map(this::convertToDto).collect(Collectors.toList());
+
+    public List<IssueResponseDto.JoinIssueSearchResponseDto> searchIssuesByProjectIdNameAndStatus(Long projectId, String name, String status) {
+        if (Objects.equals(status, "")) {
+            List<Issue> issues = issueRepository.findByProjectIdAndNameContaining(projectId, name);
+            return issues.stream().map(this::convertToDto).collect(Collectors.toList());
+        } else {
+
+            Status statusEnum = Status.valueOf(status);
+            List<Issue> issues = issueRepository.findByProjectIdAndNameContainingAndStatus(projectId, name, statusEnum);
+            return issues.stream().map(this::convertToDto).collect(Collectors.toList());
+        }
     }
 
     public List<IssueResponseDto.JoinIssueSearchResponseDto> searchIssuesByProjectId(Long projectId) {
