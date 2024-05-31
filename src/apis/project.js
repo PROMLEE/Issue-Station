@@ -68,6 +68,17 @@ const GetMember = async (id) => {
   }
 };
 
+const MyRole = async (id) => {
+  try {
+    const response = await authAPI.get(`project/role/${id}`);
+    console.log(response);
+    return response;
+  } catch (e) {
+    console.log(e);
+    alert("프로젝트 리스트 조회 에러");
+  }
+};
+
 export {
   JoinTeam,
   JoinProject,
@@ -75,4 +86,5 @@ export {
   MyProject,
   ProjectDetail,
   GetMember,
+  MyRole,
 };
