@@ -42,10 +42,10 @@ public class IssueInfoServiceImpl {
         String assigneeNickname = "not assigned";
         String reporterNickname = "not reported";
         if (assigneeId != null) {
-            assigneeNickname = userRepository.findById(Objects.requireNonNull(assigneeId).getId()).get().getNickname();
+            assigneeNickname = userRepository.findById(Objects.requireNonNull(assigneeId).getUser().getId()).get().getNickname();
         }
         if (reporterId != null) {
-            reporterNickname = userRepository.findById(Objects.requireNonNull(reporterId).getId()).get().getNickname();
+            reporterNickname = userRepository.findById(Objects.requireNonNull(reporterId).getUser().getId()).get().getNickname();
         }
 
         return new IssueResponseDto.JoinIssueInfoResponseDto(
