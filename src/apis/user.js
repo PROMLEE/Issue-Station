@@ -3,7 +3,7 @@ import { authAPI, baseAPI } from "./customApi";
 const Login = async (request) => {
   try {
     const response = await baseAPI.post(`user/login`, request);
-    // console.log(response);
+    console.log(response);
     return response;
   } catch (e) {
     console.log(e);

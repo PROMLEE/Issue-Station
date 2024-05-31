@@ -34,6 +34,7 @@ export function SignupComponent() {
     });
     if (response.status === 200) {
       alert("회원가입 성공");
+      window.location.href = "/";
     } else {
       alert("회원가입 실패");
     }

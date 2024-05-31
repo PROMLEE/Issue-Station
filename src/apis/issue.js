@@ -24,7 +24,7 @@ const IssueDetail = async (id) => {
 
 const SetIssueState = async (id, request) => {
   try {
-    const response = await authAPI.put(`issue/state/${id}`, request);
+    const response = await authAPI.post(`issue/state/${id}`, request);
     console.log(response);
     return response;
   } catch (e) {
@@ -46,7 +46,9 @@ const CommentIssue = async (id, comment) => {
 
 const SearchIssue = async (id, params) => {
   try {
-    const response = await authAPI.get(`issue/search/${id}`, { params });
+    const response = await authAPI.get(`issue/search/${id}`, {
+      params: params,
+    });
     console.log(response);
     return response;
   } catch (e) {
@@ -77,6 +79,26 @@ const CommentList = async (id) => {
   }
 };
 
+const SetReporter = async (id, nickname) => {
+  try {
+    const response = await authAPI.post(`issue/reporter/${id}`, { nickname });
+    console.log(response);
+    return response;
+  } catch (e) {
+    console.log(e);
+    alert("담당자 변경 에러");
+  }
+};
+const SetAssignee = async (id, nickname) => {
+  try {
+    const response = await authAPI.post(`issue/assignee/${id}`, { nickname });
+    console.log(response);
+    return response;
+  } catch (e) {
+    console.log(e);
+    alert("개발자 변경 에러");
+  }
+};
 export {
   CreateIssue,
   IssueDetail,
@@ -85,4 +107,6 @@ export {
   CommentIssue,
   SearchIssue,
   CommentList,
+  SetReporter,
+  SetAssignee,
 };

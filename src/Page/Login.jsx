@@ -12,7 +12,7 @@ export function LoginComponent() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await Login(login);
-    if (response.status === 200) {
+    if (response.data.result) {
       localStorage.setItem("accessToken", response.data.data.token);
       setUser({ islogin: true, nickname: response.data.data.user.nickname });
       navigate("/");

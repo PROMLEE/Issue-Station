@@ -1,6 +1,9 @@
 import { Button, Label, Modal, TextInput, Textarea } from "flowbite-react";
 import { useState } from "react";
-import { CreateIssue } from "../apis/issue";
+import { CreateIssue, CommentIssue, SetReporter } from "../apis/issue";
+import { loginstate } from "../recoil/user";
+import { useRecoilValue } from "recoil";
+
 const defaultIssue = {
   title: "기존 이슈 제목",
   description: "기존 이슈 설명...",
@@ -8,22 +11,37 @@ const defaultIssue = {
 };
 
 export function IssueCreate({ edit = false, pid }) {
+  const user = useRecoilValue(loginstate);
   const [openModal, setOpenModal] = useState(false);
   const [title, settitle] = useState(edit ? defaultIssue["title"] : "");
   const [description, setdescription] = useState(
     edit ? defaultIssue["description"] : ""
   );
+  const [comment, setComment] = useState("");
+
   function onCloseModal() {
     setOpenModal(false);
   }
 
   const handleCreateIssue = async () => {
-    CreateIssue(pid, {
+    const result = await CreateIssue(pid, {
       name: title,
       description: description,
     });
+    if (result.data.isSuccess) {
+      SetReporter(result.data.result.id, user.nickname);
+      CommentIssue(result.data.result.id, {
+        comment: comment,
+        tag: "ISSUE_CREATED",
+      });
+      alert("이슈 생성 성공");
+      window.location.reload();
+    } else {
+      alert("이슈 생성 실패");
+    }
     settitle("");
     setdescription("");
+    setComment("");
     onCloseModal();
   };
 
@@ -64,8 +82,22 @@ export function IssueCreate({ edit = false, pid }) {
                 rows={4}
               />
             </div>
+            <div>
+              <TextInput
+                id="title"
+                placeholder="코멘트 작성"
+                value={comment}
+                onChange={(event) => setComment(event.target.value)}
+                required
+              />
+            </div>
             <div className="w-full">
-              <Button onClick={handleCreateIssue}>complete</Button>
+              <Button
+                onClick={handleCreateIssue}
+                disabled={!title || !description || !comment}
+              >
+                complete
+              </Button>
             </div>
           </div>
         </Modal.Body>

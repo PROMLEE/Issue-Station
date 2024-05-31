@@ -7,20 +7,32 @@ import { Link } from "react-router-dom";
 import { IssueCreate } from "../Layout/IssueCreate";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { ProjectDetail, GetMember } from "../apis/project";
+import { ProjectDetail, GetMember, MyRole } from "../apis/project";
 import { SearchIssue } from "../apis/issue";
+import isLogin from "../util/checklogin";
 
 export const Project = () => {
   const params = useParams();
   const [detail, setDetail] = useState({});
   const [issuelist, setIssuelist] = useState([]);
   const [member, setMember] = useState([]);
+  const [myRole, setMyRole] = useState("");
+  const [search, setSearch] = useState("");
+  const [status, setStatus] = useState("");
+  const [searchType, setSearchType] = useState("name");
 
   useEffect(() => {
     getProjectDetail();
     getIssueList();
     getMember();
+    if (isLogin) {
+      getRole();
+    }
   }, []);
+
+  useEffect(() => {
+    getIssueList();
+  }, [search, status]);
 
   const getProjectDetail = async () => {
     const response = await ProjectDetail(params.id);
@@ -28,13 +40,21 @@ export const Project = () => {
   };
 
   const getIssueList = async () => {
-    const response = await SearchIssue(params.id);
+    const response = await SearchIssue(params.id, {
+      name: search,
+      status: status,
+    });
     setIssuelist(response.data);
   };
 
   const getMember = async () => {
     const response = await GetMember(params.id);
     setMember(response.data);
+  };
+
+  const getRole = async () => {
+    const response = await MyRole(params.id);
+    setMyRole(response.data.result);
   };
 
   return (
@@ -55,7 +75,8 @@ export const Project = () => {
             );
           })}
         </div>
-        <IssueCreate pid={params.id} />
+        {myRole === "TESTER" ? <IssueCreate pid={params.id} /> : null}
+        {/* <IssueCreate pid={params.id} /> */}
       </div>
       <div
         id="default-popover"
@@ -63,27 +84,53 @@ export const Project = () => {
       >
         이슈 검색하기
       </div>
-      <div className="flex items-center mx-5 md:w-1/2">
+      <div className="flex items-center mx-5 md:w-3/4  mb-5">
         <div className="w-3/5 flex items-center">
-          <input className="h-10 w-5/6 border-2 border-gray-200 focus:outline-none" />
-          <Link to="#" className="w-1/6">
-            <button className="h-10 text-sm w-full bg-gray-200">→</button>
-          </Link>
+          {searchType === "name" ? (
+            <input
+              className="h-10 border-2 border-gray-200 focus:outline-none"
+              onChange={(e) => {
+                setStatus("");
+                setSearch(e.target.value);
+              }}
+            />
+          ) : (
+            <Select
+              id="status"
+              required
+              onChange={(e) => {
+                setSearch("");
+                setStatus(e.target.value);
+              }}
+              className="h-10 focus:outline-none"
+            >
+              <option>NEW</option>
+              <option>ASSIGNED</option>
+              <option>RESOLVED</option>
+              <option>CLOSED</option>
+              <option>REOPENED</option>
+            </Select>
+          )}
         </div>
-        <div className="max-w-md ml-3">
-          <Select id="search" required>
+        <div className="max-w-md">
+          <Select
+            id="search"
+            required
+            onChange={(e) => setSearchType(e.target.value)}
+          >
             <option>name</option>
             <option>status</option>
-            <option>reporter</option>
-            <option>assignee</option>
           </Select>
         </div>
       </div>
       <div className="flex flex-wrap">
-        {issuelist.length &&
+        {issuelist.length ? (
           issuelist.map((issue) => {
-            return <IssueCard issue={issue} key={issue.id} />;
-          })}
+            return <IssueCard issue={issue} role={myRole} key={issue.id} />;
+          })
+        ) : (
+          <div className="text-center w-full">No Issue</div>
+        )}
       </div>
     </div>
   );
