@@ -9,8 +9,13 @@ public class IssueStateConverter {
 
 
     public static Issue updateIssueState(Issue issue, Status newStatus) {
-        issue.updateStatus(newStatus);
-        return issue;
+        return Issue.builder()
+                .id(issue.getId())
+                .description(issue.getDescription())
+                .name(issue.getName())
+                .project(issue.getProject())
+                .status(newStatus)
+                .build();
     }
 
 
