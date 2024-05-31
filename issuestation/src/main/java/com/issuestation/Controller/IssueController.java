@@ -105,7 +105,7 @@ public class IssueController {
     public ApiResponse<IssueResponseDto.JoinIssueStateResponseDto> changeState(HttpServletRequest token, @PathVariable("id") long issueId, @RequestBody @Valid IssueRequestDto.JoinIssueStateRequestDto request) {
 
         //토큰 검증
-        checkToken(token);
+//        checkToken(token);
 
         Issue issue = issueStateService.changeIssueState(request, issueId);
         return ApiResponse.onSuccess(IssueStateConverter.toIssueDto(issue));
