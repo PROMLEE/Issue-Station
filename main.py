@@ -19,17 +19,22 @@ def getJsonData(local_url):
         json_data = json.load(file)
     return json_data
 ##dateTime 변환
-def formatted_datetime(str):
-    if '.' in str:
-        dt, us = str.split('.')
+def formatted_datetime(date_string):
+    try:
+        dt, us = date_string.split('.')
+    except ValueError:
+        # '.' 문자가 없는 경우
+        dt = date_string
+        us = '000000'
+
     if 'Z' in us:
         us = us.replace('Z', '')
         us = (us + '000000')[:6]  # 마이크로초를 6자리로 패딩 또는 잘라내기
-        str = f"{dt}.{us}Z"
+        date_string = f"{dt}.{us}Z"
     else:
         us = (us + '000000')[:6]  # 마이크로초를 6자리로 패딩 또는 잘라내기
-        str = f"{dt}.{us}"
-    iso_string = str.replace('Z', '+00:00')
+        date_string = f"{dt}.{us}"
+    iso_string = date_string.replace('Z', '+00:00')
     # datetime 객체로 변환
     datetime_obj = datetime.fromisoformat(iso_string)
     formatted = datetime_obj.strftime("%Y-%m-%d %H:%M:%S")
@@ -340,7 +345,7 @@ class SignupScreen(QDialog):
         self.setWindowTitle('Signup')
         self.setWindowFlag(Qt.FramelessWindowHint)
         self.show()
-    
+
         self.pushButton.clicked.connect(self.nickname_check)
         self.pushButton_2.clicked.connect(self._id_check)
         self.create_btn.clicked.connect(self.create_account)
@@ -348,10 +353,11 @@ class SignupScreen(QDialog):
         self.canid = False
         self.getname = ""
         self.getid = ""
-    ##계정 만들기 X -> 로그인 화면으로
+        
+        
+    ##로그인 화면으로
     def back_to_login(self):
         self.close()
-    ##계정 만들기 O -> 로그인 화면으로
     
     ##닉네임 중복 확인
     def nickname_check(self):
@@ -406,20 +412,32 @@ class ProjDetailScreen(QDialog):
         self.ui.project_name.setText(data['name'])
         self.ui.description.setText(data['description'])
         self.ui.add_issue.clicked.connect(self.create_issue)
+        self.ui.issue_update.clicked.connect(self.update_issue)  
+        self.ui.issue_table.cellClicked.connect(self.cell_clicked)
         self.main_window = None
         self.proj = data
         self.proj_admin = None
         self.user_token = parent.get_user_token()
         self.user_data = parent.user_data
-        self.project_admin()
+        
+        
+        ##PL,TESTER,DEVELOPER 이름 저장할 변수들
+        self.pl_list = None
+        self.tester_list = None
+        self.dev_list = None
+
+        self.project_member()
         
         self.ui.add_member_btn.clicked.connect(self.add_member)
-        
-        ##member table 값 세팅
+        ##table 값 세팅
         self.set_member_table()
+        self.set_issue_data()
+        ##Detail tab 비활성화
+        self.ui.tabWidget.setTabEnabled(1,False)
+
         
-    ## project 관리자 정보 가져오기
-    def project_admin(self):
+    ## project 멤버 정보 저장
+    def project_member(self):
         headers = {}
         if self.user_token:
             headers = {
@@ -431,11 +449,25 @@ class ProjDetailScreen(QDialog):
         res = requests.get(f'{url}/project/team/member/{proj_id}', headers=headers)
         result = res.json()
         if result :
-            ##admin 찾기
+            p = [] ##pl
+            t = [] ##tester
+            d = [] ##developer
             for item in result:
-                if item['isAdmin']: 
-                    self.proj_admin = item['nickname']
-                    break
+                r = item['role']
+                n = item['nickname']
+                ##Admin 찾기
+                if r == "PL":
+                    p.append(n)
+                    if item['isAdmin']: 
+                        self.proj_admin = n
+                elif r == "TESTER":
+                    t.append(n)
+                elif r == "DEVELOPER":
+                    d.append(n)
+            self.pl_list = p
+            self.tester_list = t
+            self.dev_list = d
+            
         else:
             about_event(self,"project 정보를 가져오지 못했습니다.")  
 
@@ -462,7 +494,7 @@ class ProjDetailScreen(QDialog):
                 table.setItem(row,0,QTableWidgetItem(role))
                 table.setItem(row,1,QTableWidgetItem(name))
         else:
-            about_event(self,"Project 멤버가 아직 없습니다.") 
+            return
     ## update member table
     def update_member_table(self):
         ## 기존 데이터 삭제 
@@ -502,25 +534,135 @@ class ProjDetailScreen(QDialog):
                 res2 = requests.post(f'{url}/project/team/{proj_id}', json={"nickname":name, "isAdmin": False, "role":role}, headers=headers)
                 result2 = res2.json()
                 if result2['isSuccess']:
+                    temp = []
+                    if role == "PL":
+                        if self.pl_list:
+                            temp = self.pl_list
+                        temp.append(name)
+                        self.pl_list = temp
+                    if role == "TESTER":
+                        if self.tester_list:
+                            temp = self.tester_list
+                        temp.append(name)
+                        self.tester_list = temp
+                    if role == "DEVELOPER":
+                        if self.dev_list:
+                            temp = self.dev_list
+                        temp.append(name)
+                        self.dev_list = temp
                     self.update_member_table()
                 else:
                     about_event(self, '멤버 추가에 실패하였습니다.')
-                
-    ##이슈 목록 업데이트/조회
+##==================================================================================                
+##이슈 관련
+    def set_issue_data(self):
+        headers = {}
+        if self.user_token:
+            headers = {
+                    "Authorization": f"Bearer {self.user_token}"
+            } 
+        else:
+            return
+        proj_id = self.proj['id']
+        res = requests.get(f'{url}/issue/search/{proj_id}', headers=headers)
+        result = res.json()
+        if result:
+            table = self.ui.issue_table
+            table.setRowCount(len(result))
+            table.setColumnCount(6)
+            for row in range(len(result)):
+                temp = result[row]
+                table.setItem(row,0,QTableWidgetItem(str(temp['id'])))    
+                table.setItem(row,1,QTableWidgetItem(temp['name']))
+                table.setItem(row,2,QTableWidgetItem(temp['status']))
+                table.setItem(row,3,QTableWidgetItem("Click!"))
+                table.setItem(row,4,QTableWidgetItem(temp['description']))
+                table.setItem(row,5,QTableWidgetItem(formatted_datetime(temp['modDate'])))
+        else:
+            return
+    ##이슈 목록 업데이트
     def update_issue(self):
-        return
+        self.ui.issue_table.setRowCount(0)
+        self.set_issue_data()
     ##이슈 생성
-    def create_issue(self):
-        data = self.set_main_window.user_data
-        ##if 로그인X,이슈 생성 X
-        if data != "":
-            name = self.ui.issue_name.text()
-            description = self.ui.issue_name.text()
-            id = data['data']['user']['loginId']
-            res = requests.post(f'{url}/isuue/create/{id}', json={"name": name, "description": description})
-            result = res.json()
-            if result['isSuccess']:
-                self.update_issue()
+    def create_issue(self):    
+        if self.user_token and self.user_data:
+            data = self.user_data['data']['user']
+            ##user 이름
+            u_name = data['nickname']
+            ##배정된 tester인가
+            if self.tester_list:
+                if u_name in self.tester_list :
+                    headers = {    
+                        "Authorization": self.user_token,
+                    }
+                    ##issue 이름, 설명
+                    name = self.ui.issue_name.text()
+                    description = self.ui.issue_name.text()
+                    if name != "" and description !="":
+                        id = self.proj['id']
+                        res = requests.post(f'{url}/issue/create/{id}', json={"name": name, "description": description}, headers=headers)
+                        result = res.json()
+                        if result['isSuccess']:
+                            print(result)
+                            i_id = result['result']['id']
+                            res1 = requests.post(f'{url}/issue/reporter/{i_id}', json={"nickname": u_name}, headers=headers)
+                            result1 = res1.json()   
+                            if result1['isSuccess']:
+                                res2 = requests.post(f'{url}/issue/state/{i_id}', json={"status": "NEW"}, headers=headers)
+                                result2 = res2.json()   
+                                if result2:
+                                    self.update_issue()        
+                                else:
+                                    about_event(self, 'state 설정 실패')
+                                    return                            
+                            else:
+                                about_event(self, '리포터 설정 실패')
+                                return                        
+                            
+                    else:
+                        about_event(self,'모두 입력해주세요.')
+                        return
+                else:
+                    about_event(self, 'Tester만 이슈를 추가할 수 있습니다.')
+                    return
+            else:
+                about_event(self,f"tester list가 문제야{self.tester_list}")
+                return
+        else:
+            about_event(self, "추가할 권한이 없습니다.")
+            return 
+    def issue_info(self,id):
+        headers = {}
+        if self.user_token:
+            headers = {
+                    "Authorization": f"Bearer {self.user_token}"
+            } 
+        else:
+            return
+        res = requests.get(f'{url}/issue/info/{id}', headers=headers)
+        result = res.json()
+        return result
+    def cell_clicked(self ,row, col):
+        if col == 3:
+            if not self.ui.tabWidget.isTabEnabled(1):
+               self.ui.tabWidget.setTabEnabled(1,True)
+        else:
+            return
+        id = int(self.ui.issue_table.item(row, 0).text())
+        info = self.issue_info(id)
+        if info:    
+            r = info['result']
+            self.ui.issue_name_2.setText(r['name']) ##name
+            self.ui.issue_reporter.setText(r['reporter']) ##reporter
+            self.ui.issue_des.setText(r['description']) ## description
+            self.ui.issue_status.setText(r['status']) ##status
+            self.ui.label_18.setText(r['assignee']) ##Assignee
+            self.ui.tabWidget.setCurrentIndex(1)
+        else:
+            self.ui.tabWidget.setTabEnabled(1,False)
+            about_event(self,"정보를 볼 수 없습니다.")
+            return    
                 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
