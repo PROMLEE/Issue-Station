@@ -14,81 +14,106 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1443, 1135)
+        MainWindow.resize(1443, 1188)
         MainWindow.setStyleSheet("background-color: #fff;")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout_3 = QtWidgets.QGridLayout(self.centralwidget)
         self.gridLayout_3.setObjectName("gridLayout_3")
-        self.user_widget = QtWidgets.QWidget(self.centralwidget)
-        self.user_widget.setStyleSheet("QWidget#user_widget{    \n"
-"    background-color: rgba(240,240,240,240);\n"
-"    border-top-left-radius: 10px;\n"
-"    border-bottom-left-radius: 10px;\n"
+        self.icon_only_widget = QtWidgets.QWidget(self.centralwidget)
+        self.icon_only_widget.setStyleSheet("QWidget#icon_only_widget {\n"
+"    background-color: #fff;\n"
+"    border-color: #000;\n"
+"    border-width: 1.2px;\n"
+"    width: 45px;\n"
 "}\n"
 "\n"
-"QWidget#user_widget QLabel {\n"
-"    height:25px;\n"
+"QWidget#icon_only_widget QPushButton, QLabel {\n"
+"    height:50px;\n"
 "    border:none;\n"
-"    padding-left: 7px;\n"
-"    padding-right: 7px;\n"
-"    background-color: rgba(240,240,240,240);\n"
 "}\n"
 "\n"
-"QWidget#user_widget QPushButton {\n"
-"    height:30px;\n"
-"    border:none;\n"
-"    padding-left: 7px;\n"
-"    padding-right: 7px;\n"
-"    background-color: rgba(240,240,240,240);\n"
-"    margin-bottom: 10px;\n"
-"}\n"
-"QWidget#user_widget QPushButton:hover {\n"
-"    height:30px;\n"
-"    border:none;\n"
-"    background-color: \'#fff\';\n"
-"    border-top-right-radius: 10px;\n"
-"    border-bottom-right-radius: 10px;    \n"
-"    font-weight: bold;\n"
-"}\n"
-"QWidget#user_widget QPushButton:checked {\n"
-"    height:30px;\n"
-"    border:none;\n"
-"    background-color: \'#fff\';\n"
-"    border-top-right-radius: 10px;\n"
-"    border-bottom-right-radius: 10px;    \n"
-"    font-weight: bold;\n"
+"QWidget#icon_only_widget QPushButton:hover {\n"
+"        background-color: rgba(240,240,240,240);\n"
+"        border-top-left-radius: 20px;\n"
+"        border-bottom-left-radius: 20px;\n"
 "}\n"
 "\n"
-"\n"
-"")
-        self.user_widget.setObjectName("user_widget")
-        self.verticalLayout_6 = QtWidgets.QVBoxLayout(self.user_widget)
-        self.verticalLayout_6.setContentsMargins(0, 15, -1, -1)
-        self.verticalLayout_6.setObjectName("verticalLayout_6")
-        self.user_profile = QtWidgets.QLabel(self.user_widget)
-        font = QtGui.QFont()
-        font.setFamily("Open Sans")
-        font.setPointSize(11)
-        self.user_profile.setFont(font)
-        self.user_profile.setObjectName("user_profile")
-        self.verticalLayout_6.addWidget(self.user_profile)
-        self.user_name = QtWidgets.QLabel(self.user_widget)
-        font = QtGui.QFont()
-        font.setFamily("Open Sans")
-        font.setPointSize(10)
-        font.setBold(True)
-        font.setWeight(75)
-        self.user_name.setFont(font)
-        self.user_name.setObjectName("user_name")
-        self.verticalLayout_6.addWidget(self.user_name)
-        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_6.addItem(spacerItem)
-        self.loginorout = QtWidgets.QPushButton(self.user_widget)
-        self.loginorout.setStyleSheet("")
-        self.loginorout.setObjectName("loginorout")
-        self.verticalLayout_6.addWidget(self.loginorout)
-        self.gridLayout_3.addWidget(self.user_widget, 0, 3, 1, 1)
+"QWidget#icon_only_widget QPushButton:checked {\n"
+"        background-color: rgba(240,240,240,240);\n"
+"        border-top-left-radius: 20px;\n"
+"        border-bottom-left-radius: 20px;\n"
+"}")
+        self.icon_only_widget.setObjectName("icon_only_widget")
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.icon_only_widget)
+        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_3.setSpacing(0)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.logo_label_1 = QtWidgets.QLabel(self.icon_only_widget)
+        self.logo_label_1.setMinimumSize(QtCore.QSize(60, 70))
+        self.logo_label_1.setMaximumSize(QtCore.QSize(150, 160))
+        self.logo_label_1.setStyleSheet("padding: 2px;")
+        self.logo_label_1.setText("")
+        self.logo_label_1.setPixmap(QtGui.QPixmap(":/icon/icon/Logo_11.png"))
+        self.logo_label_1.setScaledContents(True)
+        self.logo_label_1.setObjectName("logo_label_1")
+        self.horizontalLayout_3.addWidget(self.logo_label_1)
+        self.verticalLayout_3.addLayout(self.horizontalLayout_3)
+        self.verticalLayout = QtWidgets.QVBoxLayout()
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.homeButton_1 = QtWidgets.QPushButton(self.icon_only_widget)
+        self.homeButton_1.setText("")
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/icon/icon/Home.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.homeButton_1.setIcon(icon)
+        self.homeButton_1.setIconSize(QtCore.QSize(35, 35))
+        self.homeButton_1.setCheckable(True)
+        self.homeButton_1.setAutoExclusive(True)
+        self.homeButton_1.setObjectName("homeButton_1")
+        self.verticalLayout.addWidget(self.homeButton_1)
+        self.teamButton_1 = QtWidgets.QPushButton(self.icon_only_widget)
+        self.teamButton_1.setText("")
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(":/icon/icon/Team.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.teamButton_1.setIcon(icon1)
+        self.teamButton_1.setIconSize(QtCore.QSize(35, 35))
+        self.teamButton_1.setCheckable(True)
+        self.teamButton_1.setAutoExclusive(True)
+        self.teamButton_1.setObjectName("teamButton_1")
+        self.verticalLayout.addWidget(self.teamButton_1)
+        self.projectButton_1 = QtWidgets.QPushButton(self.icon_only_widget)
+        self.projectButton_1.setText("")
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap(":/icon/icon/Project.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.projectButton_1.setIcon(icon2)
+        self.projectButton_1.setIconSize(QtCore.QSize(35, 35))
+        self.projectButton_1.setCheckable(True)
+        self.projectButton_1.setAutoExclusive(True)
+        self.projectButton_1.setObjectName("projectButton_1")
+        self.verticalLayout.addWidget(self.projectButton_1)
+        self.companyButton_1 = QtWidgets.QPushButton(self.icon_only_widget)
+        self.companyButton_1.setText("")
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap(":/icon/icon/Company.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.companyButton_1.setIcon(icon3)
+        self.companyButton_1.setIconSize(QtCore.QSize(35, 35))
+        self.companyButton_1.setCheckable(True)
+        self.companyButton_1.setAutoExclusive(True)
+        self.companyButton_1.setObjectName("companyButton_1")
+        self.verticalLayout.addWidget(self.companyButton_1)
+        self.verticalLayout_3.addLayout(self.verticalLayout)
+        spacerItem = QtWidgets.QSpacerItem(20, 496, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_3.addItem(spacerItem)
+        self.exitButton_1 = QtWidgets.QPushButton(self.icon_only_widget)
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap(":/icon/icon/close-window-64.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.exitButton_1.setIcon(icon4)
+        self.exitButton_1.setIconSize(QtCore.QSize(20, 20))
+        self.exitButton_1.setObjectName("exitButton_1")
+        self.verticalLayout_3.addWidget(self.exitButton_1)
+        self.gridLayout_3.addWidget(self.icon_only_widget, 0, 0, 1, 1)
         self.full_menu_widget = QtWidgets.QWidget(self.centralwidget)
         self.full_menu_widget.setStyleSheet("QWidget#full_menu_widget{\n"
 "    background-color: #fff;\n"
@@ -145,8 +170,6 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.homeButton_2.setFont(font)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/icon/icon/Home.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.homeButton_2.setIcon(icon)
         self.homeButton_2.setIconSize(QtCore.QSize(25, 25))
         self.homeButton_2.setCheckable(True)
@@ -160,8 +183,6 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.teamButton_2.setFont(font)
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/icon/icon/Team.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.teamButton_2.setIcon(icon1)
         self.teamButton_2.setIconSize(QtCore.QSize(25, 25))
         self.teamButton_2.setCheckable(True)
@@ -175,8 +196,6 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.projectButton_2.setFont(font)
-        icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(":/icon/icon/Project.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.projectButton_2.setIcon(icon2)
         self.projectButton_2.setIconSize(QtCore.QSize(25, 25))
         self.projectButton_2.setCheckable(True)
@@ -190,8 +209,6 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.companyButton_2.setFont(font)
-        icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap(":/icon/icon/Company.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.companyButton_2.setIcon(icon3)
         self.companyButton_2.setIconSize(QtCore.QSize(25, 25))
         self.companyButton_2.setCheckable(True)
@@ -206,92 +223,6 @@ class Ui_MainWindow(object):
         self.exitButton_2.setObjectName("exitButton_2")
         self.verticalLayout_4.addWidget(self.exitButton_2)
         self.gridLayout_3.addWidget(self.full_menu_widget, 0, 1, 1, 1)
-        self.icon_only_widget = QtWidgets.QWidget(self.centralwidget)
-        self.icon_only_widget.setStyleSheet("QWidget#icon_only_widget {\n"
-"    background-color: #fff;\n"
-"    border-color: #000;\n"
-"    border-width: 1.2px;\n"
-"    width: 45px;\n"
-"}\n"
-"\n"
-"QWidget#icon_only_widget QPushButton, QLabel {\n"
-"    height:50px;\n"
-"    border:none;\n"
-"}\n"
-"\n"
-"QWidget#icon_only_widget QPushButton:hover {\n"
-"        background-color: rgba(240,240,240,240);\n"
-"        border-top-left-radius: 20px;\n"
-"        border-bottom-left-radius: 20px;\n"
-"}\n"
-"\n"
-"QWidget#icon_only_widget QPushButton:checked {\n"
-"        background-color: rgba(240,240,240,240);\n"
-"        border-top-left-radius: 20px;\n"
-"        border-bottom-left-radius: 20px;\n"
-"}")
-        self.icon_only_widget.setObjectName("icon_only_widget")
-        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.icon_only_widget)
-        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_3.setSpacing(0)
-        self.verticalLayout_3.setObjectName("verticalLayout_3")
-        self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
-        self.logo_label_1 = QtWidgets.QLabel(self.icon_only_widget)
-        self.logo_label_1.setMinimumSize(QtCore.QSize(60, 70))
-        self.logo_label_1.setMaximumSize(QtCore.QSize(150, 160))
-        self.logo_label_1.setStyleSheet("padding: 2px;")
-        self.logo_label_1.setText("")
-        self.logo_label_1.setPixmap(QtGui.QPixmap(":/icon/icon/Logo_11.png"))
-        self.logo_label_1.setScaledContents(True)
-        self.logo_label_1.setObjectName("logo_label_1")
-        self.horizontalLayout_3.addWidget(self.logo_label_1)
-        self.verticalLayout_3.addLayout(self.horizontalLayout_3)
-        self.verticalLayout = QtWidgets.QVBoxLayout()
-        self.verticalLayout.setObjectName("verticalLayout")
-        self.homeButton_1 = QtWidgets.QPushButton(self.icon_only_widget)
-        self.homeButton_1.setText("")
-        self.homeButton_1.setIcon(icon)
-        self.homeButton_1.setIconSize(QtCore.QSize(35, 35))
-        self.homeButton_1.setCheckable(True)
-        self.homeButton_1.setAutoExclusive(True)
-        self.homeButton_1.setObjectName("homeButton_1")
-        self.verticalLayout.addWidget(self.homeButton_1)
-        self.teamButton_1 = QtWidgets.QPushButton(self.icon_only_widget)
-        self.teamButton_1.setText("")
-        self.teamButton_1.setIcon(icon1)
-        self.teamButton_1.setIconSize(QtCore.QSize(35, 35))
-        self.teamButton_1.setCheckable(True)
-        self.teamButton_1.setAutoExclusive(True)
-        self.teamButton_1.setObjectName("teamButton_1")
-        self.verticalLayout.addWidget(self.teamButton_1)
-        self.projectButton_1 = QtWidgets.QPushButton(self.icon_only_widget)
-        self.projectButton_1.setText("")
-        self.projectButton_1.setIcon(icon2)
-        self.projectButton_1.setIconSize(QtCore.QSize(35, 35))
-        self.projectButton_1.setCheckable(True)
-        self.projectButton_1.setAutoExclusive(True)
-        self.projectButton_1.setObjectName("projectButton_1")
-        self.verticalLayout.addWidget(self.projectButton_1)
-        self.companyButton_1 = QtWidgets.QPushButton(self.icon_only_widget)
-        self.companyButton_1.setText("")
-        self.companyButton_1.setIcon(icon3)
-        self.companyButton_1.setIconSize(QtCore.QSize(35, 35))
-        self.companyButton_1.setCheckable(True)
-        self.companyButton_1.setAutoExclusive(True)
-        self.companyButton_1.setObjectName("companyButton_1")
-        self.verticalLayout.addWidget(self.companyButton_1)
-        self.verticalLayout_3.addLayout(self.verticalLayout)
-        spacerItem2 = QtWidgets.QSpacerItem(20, 496, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_3.addItem(spacerItem2)
-        self.exitButton_1 = QtWidgets.QPushButton(self.icon_only_widget)
-        icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap(":/icon/icon/close-window-64.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.exitButton_1.setIcon(icon4)
-        self.exitButton_1.setIconSize(QtCore.QSize(20, 20))
-        self.exitButton_1.setObjectName("exitButton_1")
-        self.verticalLayout_3.addWidget(self.exitButton_1)
-        self.gridLayout_3.addWidget(self.icon_only_widget, 0, 0, 1, 1)
         self.widget = QtWidgets.QWidget(self.centralwidget)
         self.widget.setObjectName("widget")
         self.gridLayout = QtWidgets.QGridLayout(self.widget)
@@ -607,22 +538,16 @@ class Ui_MainWindow(object):
         self.add_btn.setFont(font)
         self.add_btn.setObjectName("add_btn")
         self.horizontalLayout.addWidget(self.add_btn)
-        spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout.addItem(spacerItem3)
-        self.delete_btn = QtWidgets.QPushButton(self.widget_4)
-        font = QtGui.QFont()
-        font.setFamily("Open Sans")
-        self.delete_btn.setFont(font)
-        self.delete_btn.setObjectName("delete_btn")
-        self.horizontalLayout.addWidget(self.delete_btn)
+        spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem2)
         self.gridLayout_9.addLayout(self.horizontalLayout, 0, 0, 1, 1)
         self.widget_2 = QtWidgets.QWidget(self.widget_4)
         self.widget_2.setStyleSheet("background-color: rgba(240,240,240,240);")
         self.widget_2.setObjectName("widget_2")
         self.horizontalLayout_13 = QtWidgets.QHBoxLayout(self.widget_2)
         self.horizontalLayout_13.setObjectName("horizontalLayout_13")
-        spacerItem4 = QtWidgets.QSpacerItem(786, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_13.addItem(spacerItem4)
+        spacerItem3 = QtWidgets.QSpacerItem(786, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_13.addItem(spacerItem3)
         self.label_2 = QtWidgets.QLabel(self.widget_2)
         font = QtGui.QFont()
         font.setFamily("맑은 고딕")
@@ -642,7 +567,7 @@ class Ui_MainWindow(object):
         self.gridLayout_9.addWidget(self.widget_2, 1, 0, 1, 1)
         self.gridLayout_10.addWidget(self.widget_4, 1, 0, 1, 1)
         self.add_widget = QtWidgets.QWidget(self.page_8)
-        self.add_widget.setMinimumSize(QtCore.QSize(0, 200))
+        self.add_widget.setMinimumSize(QtCore.QSize(0, 100))
         self.add_widget.setMaximumSize(QtCore.QSize(16777215, 200))
         self.add_widget.setStyleSheet("QWidget#add_widget{\n"
 "    background-color: rgba(240,240,240,240);\n"
@@ -650,20 +575,14 @@ class Ui_MainWindow(object):
 "}\n"
 "QWidget#add_widget QLabel{\n"
 "    background-color: rgba(240,240,240,240);\n"
-"}\n"
-"QWidget#add_widget QLineEdit{\n"
-"    border-radius: 10px;\n"
-"}\n"
-"")
+"}")
         self.add_widget.setObjectName("add_widget")
         self.gridLayout_5 = QtWidgets.QGridLayout(self.add_widget)
         self.gridLayout_5.setObjectName("gridLayout_5")
-        self.horizontalLayout_7 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_7.setObjectName("horizontalLayout_7")
-        self.verticalLayout_8 = QtWidgets.QVBoxLayout()
-        self.verticalLayout_8.setObjectName("verticalLayout_8")
-        self.horizontalLayout_6 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_6.setObjectName("horizontalLayout_6")
+        self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_5.setObjectName("horizontalLayout_5")
+        self.horizontalLayout_15 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_15.setObjectName("horizontalLayout_15")
         self.label = QtWidgets.QLabel(self.add_widget)
         font = QtGui.QFont()
         font.setFamily("Open Sans")
@@ -671,31 +590,13 @@ class Ui_MainWindow(object):
         self.label.setFont(font)
         self.label.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.label.setObjectName("label")
-        self.horizontalLayout_6.addWidget(self.label)
+        self.horizontalLayout_15.addWidget(self.label)
         self.project_name = QtWidgets.QLineEdit(self.add_widget)
         self.project_name.setObjectName("project_name")
-        self.horizontalLayout_6.addWidget(self.project_name)
-        self.verticalLayout_8.addLayout(self.horizontalLayout_6)
-        self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_5.setObjectName("horizontalLayout_5")
-        self.label_3 = QtWidgets.QLabel(self.add_widget)
-        font = QtGui.QFont()
-        font.setFamily("Open Sans")
-        font.setPointSize(10)
-        self.label_3.setFont(font)
-        self.label_3.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
-        self.label_3.setObjectName("label_3")
-        self.horizontalLayout_5.addWidget(self.label_3)
-        self.comboBox = QtWidgets.QComboBox(self.add_widget)
-        self.comboBox.setObjectName("comboBox")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.horizontalLayout_5.addWidget(self.comboBox)
-        self.verticalLayout_8.addLayout(self.horizontalLayout_5)
-        self.horizontalLayout_7.addLayout(self.verticalLayout_8)
-        self.verticalLayout_7 = QtWidgets.QVBoxLayout()
-        self.verticalLayout_7.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
-        self.verticalLayout_7.setObjectName("verticalLayout_7")
+        self.horizontalLayout_15.addWidget(self.project_name)
+        self.horizontalLayout_5.addLayout(self.horizontalLayout_15)
+        self.horizontalLayout_16 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_16.setObjectName("horizontalLayout_16")
         self.label_4 = QtWidgets.QLabel(self.add_widget)
         font = QtGui.QFont()
         font.setFamily("Open Sans")
@@ -703,17 +604,30 @@ class Ui_MainWindow(object):
         self.label_4.setFont(font)
         self.label_4.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.label_4.setObjectName("label_4")
-        self.verticalLayout_7.addWidget(self.label_4)
+        self.horizontalLayout_16.addWidget(self.label_4)
         self.project_comment = QtWidgets.QLineEdit(self.add_widget)
         self.project_comment.setObjectName("project_comment")
-        self.verticalLayout_7.addWidget(self.project_comment)
-        self.horizontalLayout_7.addLayout(self.verticalLayout_7)
-        self.gridLayout_5.addLayout(self.horizontalLayout_7, 0, 0, 1, 1)
+        self.horizontalLayout_16.addWidget(self.project_comment)
+        self.horizontalLayout_5.addLayout(self.horizontalLayout_16)
+        self.gridLayout_5.addLayout(self.horizontalLayout_5, 0, 0, 1, 2)
+        spacerItem4 = QtWidgets.QSpacerItem(473, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_5.addItem(spacerItem4, 1, 0, 1, 1)
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_4.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
-        self.horizontalLayout_4.setContentsMargins(-1, -1, -1, 20)
-        self.horizontalLayout_4.setSpacing(15)
+        self.horizontalLayout_4.setSpacing(10)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
+        self.label_3 = QtWidgets.QLabel(self.add_widget)
+        font = QtGui.QFont()
+        font.setFamily("Open Sans")
+        font.setPointSize(10)
+        self.label_3.setFont(font)
+        self.label_3.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.label_3.setObjectName("label_3")
+        self.horizontalLayout_4.addWidget(self.label_3)
+        self.comboBox = QtWidgets.QComboBox(self.add_widget)
+        self.comboBox.setObjectName("comboBox")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.horizontalLayout_4.addWidget(self.comboBox)
         spacerItem5 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_4.addItem(spacerItem5)
         self.cancel_btn = QtWidgets.QPushButton(self.add_widget)
@@ -748,7 +662,7 @@ class Ui_MainWindow(object):
 "")
         self.add_btn_2.setObjectName("add_btn_2")
         self.horizontalLayout_4.addWidget(self.add_btn_2)
-        self.gridLayout_5.addLayout(self.horizontalLayout_4, 1, 0, 1, 1)
+        self.gridLayout_5.addLayout(self.horizontalLayout_4, 1, 1, 1, 1)
         self.gridLayout_10.addWidget(self.add_widget, 0, 0, 1, 1)
         self.stackedWidget.addWidget(self.page_8)
         self.page_9 = QtWidgets.QWidget()
@@ -846,6 +760,75 @@ class Ui_MainWindow(object):
         self.label_31.setObjectName("label_31")
         self.gridLayout.addWidget(self.label_31, 1, 0, 1, 1)
         self.gridLayout_3.addWidget(self.widget, 0, 2, 1, 1)
+        self.user_widget = QtWidgets.QWidget(self.centralwidget)
+        self.user_widget.setStyleSheet("QWidget#user_widget{    \n"
+"    background-color: rgba(240,240,240,240);\n"
+"    border-top-left-radius: 10px;\n"
+"    border-bottom-left-radius: 10px;\n"
+"}\n"
+"\n"
+"QWidget#user_widget QLabel {\n"
+"    height:25px;\n"
+"    border:none;\n"
+"    padding-left: 7px;\n"
+"    padding-right: 7px;\n"
+"    background-color: rgba(240,240,240,240);\n"
+"}\n"
+"\n"
+"QWidget#user_widget QPushButton {\n"
+"    height:30px;\n"
+"    border:none;\n"
+"    padding-left: 7px;\n"
+"    padding-right: 7px;\n"
+"    background-color: rgba(240,240,240,240);\n"
+"    margin-bottom: 10px;\n"
+"}\n"
+"QWidget#user_widget QPushButton:hover {\n"
+"    height:30px;\n"
+"    border:none;\n"
+"    background-color: \'#fff\';\n"
+"    border-top-right-radius: 10px;\n"
+"    border-bottom-right-radius: 10px;    \n"
+"    font-weight: bold;\n"
+"}\n"
+"QWidget#user_widget QPushButton:checked {\n"
+"    height:30px;\n"
+"    border:none;\n"
+"    background-color: \'#fff\';\n"
+"    border-top-right-radius: 10px;\n"
+"    border-bottom-right-radius: 10px;    \n"
+"    font-weight: bold;\n"
+"}\n"
+"\n"
+"\n"
+"")
+        self.user_widget.setObjectName("user_widget")
+        self.verticalLayout_6 = QtWidgets.QVBoxLayout(self.user_widget)
+        self.verticalLayout_6.setContentsMargins(0, 15, -1, -1)
+        self.verticalLayout_6.setObjectName("verticalLayout_6")
+        self.user_profile = QtWidgets.QLabel(self.user_widget)
+        font = QtGui.QFont()
+        font.setFamily("Open Sans")
+        font.setPointSize(11)
+        self.user_profile.setFont(font)
+        self.user_profile.setObjectName("user_profile")
+        self.verticalLayout_6.addWidget(self.user_profile)
+        self.user_name = QtWidgets.QLabel(self.user_widget)
+        font = QtGui.QFont()
+        font.setFamily("Open Sans")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.user_name.setFont(font)
+        self.user_name.setObjectName("user_name")
+        self.verticalLayout_6.addWidget(self.user_name)
+        spacerItem8 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_6.addItem(spacerItem8)
+        self.loginorout = QtWidgets.QPushButton(self.user_widget)
+        self.loginorout.setStyleSheet("")
+        self.loginorout.setObjectName("loginorout")
+        self.verticalLayout_6.addWidget(self.loginorout)
+        self.gridLayout_3.addWidget(self.user_widget, 0, 3, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -877,15 +860,12 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.user_profile.setText(_translate("MainWindow", "Hi,"))
-        self.user_name.setText(_translate("MainWindow", "TextLabel"))
-        self.loginorout.setText(_translate("MainWindow", "PushButton"))
+        self.exitButton_1.setText(_translate("MainWindow", "Exit"))
         self.homeButton_2.setText(_translate("MainWindow", "Home"))
         self.teamButton_2.setText(_translate("MainWindow", "Team"))
         self.projectButton_2.setText(_translate("MainWindow", " Project"))
         self.companyButton_2.setText(_translate("MainWindow", " Manual"))
         self.exitButton_2.setText(_translate("MainWindow", "Exit"))
-        self.exitButton_1.setText(_translate("MainWindow", "Exit"))
         self.label_33.setText(_translate("MainWindow", "프로젝트 관리, 검색이 가능한 페이지로 이동합니다."))
         self.gotoP_btn_2.setText(_translate("MainWindow", "Project 페이지로 가기"))
         self.label_35.setText(_translate("MainWindow", "팀 소개 페이지로 이동합니다."))
@@ -928,16 +908,18 @@ class Ui_MainWindow(object):
         item.setText(_translate("MainWindow", "DateCreated"))
         self.update_btn.setText(_translate("MainWindow", "Update"))
         self.add_btn.setText(_translate("MainWindow", "Add"))
-        self.delete_btn.setText(_translate("MainWindow", "Delete"))
         self.checkBox.setText(_translate("MainWindow", "My Project"))
         self.my_btn.setText(_translate("MainWindow", "Search"))
         self.label.setText(_translate("MainWindow", "project name :"))
+        self.label_4.setText(_translate("MainWindow", "description : "))
         self.label_3.setText(_translate("MainWindow", "permission :"))
         self.comboBox.setItemText(0, _translate("MainWindow", "private"))
         self.comboBox.setItemText(1, _translate("MainWindow", "public"))
-        self.label_4.setText(_translate("MainWindow", "description : "))
         self.cancel_btn.setText(_translate("MainWindow", "Cancel"))
-        self.add_btn_2.setText(_translate("MainWindow", "Add"))
+        self.add_btn_2.setText(_translate("MainWindow", "Add Project"))
         self.label_59.setText(_translate("MainWindow", "Company Page"))
         self.searchInput.setPlaceholderText(_translate("MainWindow", "Project name..."))
+        self.user_profile.setText(_translate("MainWindow", "Hi,"))
+        self.user_name.setText(_translate("MainWindow", "TextLabel"))
+        self.loginorout.setText(_translate("MainWindow", "PushButton"))
 import resource_rc
