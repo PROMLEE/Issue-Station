@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class IdResponseDto {
-    private boolean nicknameDuplicate;
+    private boolean idDuplicate;
 }
