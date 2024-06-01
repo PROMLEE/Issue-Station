@@ -4,9 +4,10 @@ import webbrowser
 import requests
 from PyQt5 import QtGui, uic
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QDateTime
 from IssueMgmt_ui import Ui_MainWindow
 from login_ui import Ui_Dialog
+from datetime import datetime
 
 
 ##http 요청 url
@@ -17,7 +18,12 @@ def getJsonData(local_url):
     with open(local_url, 'r') as file:
         json_data = json.load(file)
     return json_data
-
+##dateTime 변환
+def formatted_datetime(str):
+    datetime_obj = datetime.fromisoformat(str.replace('Z', '+00:00'))
+    formatted = datetime_obj.strftime("%Y-%m-%d %H:%M:%S")
+    return formatted
+    
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
@@ -34,7 +40,7 @@ class MainWindow(QMainWindow):
         
         ## 유저 데이터,토큰
         self.user_data = ""
-        self.uwer_token=""
+        self.user_token=""
         
         self.ui.loginorout.setText('Login')
         self.ui.user_name.setText('Unknown')
@@ -49,6 +55,10 @@ class MainWindow(QMainWindow):
         self.user_widget_hidden = True
         ## project 생성
         self.ui.add_btn_2.clicked.connect(self.create_project)
+    
+    ##
+    def about_event(self,str):
+        QMessageBox.about(self,str,str)
     ## Function for user_widget
     def setUserWidget(self):
         if self.user_widget_hidden :
@@ -69,6 +79,8 @@ class MainWindow(QMainWindow):
             self.ui.searchInput.setText("")
         if not search_text :
             self.ui.label_31.setText("검색어를 입력해주세요.")
+    def on_my_btn_clicked(self):
+       self.setDataTable()
 ##===================Project Screen===============================##
     ## project screen 
     def go_to_project_screen(self):
@@ -76,15 +88,30 @@ class MainWindow(QMainWindow):
         self.setDataTable()
             
     ## proj detail screen 
-    def go_to_projdetail(self,dict):
-        ##if dict['isPrivate']:  
-        self.detail = ProjDetailScreen(dict,self)
-        ##user data 사용하기 위함
-        self.detail.set_main_window(self)
-        self.detail.exec()
-
+    def go_to_projdetail(self,id,isPrivate):
+        headers = {}
+        ## private인 경우
+        if isPrivate:
+            if self.user_token:
+                headers = {
+                    "Authorization": f"Bearer {self.user_token}"
+                }
+            else:
+                self.about_event('권한이 없습니다.')
+                return   
+        res = requests.get(f'{url}/project/info/{id}', headers=headers)     
+        result = res.json()
+        if result['isSuccess']:
+            detail = result['result']
+            self.detail = ProjDetailScreen(detail,self)
+            ##user data 사용하기 위함
+            self.detail.set_main_window(self)
+            self.detail.exec()
+        else:
+            return
     ## Fuction for setting project data
     def setDataTable(self):
+        self.ui.label_2.setText('')
         table_widget = self.ui.project_table
         ## search keyword가 있을 경우
         keyword = ""
@@ -113,7 +140,7 @@ class MainWindow(QMainWindow):
                 button_name = 'issue_btn_' + str(row)
                 self.button = QPushButton("Open", self)
                 self.button.setAccessibleName(button_name)
-                self.button.clicked.connect(lambda _, dict = proj_list[row] : self.go_to_projdetail(dict))
+                self.button.clicked.connect(lambda _, id = proj_list[row]['id'], isPrivate = proj_list[row]['isPrivate']: self.go_to_projdetail(id, isPrivate))
     
                 ##setting table data
                 table_widget.setItem(row,0,QTableWidgetItem(str(proj_list[row]['id'])))
@@ -124,8 +151,12 @@ class MainWindow(QMainWindow):
                     table_widget.setItem(row,2,QTableWidgetItem("public"))
                 table_widget.setItem(row,3,QTableWidgetItem(proj_list[row]['description']))        
                 table_widget.setCellWidget(row,4,self.button) 
-                table_widget.setItem(row,5,QTableWidgetItem(proj_list[row]['moddate']))
-                table_widget.setItem(row,6,QTableWidgetItem(proj_list[row]['initdate']))  
+                
+                ##formatted datetime
+                moddate = formatted_datetime(proj_list[row]['moddate'])
+                initdate = formatted_datetime(proj_list[row]['initdate'])
+                table_widget.setItem(row,5,QTableWidgetItem(moddate))
+                table_widget.setItem(row,6,QTableWidgetItem(initdate))  
     
     def update_project(self):
         ## 기존 데이터 삭제 
@@ -150,7 +181,8 @@ class MainWindow(QMainWindow):
             res = requests.post(f'{url}/project/create', json={"name": name, "description": discription, "isPrivate": selected_value},headers=headers)
             result = res.json()
             if result['isSuccess']:
-                res2 = requests.post(f'{url}/project/team/{result['id']}', json={"nickname":self.user_data['user']['nickname'], "is_admin": True})
+                projectId = result['result']['id']
+                res2 = requests.post(f'{url}/project/team/{projectId}', json={"nickname":self.user_data['user']['nickname'], "is_admin": True})
                 result2 = res2.json()
                 if result2['isSuccess']:
                     self.update_project()
