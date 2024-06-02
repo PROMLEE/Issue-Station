@@ -1,5 +1,4 @@
 import sys
-import json
 import webbrowser
 import requests
 from PyQt5 import QtGui, uic
@@ -9,15 +8,19 @@ from IssueMgmt_ui import Ui_MainWindow
 from login_ui import Ui_Dialog
 from datetime import datetime
 
+import os
+
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 ##http 요청 url
 url = 'http://43.203.47.111:8080'
 
-##json file 데이터 읽어오기
-def getJsonData(local_url):
-    with open(local_url, 'r') as file:
-        json_data = json.load(file)
-    return json_data
 ##dateTime 변환
 def formatted_datetime(date_string):
     try:
@@ -51,7 +54,7 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
         self.setFixedSize(1200, 800)
         self.setWindowTitle("SE ISSUE MGMT")
-        self.setWindowIcon(QtGui.QIcon('Logo_11.png'))
+        self.setWindowIcon(QtGui.QIcon(resource_path('Logo_11.png')))
         ## 유저 관련 변수(유저 데이터 관리)
         self.user_data = ""
         self.user_token=""
@@ -93,8 +96,6 @@ class MainWindow(QMainWindow):
             ## 스크린 이동
             self.go_to_project_screen()
             self.ui.searchInput.setText("")
-        if not search_text :
-            self.ui.label_31.setText("검색어를 입력해주세요.")
     def on_my_btn_clicked(self):
        self.setDataTable()
 ##===================Project Screen===============================##
@@ -296,7 +297,7 @@ class LoginScreen(QDialog):
         super(LoginScreen, self).__init__()
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
-        self.setWindowIcon(QtGui.QIcon('Logo_11.png'))
+        self.setWindowIcon(QtGui.QIcon(resource_path('Logo_11.png')))
         self.setWindowTitle('Login')
         self.setWindowFlag(Qt.FramelessWindowHint)
         self.show()
@@ -340,8 +341,8 @@ class LoginScreen(QDialog):
 class SignupScreen(QDialog):
     def __init__(self):
         super(SignupScreen, self).__init__()
-        self.ui = uic.loadUi("signup.ui", self)
-        self.setWindowIcon(QtGui.QIcon('Logo_11.png'))
+        self.ui = uic.loadUi(resource_path("signup.ui"), self)
+        self.setWindowIcon(QtGui.QIcon(resource_path('Logo_11.png')))
         self.setWindowTitle('Signup')
         self.setWindowFlag(Qt.FramelessWindowHint)
         self.show()
@@ -404,9 +405,9 @@ class SignupScreen(QDialog):
 class ProjDetailScreen(QDialog):
     def __init__(self, data, parent=None):
         super(ProjDetailScreen, self).__init__(parent)
-        self.ui = uic.loadUi("proj_detail.ui", self)
+        self.ui = uic.loadUi(resource_path("proj_detail.ui"), self)
         self.setWindowTitle(data['name'])
-        self.setWindowIcon(QtGui.QIcon('Logo_11.png'))
+        self.setWindowIcon(QtGui.QIcon(resource_path('Logo_11.png')))
         self.show()
         self.ui.project_id.setText(str(data['id']))
         self.ui.project_name.setText(data['name'])
