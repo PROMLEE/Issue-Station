@@ -435,7 +435,9 @@ class ProjDetailScreen(QDialog):
         self.set_issue_data()
         ##Detail tab 비활성화
         self.ui.tabWidget.setTabEnabled(1,False)
-
+        ##issue id 저장
+        self.issue_id = None
+        self.ui.assign_btn.clicked.connect(self.assigned_dev)
         
     ## project 멤버 정보 저장
     def project_member(self):
@@ -512,6 +514,7 @@ class ProjDetailScreen(QDialog):
         elif self.user_data !="" and user_name != self.proj_admin:
             about_event(self,"추가 권한이 없습니다..")
             return 
+        ## proj_admin일 때만 멤버 추가가 가능
         elif self.user_data != "" and user_name == self.proj_admin :
             name = ""
             name = self.ui.member_nickname.text()        
@@ -610,6 +613,7 @@ class ProjDetailScreen(QDialog):
                             res1 = requests.post(f'{url}/issue/reporter/{i_id}', json={"nickname": u_name}, headers=headers)
                             result1 = res1.json()   
                             if result1['isSuccess']:
+                                ## 상태 NEW로 변경
                                 res2 = requests.post(f'{url}/issue/state/{i_id}', json={"status": "NEW"}, headers=headers)
                                 result2 = res2.json()   
                                 if result2:
@@ -660,11 +664,55 @@ class ProjDetailScreen(QDialog):
             self.ui.issue_status.setText(r['status']) ##status
             self.ui.label_18.setText(r['assignee']) ##Assignee
             self.ui.tabWidget.setCurrentIndex(1)
+            self.issue_id = r['id'] ##id 값 저장
         else:
             self.ui.tabWidget.setTabEnabled(1,False)
             about_event(self,"정보를 볼 수 없습니다.")
             return    
+    
+    ##devleoper 배정
+    def assigned_dev(self):
+        ## 로그인을 했고 배정하려는 사람이 PL로 Project member인가
+        if self.user_token and self.user_data['data']['user']['nickname'] in self.pl_list:
+            if self.issue_id != None:
+                issue = self.issue_info(self.issue_id)
+                if issue['isSuccess'] and issue['result']['assignee'] == "not assigned":  
+                    ## 값 가져오기
+                    nickname  = self.ui.assign_name.text()    
+                    ## project member에 dev 역할인 사람인가 확인
+                    if nickname in self.dev_list:
+                        ## 배정
+                        headers = {
+                            "Authorization": self.user_token,
+                        }
+                        res = requests.post(f'{url}/issue/assignee/{self.issue_id}', json={"nickname": nickname},headers=headers)
+                        result = res.json()
+                        if result['isSuccess']:
+                            print(result)
+                            ## status 변경
+                            res2 = requests.post(f'{url}/issue/state/{self.issue_id}', json={"status": "ASSIGNED"}, headers=headers)
+                            result2 = res2.json()   
+                            if result2['isSuccess']:
+                                print(result2)
+                                ## ui에서도 status Assigned로 변경 
+                                self.ui.issue_status.setText("ASSIGNED")
+                                self.ui.label_18.setText(nickname)
+                            else:
+                                about_event(self, "상태 변경에 실패하였습니다.")
+                                
+                    else :
+                        about_event(self, "개발자 멤버가 아닙니다. 추가해주세요")
+                        return
+                else:
+                    about_event(self,"이미 배정되어있습니다.")
+                    return    
                 
+        else:
+            about_event(self, "권한이 없습니다.")
+     
+        
+        
+    
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     ## loading style file
