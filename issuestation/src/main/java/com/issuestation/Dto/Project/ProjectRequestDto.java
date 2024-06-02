@@ -1,10 +1,12 @@
 package com.issuestation.Dto.Project;
 
 import com.issuestation.Entity.enums.Role;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 public class ProjectRequestDto {
 
+    @AllArgsConstructor
     @Getter
     public static class JoinProjectCreateRequestDto {
         String name;
