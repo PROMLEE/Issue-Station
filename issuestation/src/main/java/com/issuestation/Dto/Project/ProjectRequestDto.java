@@ -6,7 +6,6 @@ import lombok.Getter;
 
 public class ProjectRequestDto {
 
-    @AllArgsConstructor
     @Getter
     public static class JoinProjectCreateRequestDto {
         String name;
