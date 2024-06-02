@@ -602,13 +602,12 @@ class ProjDetailScreen(QDialog):
                     }
                     ##issue 이름, 설명
                     name = self.ui.issue_name.text()
-                    description = self.ui.issue_name.text()
+                    description = self.ui.issue_description.text()
                     if name != "" and description !="":
                         id = self.proj['id']
                         res = requests.post(f'{url}/issue/create/{id}', json={"name": name, "description": description}, headers=headers)
                         result = res.json()
                         if result['isSuccess']:
-                            print(result)
                             i_id = result['result']['id']
                             res1 = requests.post(f'{url}/issue/reporter/{i_id}', json={"nickname": u_name}, headers=headers)
                             result1 = res1.json()   
