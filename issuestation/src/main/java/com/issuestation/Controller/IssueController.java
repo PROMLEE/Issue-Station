@@ -77,15 +77,6 @@ public class IssueController {
                                                                                           @PathVariable("id") long projectId,
                                                                                           @RequestParam(required = false) String name,
                                                                                           @RequestParam(required = false) String status) {
-        // 토큰 검증
-//        checkToken(token);
-//        Project project = projectRepository.findById(projectId).orElseThrow(() -> new RuntimeException("Project not found"));
-//        if (project.getIsPrivate()){
-//            long loginId = checkToken(token);
-//            if (project.().getId() != loginId){
-//                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-//            }
-//        }
         List<IssueResponseDto.JoinIssueSearchResponseDto> issues;
         if (name != null || status != null) {
             issues = issueSearchService.searchIssuesByProjectIdNameAndStatus(projectId, name, status);
@@ -103,10 +94,6 @@ public class IssueController {
 
     @PostMapping("/state/{id}")
     public ApiResponse<IssueResponseDto.JoinIssueStateResponseDto> changeState(HttpServletRequest token, @PathVariable("id") long issueId, @RequestBody @Valid IssueRequestDto.JoinIssueStateRequestDto request) {
-
-        //토큰 검증
-//        checkToken(token);
-
         Issue issue = issueStateService.changeIssueState(request, issueId);
         return ApiResponse.onSuccess(IssueStateConverter.toIssueDto(issue));
     }
