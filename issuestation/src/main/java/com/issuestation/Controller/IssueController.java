@@ -88,13 +88,12 @@ public class IssueController {
     }
 
     @GetMapping("/info/{id}")
-    public ApiResponse<IssueResponseDto.JoinIssueInfoResponseDto> info(HttpServletRequest token, @PathVariable long id) {
-//        checkToken(token);
+    public ApiResponse<IssueResponseDto.JoinIssueInfoResponseDto> info(@PathVariable long id) {
         return ApiResponse.onSuccess(issueInfoService.getIssueDetails(id));
     }
 
     @PostMapping("/state/{id}")
-    public ApiResponse<IssueResponseDto.JoinIssueStateResponseDto> changeState(HttpServletRequest token, @PathVariable("id") long issueId, @RequestBody @Valid IssueRequestDto.JoinIssueStateRequestDto request) {
+    public ApiResponse<IssueResponseDto.JoinIssueStateResponseDto> changeState(@PathVariable("id") long issueId, @RequestBody @Valid IssueRequestDto.JoinIssueStateRequestDto request) {
         Issue issue = issueStateService.changeIssueState(request, issueId);
         return ApiResponse.onSuccess(IssueStateConverter.toIssueDto(issue));
     }

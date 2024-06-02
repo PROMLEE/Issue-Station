@@ -9,7 +9,6 @@ import lombok.Setter;
 
 public class IssueRequestDto {
 
-    @AllArgsConstructor
     @Getter
     public static class JoinIssueCreateRequestDto {
         String name;
@@ -18,7 +17,7 @@ public class IssueRequestDto {
 
     @Getter
     public static class JoinIssueStateRequestDto {
-        private Status status;
+        Status status;
     }
 
     @Getter
