@@ -9,6 +9,7 @@ import lombok.Setter;
 
 public class IssueRequestDto {
 
+    @AllArgsConstructor
     @Getter
     public static class JoinIssueCreateRequestDto {
         String name;
