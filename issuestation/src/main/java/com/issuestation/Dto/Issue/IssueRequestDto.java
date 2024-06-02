@@ -2,6 +2,8 @@ package com.issuestation.Dto.Issue;
 
 import com.issuestation.Entity.enums.CommentTag;
 import com.issuestation.Entity.enums.Status;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
