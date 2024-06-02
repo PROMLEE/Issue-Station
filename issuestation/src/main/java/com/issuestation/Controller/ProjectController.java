@@ -53,7 +53,6 @@ public class ProjectController {
 
     @PostMapping("/create")
     public ApiResponse<ProjectResponseDto.JoinProjectCreateResponseDto> join(HttpServletRequest token, @RequestBody @Valid ProjectRequestDto.JoinProjectCreateRequestDto request) {
-
         //토큰 검증
         CheckToken(token);
         Project project = projectCreateService.joinProject(request);
