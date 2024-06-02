@@ -138,7 +138,7 @@
   이슈를 생성하게 되면 이슈 상태는 "NEW", 리포터 값은 이슈를 생성한 Tester의 이름으로 저장됩니다.
 
 
-  > ![image](https://github.com/SE-Issue-Mgmt-Sys/GUI/assets/67683170/8d63e8f4-78aa-4259-97b8-a3324d13675b)
+  > ![image](https://github.com/SE-Issue-Mgmt-Sys/GUI/assets/67683170/07c5673b-7e57-4ae3-8794-d01112e0e0af)
 
   >> 이슈를 추가한 모습이다.
 
