@@ -414,7 +414,10 @@ class ProjDetailScreen(QDialog):
         self.ui.description.setText(data['description'])
         self.ui.add_issue.clicked.connect(self.create_issue)
         self.ui.issue_update.clicked.connect(self.update_issue)  
+        self.ui.fix_btn.clicked.connect(self.fix_issue)
+        
         self.ui.issue_table.cellClicked.connect(self.cell_clicked)
+        self.ui.update_btn.clicked.connect(self.update_comment)
         self.main_window = None
         self.proj = data
         self.proj_admin = None
@@ -438,6 +441,9 @@ class ProjDetailScreen(QDialog):
         ##issue id 저장
         self.issue_id = None
         self.ui.assign_btn.clicked.connect(self.assigned_dev)
+        
+        self.ui.resoloved_btn.clicked.connect(self.resolved_issue)
+        self.ui.add_comment_btn.clicked.connect(self.create_comment)
         
     ## project 멤버 정보 저장
     def project_member(self):
@@ -581,7 +587,8 @@ class ProjDetailScreen(QDialog):
                 table.setItem(row,2,QTableWidgetItem(temp['status']))
                 table.setItem(row,3,QTableWidgetItem("Click!"))
                 table.setItem(row,4,QTableWidgetItem(temp['description']))
-                table.setItem(row,5,QTableWidgetItem(formatted_datetime(temp['modDate'])))
+                table.setItem(row,5,QTableWidgetItem(temp['priority']))
+                table.setItem(row,6,QTableWidgetItem(formatted_datetime(temp['modDate'])))
         else:
             return
     ##이슈 목록 업데이트
@@ -600,12 +607,13 @@ class ProjDetailScreen(QDialog):
                     headers = {    
                         "Authorization": self.user_token,
                     }
-                    ##issue 이름, 설명
+                    ##issue 이름, 설명, 중요도
                     name = self.ui.issue_name.text()
                     description = self.ui.issue_description.text()
-                    if name != "" and description !="":
+                    priority = self.ui.priority.currentText()
+                    if name != "" and description !="" and priority !="":
                         id = self.proj['id']
-                        res = requests.post(f'{url}/issue/create/{id}', json={"name": name, "description": description}, headers=headers)
+                        res = requests.post(f'{url}/issue/create/{id}', json={"name": name, "description": description, "priority": priority}, headers=headers)
                         result = res.json()
                         if result['isSuccess']:
                             i_id = result['result']['id']
@@ -623,7 +631,6 @@ class ProjDetailScreen(QDialog):
                             else:
                                 about_event(self, '리포터 설정 실패')
                                 return                        
-                            
                     else:
                         about_event(self,'모두 입력해주세요.')
                         return
@@ -636,6 +643,9 @@ class ProjDetailScreen(QDialog):
         else:
             about_event(self, "추가할 권한이 없습니다.")
             return 
+        
+        
+    ## 이슈 정보 가져오기 !! ==================================
     def issue_info(self,id):
         headers = {}
         if self.user_token:
@@ -647,13 +657,27 @@ class ProjDetailScreen(QDialog):
         res = requests.get(f'{url}/issue/info/{id}', headers=headers)
         result = res.json()
         return result
+   ## =======================================================
+   
+    ## 셀 클릭 이벤트_1.이슈 상세 정보(Detail)로 이동
     def cell_clicked(self ,row, col):
+        id = int(self.ui.issue_table.item(row, 0).text())
+        ## detail 클릭
         if col == 3:
+            state = self.ui.issue_table.item(row,2).text()
+            if state == "CLOSED":
+                about_event(self,"이미 닫힌 이슈입니다.") 
+                return
             if not self.ui.tabWidget.isTabEnabled(1):
-               self.ui.tabWidget.setTabEnabled(1,True)
+               self.ui.tabWidget.setTabEnabled(1,True) 
+            self.set_detail(id)
+        elif col == 2:
+            self.closed_issue(id)
         else:
             return
-        id = int(self.ui.issue_table.item(row, 0).text())
+
+    ## set detail screen
+    def set_detail(self,id):
         info = self.issue_info(id)
         if info:    
             r = info['result']
@@ -662,13 +686,74 @@ class ProjDetailScreen(QDialog):
             self.ui.issue_des.setText(r['description']) ## description
             self.ui.issue_status.setText(r['status']) ##status
             self.ui.label_18.setText(r['assignee']) ##Assignee
+            self.ui.fixer.setText(r['fixer'])##fixer
             self.ui.tabWidget.setCurrentIndex(1)
             self.issue_id = r['id'] ##id 값 저장
+            self.set_issue_comment()
         else:
             self.ui.tabWidget.setTabEnabled(1,False)
             about_event(self,"정보를 볼 수 없습니다.")
-            return    
-    
+            return  
+        
+    ## set issue comment
+    def set_issue_comment(self):
+        if self.issue_id:
+            headers = {}
+            if self.user_token:
+                headers = {
+                        "Authorization": f"Bearer {self.user_token}"
+                } 
+            else:
+                return
+            res = requests.get(f'{url}/issue/comment/{self.issue_id}', headers=headers)
+            result = res.json()
+            if result:
+                table = self.ui.comment_table
+                table.setRowCount(len(result))
+                table.setColumnCount(6)
+                for row in range(len(result)):
+                    temp = result[row]
+                    table.setItem(row,0,QTableWidgetItem(str(temp['id'])))    
+                    table.setItem(row,1,QTableWidgetItem(temp['nickname']))
+                    table.setItem(row,2,QTableWidgetItem(temp['tag']))
+                    table.setItem(row,3,QTableWidgetItem(temp['modDate']))
+                    table.setItem(row,4,QTableWidgetItem(temp['comment']))
+            else:
+                return
+        else:
+            return
+        
+    ## update comment
+    def update_comment(self):
+        self.ui.comment_table.setRowCount(0)
+        self.set_issue_comment()
+        
+    ## add comment
+    def create_comment(self):
+        if self.user_token and self.user_data:
+            data = self.user_data['data']['user']
+            ##user 이름
+            u_name = data['nickname']
+            ##프로젝트 멤버인가
+            if u_name in self.tester_list or u_name in self.pl_list or u_name in self.dev_list:
+                headers = {    
+                    "Authorization": self.user_token,
+                }
+                ## comment, tag
+                comment = self.ui.comment_input.text()
+                tag = self.ui.tag.currentText()
+                if tag != "" and comment != "":
+                    res = requests.post(f'{url}/issue/comment/create/{self.issue_id}', json={"comment": comment, "tag": tag}, headers=headers)
+                    result = res.json()
+                    if result['isSuccess']:
+                        self.update_comment()
+                    else:
+                        about_event(self, "comment 추가를 실패하였습니다.")
+            else:
+                about_event(self,"프로젝트 멤버가 아닙니다.")  
+        else:
+            about_event(self,"권한이 없습니다.")   
+                       
     ##devleoper 배정
     def assigned_dev(self):
         ## 로그인을 했고 배정하려는 사람이 PL로 Project member인가
@@ -687,15 +772,13 @@ class ProjDetailScreen(QDialog):
                         res = requests.post(f'{url}/issue/assignee/{self.issue_id}', json={"nickname": nickname},headers=headers)
                         result = res.json()
                         if result['isSuccess']:
-                            print(result)
                             ## status 변경
                             res2 = requests.post(f'{url}/issue/state/{self.issue_id}', json={"status": "ASSIGNED"}, headers=headers)
                             result2 = res2.json()   
                             if result2['isSuccess']:
-                                print(result2)
                                 ## ui에서도 status Assigned로 변경 
-                                self.ui.issue_status.setText("ASSIGNED")
-                                self.ui.label_18.setText(nickname)
+                                self.update_issue()
+                                self.set_detail(self.issue_id)
                             else:
                                 about_event(self, "상태 변경에 실패하였습니다.")
                                 
@@ -708,7 +791,94 @@ class ProjDetailScreen(QDialog):
                 
         else:
             about_event(self, "권한이 없습니다.")
-     
+    
+    ## fix issue
+    def fix_issue(self):
+        if self.user_token and self.user_data:
+            data = self.issue_info(self.issue_id)
+            if data:
+                nee = data['result']['assignee']
+                fixer= data['result']['fixer']
+                nickname = self.user_data['data']['user']['nickname']
+                ## fixer가 아직 없고 배정된 개발자이어야함
+                if fixer =="not fixed" and nee == nickname:
+                    headers = {
+                        "Authorization": self.user_token,
+                    }
+                    res = requests.post(f'{url}/issue/fixer/{self.issue_id}', json={"nickname": nickname},headers=headers)
+                    result = res.json()
+                    if result['isSuccess']:
+                        self.ui.fixer.setText(nickname)
+                        ## 이슈 상태 FIXED로 변경
+                        res2 = requests.post(f'{url}/issue/state/{self.issue_id}', json={"status": "FIXED"}, headers=headers)
+                        result2 = res2.json()   
+                        if result2:
+                            self.update_issue()
+                            self.set_detail(self.issue_id)        
+                        else:
+                            about_event(self, 'state 설정 실패')
+                            return    
+                else:
+                    about_event(self,"이미 해결했거나 배정된 개발자가 없습니다.")
+                    return
+        else:
+            about_event(self,"권한이 없습니다.")
+            return 
+    ## state resolved > reporter
+    def resolved_issue(self):
+        if self.user_token and self.user_data:
+            data = self.issue_info(self.issue_id)
+            if data:
+                reporter= data['result']['reporter']
+                state = data['result']['status']
+                nickname = self.user_data['data']['user']['nickname']
+                ## reporter 본인이어야함 fixed상태이어야함
+                if reporter == nickname and state == "FIXED":
+                    headers = {
+                        "Authorization": self.user_token,
+                    }
+                    res2 = requests.post(f'{url}/issue/state/{self.issue_id}', json={"status": "RESOLVED"}, headers=headers)
+                    result2 = res2.json()   
+                    if result2:
+                        self.update_issue()
+                        self.set_detail(self.issue_id)        
+                    else:
+                        about_event(self, 'state 설정 실패')
+                        return    
+                else:
+                    if reporter != nickname:
+                        about_event(self,"권한이 없습니다.(REPORTER가 아님)")
+                    else:
+                        about_event(self,"FIXED 상태가 아닙니다.")
+                    return
+        else:
+            about_event(self,"권한이 없습니다.")
+            return   
+    ## state closed > pl
+    def closed_issue(self, id):
+        if self.user_token and self.user_data:
+            data = self.issue_info(id)
+            if data and self.pl_list:
+                state = data['result']['status']
+                nickname = self.user_data['data']['user']['nickname']
+                ## 프로젝트 PL 멤버이어야함, resolved 상태이어야함 
+                if state == "RESOLVED" and nickname in self.pl_list:
+                    headers = {
+                        "Authorization": self.user_token,
+                    }
+                    res2 = requests.post(f'{url}/issue/state/{id}', json={"status": "CLOSED"}, headers=headers)
+                    result2 = res2.json()   
+                    if result2:
+                        self.update_issue()
+                    else:
+                        about_event(self, 'state 설정 실패')
+                        return    
+                else:
+                    about_event(self,"권한이 없습니다.")
+                    return
+        else:
+            about_event(self,"권한이 없습니다.")
+            return  
         
         
     

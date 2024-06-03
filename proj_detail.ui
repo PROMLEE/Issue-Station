@@ -443,6 +443,35 @@ background-color : rgba(240,240,240,240);
                  <widget class="QLineEdit" name="issue_description"/>
                 </item>
                 <item>
+                 <widget class="QComboBox" name="priority">
+                  <item>
+                   <property name="text">
+                    <string>BLOCKER</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>CRITICAL</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>MAJOR</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>MINOR</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>TRIVIAL</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+                <item>
                  <widget class="QPushButton" name="add_issue">
                   <property name="font">
                    <font>
@@ -489,7 +518,7 @@ background-color : rgba(240,240,240,240);
                 <set>QAbstractItemView::NoEditTriggers</set>
                </property>
                <attribute name="horizontalHeaderDefaultSectionSize">
-                <number>90</number>
+                <number>80</number>
                </attribute>
                <attribute name="horizontalHeaderStretchLastSection">
                 <bool>true</bool>
@@ -523,6 +552,11 @@ background-color : rgba(240,240,240,240);
                <column>
                 <property name="text">
                  <string>Description</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>Priority</string>
                 </property>
                </column>
                <column>
@@ -582,10 +616,49 @@ background-color : rgba(240,240,240,240);
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="lineEdit_2"/>
+                 <widget class="QLineEdit" name="comment_input"/>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="pushButton_2">
+                 <widget class="QComboBox" name="tag">
+                  <item>
+                   <property name="text">
+                    <string>OTHERS</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>ISSUE_CREATED</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>SET_ASSIGNEE</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>SET_FIXED</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>SET_RESOLVED</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>SET_CLOSED</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>SET_REOPENED</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="add_comment_btn">
                   <property name="text">
                    <string>Add Comment</string>
                   </property>
@@ -595,7 +668,7 @@ background-color : rgba(240,240,240,240);
               </widget>
              </item>
              <item row="3" column="0">
-              <widget class="QTableWidget" name="tableWidget">
+              <widget class="QTableWidget" name="comment_table">
                <attribute name="horizontalHeaderDefaultSectionSize">
                 <number>110</number>
                </attribute>
@@ -604,7 +677,12 @@ background-color : rgba(240,240,240,240);
                </attribute>
                <column>
                 <property name="text">
-                 <string>commenter</string>
+                 <string>ID</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>Nickname</string>
                 </property>
                </column>
                <column>
@@ -614,12 +692,12 @@ background-color : rgba(240,240,240,240);
                </column>
                <column>
                 <property name="text">
-                 <string>DateCreated</string>
+                 <string>DateModified</string>
                 </property>
                </column>
                <column>
                 <property name="text">
-                 <string>Detail</string>
+                 <string>Comment</string>
                 </property>
                </column>
               </widget>
@@ -651,6 +729,13 @@ background-color : rgba(240,240,240,240);
                  </property>
                 </spacer>
                </item>
+               <item>
+                <widget class="QPushButton" name="update_btn">
+                 <property name="text">
+                  <string>Update</string>
+                 </property>
+                </widget>
+               </item>
               </layout>
              </item>
              <item row="0" column="0">
@@ -671,45 +756,6 @@ QWidget#widget_10 QLabel{
 }</string>
                </property>
                <layout class="QGridLayout" name="gridLayout_6">
-                <item row="1" column="1">
-                 <layout class="QHBoxLayout" name="horizontalLayout_11">
-                  <item>
-                   <widget class="QLabel" name="label_13">
-                    <property name="text">
-                     <string>Assignee :</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="label_18">
-                    <property name="text">
-                     <string>-</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item row="2" column="1" colspan="2">
-                 <layout class="QHBoxLayout" name="horizontalLayout_8">
-                  <item>
-                   <widget class="QLabel" name="label_9">
-                    <property name="text">
-                     <string>Nickname :</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLineEdit" name="assign_name"/>
-                  </item>
-                  <item>
-                   <widget class="QPushButton" name="assign_btn">
-                    <property name="text">
-                     <string>Assign</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
                 <item row="0" column="0">
                  <layout class="QHBoxLayout" name="horizontalLayout_13">
                   <item>
@@ -727,6 +773,31 @@ QWidget#widget_10 QLabel{
                    </widget>
                   </item>
                  </layout>
+                </item>
+                <item row="0" column="1" colspan="2">
+                 <layout class="QHBoxLayout" name="horizontalLayout_16">
+                  <item>
+                   <widget class="QLabel" name="label_21">
+                    <property name="text">
+                     <string>Description :</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="issue_des">
+                    <property name="text">
+                     <string>-</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item row="0" column="3">
+                 <widget class="QPushButton" name="resoloved_btn">
+                  <property name="text">
+                   <string>Resolved</string>
+                  </property>
+                 </widget>
                 </item>
                 <item row="1" column="0">
                  <layout class="QHBoxLayout" name="horizontalLayout_14">
@@ -746,6 +817,49 @@ QWidget#widget_10 QLabel{
                   </item>
                  </layout>
                 </item>
+                <item row="1" column="1">
+                 <layout class="QHBoxLayout" name="horizontalLayout_11">
+                  <item>
+                   <widget class="QLabel" name="label_13">
+                    <property name="text">
+                     <string>Assignee :</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="label_18">
+                    <property name="text">
+                     <string>-</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item row="1" column="2">
+                 <layout class="QHBoxLayout" name="horizontalLayout_17">
+                  <item>
+                   <widget class="QLabel" name="label_12">
+                    <property name="text">
+                     <string>Fixer :</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="fixer">
+                    <property name="text">
+                     <string>-</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item row="1" column="3">
+                 <widget class="QPushButton" name="fix_btn">
+                  <property name="text">
+                   <string>FIX!</string>
+                  </property>
+                 </widget>
+                </item>
                 <item row="2" column="0">
                  <layout class="QHBoxLayout" name="horizontalLayout_15">
                   <item>
@@ -764,19 +878,22 @@ QWidget#widget_10 QLabel{
                   </item>
                  </layout>
                 </item>
-                <item row="0" column="1">
-                 <layout class="QHBoxLayout" name="horizontalLayout_16">
+                <item row="2" column="1" colspan="3">
+                 <layout class="QHBoxLayout" name="horizontalLayout_8">
                   <item>
-                   <widget class="QLabel" name="label_21">
+                   <widget class="QLabel" name="label_9">
                     <property name="text">
-                     <string>Description :</string>
+                     <string>Nickname :</string>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLabel" name="issue_des">
+                   <widget class="QLineEdit" name="assign_name"/>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="assign_btn">
                     <property name="text">
-                     <string>-</string>
+                     <string>Assign</string>
                     </property>
                    </widget>
                   </item>
