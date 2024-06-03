@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.issuestation.converter.IssueStateConverter.updateIssueState;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -17,11 +19,10 @@ public class IssueStateServiceImpl implements IssueStateService {
 
     @Override
     @Transactional
-    public Issue changeIssueState(IssueRequestDto.JoinIssueStateRequestDto request, long issueId) {
+    public void changeIssueState(IssueRequestDto.JoinIssueStateRequestDto request, long issueId) {
         Issue issue = issueRepository.findById(issueId)
                 .orElseThrow(() -> new IllegalArgumentException("Issue not found"));
 
-        Issue updatedIssue = IssueStateConverter.updateIssueState(issue, request.getStatus());
-        return issueRepository.save(updatedIssue);
+        updateIssueState(issue, request.getStatus());
     }
 }
