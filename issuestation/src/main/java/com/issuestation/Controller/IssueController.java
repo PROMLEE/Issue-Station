@@ -35,6 +35,7 @@ public class IssueController {
     private final IssueSearchService issueSearchService;
     private final SetAssigneeService assigneeService;
     private final CommentListService commentService;
+    private final AssigneeAlgoService assigneeAlgoService;
 
     @Autowired
     TokenProvider tokenProvider;
@@ -125,5 +126,11 @@ public class IssueController {
     @GetMapping("/comment/{id}")
     public List<IssueResponseDto.GetCommentResponseDto> getCommentsByIssueId(@PathVariable Long id) {
         return commentService.getCommentsByIssueId(id);
+    }
+
+    @GetMapping("/assignee/algo/{id}")
+    public ResponseEntity<List<IssueResponseDto.AssigneeAlgoResponseDto>> getDevelopersWithLeastAssignments(@PathVariable Long id) {
+        List<IssueResponseDto.AssigneeAlgoResponseDto> developers = assigneeAlgoService.getDevelopersWithLeastAssignments(id);
+        return ResponseEntity.ok(developers);
     }
 }
