@@ -8,6 +8,7 @@ import com.issuestation.Dto.ResponseDto;
 import com.issuestation.Dto.UserDto.Token.TokenResponseDto;
 import com.issuestation.Entity.*;
 import com.issuestation.Entity.enums.CommentTag;
+import com.issuestation.Entity.enums.Priority;
 import com.issuestation.Entity.enums.Status;
 import com.issuestation.Repository.ProjectRepository;
 import com.issuestation.Security.TokenProvider;
@@ -88,6 +89,7 @@ class IssueControllerTest {
         IssueRequestDto.JoinIssueCreateRequestDto requestDto = new IssueRequestDto.JoinIssueCreateRequestDto();
         ReflectionTestUtils.setField(requestDto, "name", "test");
         ReflectionTestUtils.setField(requestDto, "description", "test");
+        ReflectionTestUtils.setField(requestDto,"priority",Priority.MAJOR);
         Issue issue = new Issue();
         ReflectionTestUtils.setField(issue, "id", issueId); // Issue의 id 필드에 접근하여 값을 설정
         String jwtToken = "Bearer test.jwt.token";

@@ -6,6 +6,7 @@ import com.issuestation.Dto.Project.ProjectRequestDto;
 import com.issuestation.Dto.Project.ProjectResponseDto;
 import com.issuestation.Entity.Project;
 import com.issuestation.Entity.Team;
+import com.issuestation.Entity.enums.Priority;
 import com.issuestation.Entity.enums.Role;
 import com.issuestation.Security.TokenProvider;
 import com.issuestation.Service.ProjectService.*;
