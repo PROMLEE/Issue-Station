@@ -53,6 +53,7 @@ public class IssueInfoServiceImpl {
                 issue.getName(),
                 issue.getDescription(),
                 issue.getStatus(),
+                issue.getPriority(),
                 issue.getProject().getId(),
                 String.valueOf(issue.getInitdate()),
                 String.valueOf(issue.getModdate()),
