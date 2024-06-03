@@ -2,6 +2,7 @@ package com.issuestation.Entity;
 
 import com.issuestation.Entity.Temp.IssueId;
 import com.issuestation.Entity.common.BaseTimeEntity;
+import com.issuestation.Entity.enums.Priority;
 import com.issuestation.Entity.enums.Status;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -28,6 +29,9 @@ public class Issue extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     @NotNull
     private Status status;
+
+    @Enumerated(EnumType.STRING)
+    private Priority priority;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id")

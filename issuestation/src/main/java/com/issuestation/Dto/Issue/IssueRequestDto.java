@@ -1,6 +1,7 @@
 package com.issuestation.Dto.Issue;
 
 import com.issuestation.Entity.enums.CommentTag;
+import com.issuestation.Entity.enums.Priority;
 import com.issuestation.Entity.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,6 +14,7 @@ public class IssueRequestDto {
     public static class JoinIssueCreateRequestDto {
         String name;
         String description;
+        Priority priority;
     }
 
     @Getter

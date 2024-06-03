@@ -1,6 +1,7 @@
 package com.issuestation.Dto.Issue;
 
 import com.issuestation.Entity.enums.CommentTag;
+import com.issuestation.Entity.enums.Priority;
 import com.issuestation.Entity.enums.Status;
 import lombok.*;
 
@@ -49,6 +50,7 @@ public class IssueResponseDto {
         String name;
         String description;
         Status status;
+        Priority priority;
         Long projectId;
         String initDate;
         String modDate;
@@ -65,6 +67,9 @@ public class IssueResponseDto {
         String name;
         String description;
         Status status;
+        Priority priority;
+        String reporter;
+        String assignee;
         Long projectId;
         String modDate;
     }
