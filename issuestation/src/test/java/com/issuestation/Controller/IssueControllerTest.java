@@ -138,6 +138,7 @@ class IssueControllerTest {
                         .description("이슈 설명1")
                         .status(Status.NEW) // 예시 상태 값
                         .projectId(projectId)
+                        .priority(Priority.BLOCKER)
                         .modDate("2023-06-01")
                         .build()
         );
@@ -167,6 +168,7 @@ class IssueControllerTest {
                         .name("이슈1")
                         .description("이슈 설명1")
                         .status(Status.NEW) // 예시 상태 값
+                        .priority(Priority.CRITICAL)
                         .projectId(projectId)
                         .modDate("2023-06-01")
                         .build()
@@ -194,6 +196,7 @@ class IssueControllerTest {
                 .name("테스트 이슈")
                 .description("테스트 설명")
                 .status(Status.NEW)
+                .priority(Priority.TRIVIAL)
                 .projectId(1L)
                 .initDate("2023-06-01")
                 .modDate("2023-06-01")
@@ -213,11 +216,13 @@ class IssueControllerTest {
                 .andExpect(jsonPath("$.result.name").value("테스트 이슈"))
                 .andExpect(jsonPath("$.result.description").value("테스트 설명"))
                 .andExpect(jsonPath("$.result.status").value("NEW"))
+                .andExpect(jsonPath("$.result.priority").value("TRIVIAL"))
                 .andExpect(jsonPath("$.result.projectId").value(1L))
                 .andExpect(jsonPath("$.result.initDate").value("2023-06-01"))
                 .andExpect(jsonPath("$.result.modDate").value("2023-06-01"))
                 .andExpect(jsonPath("$.result.assignee").value("테스트 담당자"))
                 .andExpect(jsonPath("$.result.reporter").value("테스트 보고자"));
+
     }
 
     @Test
