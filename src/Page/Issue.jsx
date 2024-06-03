@@ -331,7 +331,7 @@ export const Issue = () => {
                   handleState("CLOSED");
                 }}
               >
-                Set Colsed
+                Set Closed
               </Button>
             )}
             {location.state.role === "TESTER" && issue.status === "CLOSED" && (
