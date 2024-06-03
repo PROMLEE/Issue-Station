@@ -232,27 +232,25 @@ class IssueControllerTest {
         long issueId = 1L; // 테스트 대상 이슈 ID
         Status newStatus = Status.FIXED; // 변경할 새 상태
         IssueRequestDto.JoinIssueStateRequestDto requestDto = new IssueRequestDto.JoinIssueStateRequestDto();
-        ReflectionTestUtils.setField(requestDto, "status", Status.NEW);
-        Issue issue = new Issue();
-        ReflectionTestUtils.setField(issue, "id", issueId); // Issue의 id 필드에 접근하여 값을 설정
-        ReflectionTestUtils.setField(issue, "status", newStatus); // Issue의 status 필드에 접근하여 값을 설정
+        ReflectionTestUtils.setField(requestDto, "status", newStatus); // 변경할 상태로 수정, 즉, 변경할 상태를 전달받음
+
+        //서비스에서 상태를 return하는게 없기 때문에, 상태 변경 서비스가 동작하는지만 확인해야함.
 
         String jwtToken = "Bearer test.jwt.token";
 
         when(tokenProvider.validateJwt(anyString())).thenReturn("1"); // 토큰 검증 모의 처리
-        when(issueStateService.changeIssueState(any(IssueRequestDto.JoinIssueStateRequestDto.class), eq(issueId))).thenReturn(issue); // 이슈 상태 변경 서비스 호출 결과 모의 처리
 
         // 실행 & 검증
         mockMvc.perform(post("/issue/state/{id}", issueId)
                         .header("Authorization", jwtToken)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(requestDto)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.result.status").value(newStatus.toString())); // 응답에 포함된 이슈 상태가 변경된 상태와 일치하는지 검증
+                .andExpect(status().isOk());
 
         // 이슈 상태 변경 서비스가 올바르게 호출되었는지 확인
         verify(issueStateService).changeIssueState(any(IssueRequestDto.JoinIssueStateRequestDto.class), eq(issueId));
     }
+
 
     @Test
     @DisplayName("코멘트 생성 성공")
