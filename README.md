@@ -17,7 +17,7 @@
 12. [이슈 검색](#이슈-검색)
 13. [개발자의 상태 변경 (Fixed)](#개발자의-상태-변경-fixed)
 14. [Project Leader의 피드백 (Resolved)](#project-leader의-피드백-resolved)
-
+15. [Amazon Relational Database Service (RDS)](#Amazon-Relational-Database-Service-RDS)
 ---
 
 ## About Us
@@ -137,6 +137,15 @@
 
 1. 이슈를 생성한 Tester 계정으로 로그인합니다.
 2. **Set Resolved** 버튼을 클릭하여 상태를 RESOLVED로 변경합니다.
+
+---
+
+## Amazon Relational Database Service (RDS)
+
+[RDS]
+1. endpoint: issue-station-db.c1ckm6ya0suu.ap-northeast-2.rds.amazonaws.com
+2. user    : root
+3. pw      : issuestation2021
 
 ---
 
