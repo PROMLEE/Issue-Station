@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface FixerRepository extends JpaRepository<Fixer, Long> {
     void deleteAllByIssueId(Long id);
     Optional<Fixer> findDistinctFirstByIssueId(Long issueId);
+
 }
