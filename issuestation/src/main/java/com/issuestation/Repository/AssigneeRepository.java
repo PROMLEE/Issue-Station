@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface AssigneeRepository extends JpaRepository<Assignee, Integer> {
     Optional<Assignee> findDistinctFirstByIssueId(Long id);
+void deleteAllByIssueId(Long id);
 }
