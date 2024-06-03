@@ -9,6 +9,7 @@ import com.issuestation.Dto.UserDto.Token.TokenResponseDto;
 import com.issuestation.Entity.*;
 import com.issuestation.Entity.enums.CommentTag;
 import com.issuestation.Entity.enums.Priority;
+import com.issuestation.Entity.enums.Role;
 import com.issuestation.Entity.enums.Status;
 import com.issuestation.Repository.ProjectRepository;
 import com.issuestation.Security.TokenProvider;
@@ -44,6 +45,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
@@ -76,6 +78,9 @@ class IssueControllerTest {
 
     @MockBean
     private CommentListService commentListService;
+
+    @MockBean
+    private AssigneeAlgoService assigneeAlgoService;
 
     @MockBean
     private TokenProvider tokenProvider;
@@ -372,5 +377,30 @@ class IssueControllerTest {
                 .andExpect(jsonPath("$[1].tag").value(comments.get(1).getTag().toString()))
                 .andExpect(jsonPath("$[1].nickname").value(comments.get(1).getNickname()))
                 .andExpect(jsonPath("$[1].modDate").value(comments.get(1).getModDate()));
+    }
+
+    @Test
+    @DisplayName("가장 적은 이슈가 할당된 개발자 목록 가져오기 성공")
+    void getDevelopersWithLeastAssignmentsSuccess() throws Exception {
+        // 준비
+        long projectId = 1L;
+        List<IssueResponseDto.AssigneeAlgoResponseDto> developers = new ArrayList<>();
+        IssueResponseDto.AssigneeAlgoResponseDto developer = new IssueResponseDto.AssigneeAlgoResponseDto();
+        developer.setId(1L);
+        developer.setNickname("dev1");
+        developer.setRole(Role.DEVELOPER);
+        developer.setAssignedIssueCount(2L);
+        developers.add(developer);
+
+        when(assigneeAlgoService.getDevelopersWithLeastAssignments(projectId)).thenReturn(developers); // 서비스 호출 결과 모의 처리
+
+        // 실행 & 검증
+        mockMvc.perform(get("/issue/assignee/algo/{id}", projectId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(developer.getId()))
+                .andExpect(jsonPath("$[0].nickname").value(developer.getNickname()))
+                .andExpect(jsonPath("$[0].role").value(developer.getRole().toString()))
+                .andExpect(jsonPath("$[0].assignedIssueCount").value(developer.getAssignedIssueCount()));
     }
 }
