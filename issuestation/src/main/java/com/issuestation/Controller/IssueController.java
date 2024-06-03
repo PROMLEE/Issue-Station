@@ -118,7 +118,11 @@ public class IssueController {
         Reporter reporter = assigneeService.assignReporter(id, request);
         return ApiResponse.onSuccess(JoinAssigneeConverter.toReporterDto(reporter));
     }
-
+    @PostMapping("/fixer/{id}")
+    public ApiResponse<IssueResponseDto.JoinAssigneeCreateResponseDto> assignFixerToIssue(@PathVariable long id, @RequestBody IssueRequestDto.JoinAssigneeRequestDto request) {
+        Fixer fixer = assigneeService.assignFixer(id, request);
+        return ApiResponse.onSuccess(JoinAssigneeConverter.toFixerDto(fixer));
+    }
     @GetMapping("/comment/{id}")
     public List<IssueResponseDto.GetCommentResponseDto> getCommentsByIssueId(@PathVariable Long id) {
         return commentService.getCommentsByIssueId(id);

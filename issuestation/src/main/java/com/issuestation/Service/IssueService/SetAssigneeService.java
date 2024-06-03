@@ -16,13 +16,15 @@ public class SetAssigneeService {
     private final ReporterRepository reportRepository;
     private final IssueRepository issueRepository;
     private final UserRepository userRepository;
+    private final FixerRepository fixerRepository;
 
     @Autowired
-    public SetAssigneeService(AssigneeRepository assigneeRepository, IssueRepository issueRepository, UserRepository userRepository, ReporterRepository reportRepository) {
+    public SetAssigneeService(AssigneeRepository assigneeRepository, IssueRepository issueRepository, UserRepository userRepository, ReporterRepository reportRepository, FixerRepository fixerRepository) {
         this.assigneeRepository = assigneeRepository;
         this.issueRepository = issueRepository;
         this.userRepository = userRepository;
         this.reportRepository = reportRepository;
+        this.fixerRepository = fixerRepository;
     }
 
     public Assignee assignAssignee(Long issueId, IssueRequestDto.JoinAssigneeRequestDto assigneeRequest) {
@@ -56,6 +58,24 @@ public class SetAssigneeService {
                     .user(user)
                     .build();
             return reportRepository.save(reporter);
+        } else {
+            throw new RuntimeException("Issue or User not found");
+        }
+    }
+
+    public Fixer assignFixer(Long issueId, IssueRequestDto.JoinAssigneeRequestDto assigneeRequest) {
+        Optional<Issue> issueOptional = issueRepository.findById(issueId);
+        Optional<User> userOptional = userRepository.findByNickname(assigneeRequest.getNickname());
+
+        if (issueOptional.isPresent() && userOptional.isPresent()) {
+            Issue issue = issueOptional.get();
+            User user = userOptional.get();
+
+            Fixer fixer = Fixer.builder()
+                    .issue(issue)
+                    .user(user)
+                    .build();
+            return fixerRepository.save(fixer);
         } else {
             throw new RuntimeException("Issue or User not found");
         }
