@@ -1,11 +1,13 @@
 import { Tag } from "./Tag";
 import { Date } from "./Date";
 import { Button, Card } from "flowbite-react";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { loginstate } from "../recoil/user";
+import { useRecoilValue } from "recoil";
 
 export const IssueCard = ({ issue, role }) => {
   const navigate = useNavigate();
+  const user = useRecoilValue(loginstate);
 
   const toIssue = () => {
     navigate(`/issue/${issue.id}`, { state: { role } });
@@ -15,14 +17,53 @@ export const IssueCard = ({ issue, role }) => {
       <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
         {issue.name}
       </h5>
-      <div className="font-normal text-gray-700 dark:text-gray-400">
+      {/* <div className="font-normal text-gray-700 dark:text-gray-400">
         {issue.description}
-      </div>
+      </div> */}
       <div className="flex gap-2 my-1">
         <div>status: </div>
         <Tag status={issue.status} />
       </div>
-      <Date date={issue.modDate} />
+      <div className="flex gap-2 my-1">
+        <div>priority: </div>
+        {issue.priority ? (
+          <Tag status={issue.priority} />
+        ) : (
+          <Tag status={"MAJOR"} />
+        )}
+      </div>
+      <Date date={issue.initDate} />
+      <Date date={issue.modDate} create={false} />
+      <div className="">
+        reporter:{" "}
+        <div
+          className={`inline font-bold ${
+            user.nickname === issue.reporter && "text-purple-500"
+          }`}
+        >
+          {issue.reporter}
+        </div>
+      </div>
+      <div className="">
+        assignee:{" "}
+        <div
+          className={`inline font-bold ${
+            user.nickname === issue.assignee && "text-purple-500"
+          }`}
+        >
+          {issue.assignee}
+        </div>
+      </div>
+      <div className="">
+        fixer:{" "}
+        <div
+          className={`inline font-bold ${
+            user.nickname === issue.fixer && "text-purple-500"
+          }`}
+        >
+          {issue.fixer}
+        </div>
+      </div>
       <Button className="w-full" onClick={toIssue}>
         Read more
         <svg

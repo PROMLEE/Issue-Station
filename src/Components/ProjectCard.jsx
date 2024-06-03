@@ -46,16 +46,17 @@ export function ProjectCard({ project }) {
         <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
           {project.name}
         </h5>
-        <span className="text-sm text-gray-500 dark:text-gray-400">
+        {/* <span className="text-sm text-gray-500 dark:text-gray-400">
           {project.description}
-        </span>
-        <span className="text-sm text-gray-500 dark:text-gray-400">
+        </span> */}
+        <span className="text-sm text-gray-500 dark:text-gray-400 border rounded-md px-2">
           {project.isPrivate ? "Private" : "Public"}
         </span>
         {/* <div className="text-xs text-slate-400 mt-1">
           Admin: {project.admin}
         </div> */}
         <Date date={project.initdate} style={`text-xs text-slate-400`} />
+
         <div className="mt-4 flex space-x-3 lg:mt-6">
           <button
             onClick={handleDetail}

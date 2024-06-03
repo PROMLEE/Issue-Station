@@ -99,6 +99,29 @@ const SetAssignee = async (id, nickname) => {
     alert("개발자 변경 에러");
   }
 };
+
+const SetFixer = async (id, nickname) => {
+  try {
+    const response = await authAPI.post(`issue/fixer/${id}`, { nickname });
+    console.log(response);
+    return response;
+  } catch (e) {
+    console.log(e);
+    alert("수정자 변경 에러");
+  }
+};
+
+const IssueDelete = async (id) => {
+  try {
+    const response = await authAPI.delete(`issue/delete/${id}`);
+    console.log(response);
+    return response;
+  } catch (e) {
+    console.log(e);
+    alert("이슈 삭제 에러");
+  }
+};
+
 export {
   CreateIssue,
   IssueDetail,
@@ -109,4 +132,6 @@ export {
   CommentList,
   SetReporter,
   SetAssignee,
+  SetFixer,
+  IssueDelete,
 };
