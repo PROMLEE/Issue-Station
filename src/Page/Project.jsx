@@ -25,7 +25,7 @@ export const Project = () => {
     getProjectDetail();
     getIssueList();
     getMember();
-    if (isLogin) {
+    if (isLogin()) {
       getRole();
     }
   }, []);
@@ -65,17 +65,28 @@ export const Project = () => {
           <div className="text-3xl font-bold">{detail.name}</div>
           <div className="font-bold">{detail.description}</div>
           <Date date={detail.initdate} />
-          <div>{detail.isPrivate ? "private" : "public"} Project</div>
-          <div className="text-2xl font-bold mt-3">Project Member</div>
-          {member.map((member, i) => {
-            return (
-              <div className="flex gap-2 my-1" key={i}>
-                {member.nickname}: <Tag status={member.role} />
-              </div>
-            );
-          })}
+          <div className="">
+            <div className="inline font-bold">
+              {detail.isPrivate ? "private" : "public"}
+            </div>{" "}
+            Project
+          </div>
+          <div className="border rounded-lg p-3 bg-slate-100">
+            <div className="text-2xl font-bold mb-3 text-sky-600">
+              Project Member
+            </div>
+            {member.map((member, i) => {
+              return (
+                <div className="flex gap-2 my-1" key={i}>
+                  {member.nickname}: <Tag status={member.role} />
+                </div>
+              );
+            })}
+          </div>
         </div>
-        {myRole === "TESTER" ? <IssueCreate pid={params.id} /> : null}
+        {myRole === "TESTER" ? (
+          <IssueCreate pid={params.id} role={myRole} />
+        ) : null}
         {/* <IssueCreate pid={params.id} /> */}
       </div>
       <div
@@ -116,7 +127,11 @@ export const Project = () => {
           <Select
             id="search"
             required
-            onChange={(e) => setSearchType(e.target.value)}
+            onChange={(e) => {
+              setSearchType(e.target.value);
+              setSearch("");
+              setStatus("NEW");
+            }}
           >
             <option>name</option>
             <option>status</option>

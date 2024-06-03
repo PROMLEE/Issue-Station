@@ -11,6 +11,8 @@ import {
   CommentList,
   SetIssueState,
   SetAssignee,
+  SetFixer,
+  IssueDelete,
 } from "../apis/issue";
 import { Button, TextInput } from "flowbite-react";
 import { loginstate } from "../recoil/user";
@@ -62,6 +64,18 @@ export const Issue = () => {
     getMembers(response.data.result.projectId);
   };
 
+  const DeleteIssue = async () => {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      const response = await IssueDelete(params.id);
+      if (response.status === 200) {
+        alert("이슈 삭제 성공");
+        window.history.back();
+      } else {
+        alert("이슈 삭제 실패");
+      }
+    }
+  };
+
   const getCommentList = async () => {
     const response = await CommentList(params.id);
     setComments(response.data);
@@ -78,6 +92,15 @@ export const Issue = () => {
       getIssueDetail();
     } else {
       alert("담당자 변경 실패");
+    }
+  };
+
+  const setFixer = async (nickname) => {
+    const response = await SetFixer(params.id, nickname);
+    if (response.status === 200) {
+      getIssueDetail();
+    } else {
+      alert("개발자 변경 실패");
     }
   };
 
@@ -130,6 +153,7 @@ export const Issue = () => {
         setShowmembers(!showmembers);
         setState(state);
       } else if (state === "FIXED") {
+        setFixer(nickname);
         setState(state);
       } else if (state === "RESOLVED") {
         setState(state);
@@ -160,13 +184,46 @@ export const Issue = () => {
         <div>status: </div>
         <Tag status={issue.status} />
       </div>
-      <div className="">
-        reporter: <div className="inline font-bold">{issue.reporter}</div>
+      <div className="flex gap-2 my-1">
+        <div>priority: </div>
+        {issue.priority ? (
+          <Tag status={issue.priority} />
+        ) : (
+          <Tag status={"MAJOR"} />
+        )}
       </div>
       <div className="">
-        assignee: <div className="inline font-bold">{issue.assignee}</div>
+        reporter:{" "}
+        <div
+          className={`inline font-bold ${
+            user.nickname === issue.reporter && "text-purple-500"
+          }`}
+        >
+          {issue.reporter}
+        </div>
       </div>
-      <Date date={issue.modDate} />
+      <div className="">
+        assignee:{" "}
+        <div
+          className={`inline font-bold ${
+            user.nickname === issue.assignee && "text-purple-500"
+          }`}
+        >
+          {issue.assignee}
+        </div>
+      </div>
+      <div className="">
+        fixer:{" "}
+        <div
+          className={`inline font-bold ${
+            user.nickname === issue.fixer && "text-purple-500"
+          }`}
+        >
+          {issue.fixer}
+        </div>
+      </div>
+      <Date date={issue.initDate} />
+      <Date date={issue.modDate} create={false} />
       {showmembers &&
         members.map((member, i) => {
           return (
@@ -175,7 +232,6 @@ export const Issue = () => {
             </div>
           );
         })}
-
       {/* <IssueCreate edit={true} /> */}
       {setmember &&
         (assign === "" ? (
@@ -298,7 +354,14 @@ export const Issue = () => {
             <div className="text-slate-500">{comment.comment}</div>
           </div>
         );
-      })}
+      })}{" "}
+      <div className="flex w-full gap-3">
+        {isLogin && location.state.role === "PL" && (
+          <Button onClick={DeleteIssue} className="bg-red-500 text-black">
+            Delete Issue
+          </Button>
+        )}
+      </div>
     </div>
   );
 };

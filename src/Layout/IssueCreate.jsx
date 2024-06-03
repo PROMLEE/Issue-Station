@@ -1,8 +1,16 @@
-import { Button, Label, Modal, TextInput, Textarea } from "flowbite-react";
+import {
+  Button,
+  Label,
+  Modal,
+  TextInput,
+  Textarea,
+  Select,
+} from "flowbite-react";
 import { useState } from "react";
-import { CreateIssue, CommentIssue, SetReporter } from "../apis/issue";
+import { CreateIssue, SetReporter } from "../apis/issue";
 import { loginstate } from "../recoil/user";
 import { useRecoilValue } from "recoil";
+import { useNavigate } from "react-router-dom";
 
 const defaultIssue = {
   title: "기존 이슈 제목",
@@ -10,14 +18,15 @@ const defaultIssue = {
   private: true,
 };
 
-export function IssueCreate({ edit = false, pid }) {
+export function IssueCreate({ edit = false, pid, role }) {
+  const navigate = useNavigate();
   const user = useRecoilValue(loginstate);
   const [openModal, setOpenModal] = useState(false);
   const [title, settitle] = useState(edit ? defaultIssue["title"] : "");
   const [description, setdescription] = useState(
     edit ? defaultIssue["description"] : ""
   );
-  const [comment, setComment] = useState("");
+  const [priority, setpriority] = useState("MAJOR");
 
   function onCloseModal() {
     setOpenModal(false);
@@ -27,21 +36,13 @@ export function IssueCreate({ edit = false, pid }) {
     const result = await CreateIssue(pid, {
       name: title,
       description: description,
+      priority: priority,
     });
-    if (result.data.isSuccess) {
-      SetReporter(result.data.result.id, user.nickname);
-      CommentIssue(result.data.result.id, {
-        comment: comment,
-        tag: "ISSUE_CREATED",
-      });
-      alert("이슈 생성 성공");
-      window.location.reload();
-    } else {
-      alert("이슈 생성 실패");
-    }
+    SetReporter(result.data.result.id, user.nickname);
+    alert("이슈가 생성되었습니다.");
+    navigate(`/issue/${result.data.result.id}`, { state: { role } });
     settitle("");
     setdescription("");
-    setComment("");
     onCloseModal();
   };
 
@@ -71,7 +72,7 @@ export function IssueCreate({ edit = false, pid }) {
             </div>
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="description" />
+                <Label htmlFor="description" value="description" />
               </div>
               <Textarea
                 id="description"
@@ -81,23 +82,24 @@ export function IssueCreate({ edit = false, pid }) {
                 required
                 rows={4}
               />
-            </div>
-            <div>
-              <TextInput
-                id="title"
-                placeholder="코멘트 작성"
-                value={comment}
-                onChange={(event) => setComment(event.target.value)}
-                required
-              />
+
+              <div className="my-3 block">
+                <Label htmlFor="description" value="priority" />
+              </div>
+              <Select
+                id="priority"
+                value={priority}
+                onChange={(e) => setpriority(e.target.value)}
+              >
+                <option>BLOCKER</option>
+                <option>CRITICAL</option>
+                <option>MAJOR</option>
+                <option>MINOR</option>
+                <option>TRIVIAL</option>
+              </Select>
             </div>
             <div className="w-full">
-              <Button
-                onClick={handleCreateIssue}
-                disabled={!title || !description || !comment}
-              >
-                complete
-              </Button>
+              <Button onClick={handleCreateIssue}>complete</Button>
             </div>
           </div>
         </Modal.Body>

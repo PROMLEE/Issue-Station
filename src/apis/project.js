@@ -75,7 +75,7 @@ const MyRole = async (id) => {
     return response;
   } catch (e) {
     console.log(e);
-    alert("프로젝트 리스트 조회 에러");
+    alert("내 역할 조회 에러");
   }
 };
 
