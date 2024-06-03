@@ -874,7 +874,10 @@ class ProjDetailScreen(QDialog):
                         about_event(self, 'state 설정 실패')
                         return    
                 else:
-                    about_event(self,"권한이 없습니다.")
+                    if state != "RESOLVED":
+                        about_event(self,"RESOLVED 상태가 아닙니다.")
+                    else:    
+                        about_event(self,"권한이 없습니다.")
                     return
         else:
             about_event(self,"권한이 없습니다.")
