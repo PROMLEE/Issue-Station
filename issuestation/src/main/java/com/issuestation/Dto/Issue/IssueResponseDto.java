@@ -2,6 +2,7 @@ package com.issuestation.Dto.Issue;
 
 import com.issuestation.Entity.enums.CommentTag;
 import com.issuestation.Entity.enums.Priority;
+import com.issuestation.Entity.enums.Role;
 import com.issuestation.Entity.enums.Status;
 import lombok.*;
 
@@ -108,5 +109,11 @@ public class IssueResponseDto {
         private String nickname;
         private String modDate;
     }
-
+    @Data
+    public static class AssigneeAlgoResponseDto {
+        private Long id;
+        private String nickname; // User 엔티티에서 필요한 필드
+        private Role role;
+        private Long assignedIssueCount;
+    }
 }
