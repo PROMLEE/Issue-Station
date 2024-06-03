@@ -82,6 +82,7 @@ public class IssueSearchService {
                 .reporter(reporterNickname)
                 .fixer(fixerNickname)
                 .projectId(issue.getProject().getId())
+                .initDate(String.valueOf(issue.getInitdate()))
                 .modDate(String.valueOf(issue.getModdate()))
                 .build();
     }

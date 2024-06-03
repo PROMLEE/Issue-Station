@@ -4,5 +4,5 @@ import com.issuestation.Dto.Issue.IssueRequestDto;
 import com.issuestation.Entity.Issue;
 
 public interface IssueStateService {
-    Issue changeIssueState(IssueRequestDto.JoinIssueStateRequestDto request, long issueId);
+    void changeIssueState(IssueRequestDto.JoinIssueStateRequestDto request, long issueId);
 }

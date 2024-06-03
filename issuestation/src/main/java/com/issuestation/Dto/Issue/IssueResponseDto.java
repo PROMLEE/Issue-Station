@@ -74,6 +74,7 @@ public class IssueResponseDto {
         String fixer;
         Long projectId;
         String modDate;
+        String initDate;
     }
 
 
