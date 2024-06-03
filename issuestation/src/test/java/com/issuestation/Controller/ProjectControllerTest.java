@@ -169,8 +169,6 @@ class ProjectControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(projects.size())); // 반환된 프로젝트 목록의 크기 검증
     }
-
-
     @Test
     @DisplayName("프로젝트 정보 조회 성공")
     void getProjectInfo() throws Exception {
@@ -196,22 +194,16 @@ class ProjectControllerTest {
                 .andExpect(jsonPath("$.result.name").value("testProject"))
                 .andExpect(jsonPath("$.result.description").value("testDescription"));
     }
-
-
     @Test
     @DisplayName("사용자 프로젝트 조회 성공")
     void getUserProjectsSuccess() throws Exception {
-        // Mock 데이터 설정
         String jwtToken = "Bearer test.jwt.token";
         String token = "test.jwt.token";
         Long userId = 1L;
-
         List<ProjectResponseDto.MyProjectResponseDto> projects = Arrays.asList(
                 ProjectResponseDto.MyProjectResponseDto.builder()
-                        .id(1L)
-                        .name("Project 1")
-                        .isPrivate(false)
-                        .description("Description 1")
+                        .id(1L).name("Project 1")
+                        .isPrivate(false).description("Description 1")
                         .thumbnaillink("http://example.com/image1.png")
                         .initdate(LocalDateTime.now().minusDays(5))
                         .moddate(LocalDateTime.now().minusDays(3))
@@ -226,30 +218,22 @@ class ProjectControllerTest {
                         .moddate(LocalDateTime.now().minusDays(1))
                         .build()
         );
-
-        // Mock 동작 설정
         when(tokenProvider.validateJwt(anyString())).thenReturn(userId.toString());
         when(myProjectService.getProjectsByUserToken(token)).thenReturn(projects);
-
-        // 테스트 실행 및 검증
         mockMvc.perform(get("/project/my")
                         .header("Authorization", jwtToken)
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(1L))
+                .andExpect(status().isOk()).andExpect(jsonPath("$[0].id").value(1L))
                 .andExpect(jsonPath("$[0].name").value("Project 1"))
                 .andExpect(jsonPath("$[0].isPrivate").value(false))
                 .andExpect(jsonPath("$[0].description").value("Description 1"))
                 .andExpect(jsonPath("$[0].thumbnaillink").value("http://example.com/image1.png"))
-                .andExpect(jsonPath("$[0].initdate").exists())
-                .andExpect(jsonPath("$[0].moddate").exists())
-                .andExpect(jsonPath("$[1].id").value(2L))
-                .andExpect(jsonPath("$[1].name").value("Project 2"))
+                .andExpect(jsonPath("$[0].initdate").exists()).andExpect(jsonPath("$[0].moddate").exists())
+                .andExpect(jsonPath("$[1].id").value(2L)).andExpect(jsonPath("$[1].name").value("Project 2"))
                 .andExpect(jsonPath("$[1].isPrivate").value(true))
                 .andExpect(jsonPath("$[1].description").value("Description 2"))
                 .andExpect(jsonPath("$[1].thumbnaillink").value("http://example.com/image2.png"))
-                .andExpect(jsonPath("$[1].initdate").exists())
-                .andExpect(jsonPath("$[1].moddate").exists());
+                .andExpect(jsonPath("$[1].initdate").exists()).andExpect(jsonPath("$[1].moddate").exists());
     }
 
     @Test

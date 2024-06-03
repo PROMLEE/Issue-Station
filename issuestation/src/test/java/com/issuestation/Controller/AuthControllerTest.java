@@ -73,6 +73,7 @@ class AuthControllerTest {
         SignupDto signupDto = new SignupDto("test", "testN", "1004");
         ResponseDto<String> expectedResponse = ResponseDto.setSuccess("User registered successfully", null);
 
+        //given을 통해 생성한 signUpDto가 받는다면, willReturn으로 expectedResponse가 되도록 하였습니다.
         given(authService.signUp(signupDto)).willReturn(expectedResponse);
 
         // when & then
