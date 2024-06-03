@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface ReporterRepository extends JpaRepository<Reporter, Integer> {
     Optional<Reporter> findDistinctFirstByIssueId(Long id);
+    void deleteAllByIssueId(Long id);
 }
