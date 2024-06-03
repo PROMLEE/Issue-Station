@@ -3,13 +3,13 @@ import { Select } from "flowbite-react";
 import { IssueCard } from "../Components/IssueCard";
 import { Tag } from "../Components/Tag";
 import { Date } from "../Components/Date";
-import { Link } from "react-router-dom";
 import { IssueCreate } from "../Layout/IssueCreate";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ProjectDetail, GetMember, MyRole } from "../apis/project";
 import { SearchIssue } from "../apis/issue";
 import isLogin from "../util/checklogin";
+import IssueTrendChart from "../Components/IssueTrendChart";
 
 export const Project = () => {
   const params = useParams();
@@ -71,6 +71,7 @@ export const Project = () => {
             </div>{" "}
             Project
           </div>
+          <IssueTrendChart data={issuelist} />
           <div className="border rounded-lg p-3 bg-slate-100">
             <div className="text-2xl font-bold mb-3 text-sky-600">
               Project Member

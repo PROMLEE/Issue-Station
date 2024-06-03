@@ -122,6 +122,17 @@ const IssueDelete = async (id) => {
   }
 };
 
+const AssigneeAlgo = async (id) => {
+  try {
+    const response = await authAPI.get(`issue/assignee/algo/${id}`);
+    console.log(response);
+    return response;
+  } catch (e) {
+    console.log(e);
+    alert("개발자 추천 에러");
+  }
+};
+
 export {
   CreateIssue,
   IssueDetail,
@@ -134,4 +145,5 @@ export {
   SetAssignee,
   SetFixer,
   IssueDelete,
+  AssigneeAlgo,
 };
