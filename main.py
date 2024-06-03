@@ -818,8 +818,10 @@ class ProjDetailScreen(QDialog):
                         else:
                             about_event(self, 'state 설정 실패')
                             return    
+                    else:
+                        return
                 else:
-                    about_event(self,"이미 해결했거나 배정된 개발자가 없습니다.")
+                    about_event(self,"권한이 없습니다.")
                     return
         else:
             about_event(self,"권한이 없습니다.")
