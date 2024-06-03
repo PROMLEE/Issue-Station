@@ -13,6 +13,7 @@ import {
   SetAssignee,
   SetFixer,
   IssueDelete,
+  AssigneeAlgo,
 } from "../apis/issue";
 import { Button, TextInput } from "flowbite-react";
 import { loginstate } from "../recoil/user";
@@ -82,7 +83,7 @@ export const Issue = () => {
   };
 
   const getMembers = async (id) => {
-    const response = await GetMember(id);
+    const response = await AssigneeAlgo(id);
     setMembers(response.data);
   };
 
@@ -224,14 +225,23 @@ export const Issue = () => {
       </div>
       <Date date={issue.initDate} />
       <Date date={issue.modDate} create={false} />
-      {showmembers &&
-        members.map((member, i) => {
-          return (
-            <div className="flex gap-2 my-1" key={i}>
-              {member.nickname}: <Tag status={member.role} />
-            </div>
-          );
-        })}
+      {showmembers && (
+        <div className="font-bold text-pink-500 bg-slate-100 p-3">
+          개발자 추천
+          {members.map((member, i) => {
+            return (
+              <div className="flex gap-2 my-1" key={i}>
+                {i + 1}순위
+                <Tag status={member.role} />:{" "}
+                <div className="text-sky-500">{member.nickname}</div>{" "}
+                <div className="font-normal text-black text-sm">
+                  이 프로젝트에 할당된 이슈 개수: {member.assignedIssueCount}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
       {/* <IssueCreate edit={true} /> */}
       {setmember &&
         (assign === "" ? (
