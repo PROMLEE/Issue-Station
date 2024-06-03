@@ -56,6 +56,7 @@ public class IssueResponseDto {
         String modDate;
         String assignee;
         String reporter;
+        String fixer;
     }
 
     @Builder
@@ -70,8 +71,10 @@ public class IssueResponseDto {
         Priority priority;
         String reporter;
         String assignee;
+        String fixer;
         Long projectId;
         String modDate;
+        String initDate;
     }
 
 

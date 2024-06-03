@@ -27,7 +27,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/issue")
 public class IssueController {
-    private final ProjectRepository projectRepository;
     private final IssueInfoServiceImpl issueInfoService;
     private final IssueCreateService issueCreateService;
     private final IssueDeleteService issueDeleteService;
@@ -94,8 +93,8 @@ public class IssueController {
 
     @PostMapping("/state/{id}")
     public ApiResponse<IssueResponseDto.JoinIssueStateResponseDto> changeState(@PathVariable("id") long issueId, @RequestBody @Valid IssueRequestDto.JoinIssueStateRequestDto request) {
-        Issue issue = issueStateService.changeIssueState(request, issueId);
-        return ApiResponse.onSuccess(IssueStateConverter.toIssueDto(issue));
+        issueStateService.changeIssueState(request, issueId);
+        return ApiResponse.onSuccess(new IssueResponseDto.JoinIssueStateResponseDto(request.getStatus()));
     }
 
     @PostMapping("/comment/create/{id}")

@@ -13,6 +13,7 @@ import java.util.Date;
 @Builder
 @Entity
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Issue extends BaseTimeEntity {
