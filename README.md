@@ -110,7 +110,7 @@
 
 ## 프로젝트 상세 정보 페이지
 
-![image](https://github.com/SE-Issue-Mgmt-Sys/GUI/assets/67683170/05f8a592-a445-4c31-ac5e-fb39346014ab)
+![image](https://github.com/SE-Issue-Mgmt-Sys/Issue-Station-GUI/assets/67683170/2bb43828-099c-4437-bd7b-47dad1b65f33)
 
     특정 프로젝트에 대한 상세 정보를 확인할 수 있습니다. 
     
@@ -135,10 +135,13 @@
 
   만약 프로젝트 멤버 중 Tester 멤버가 아니라면 권한이 없다는 안내창이 뜹니다.
 
-  이슈를 생성하게 되면 이슈 상태는 "NEW", 리포터 값은 이슈를 생성한 Tester의 이름으로 저장됩니다.
+  이슈 이름, 설명, 중요도를 설정하여 이슈를 생성하게 되면 이슈 상태는 "NEW", 리포터 값은 이슈를 생성 
+  
+  한 Tester의 이름으로 저장됩니다.
 
 
-  > ![image](https://github.com/SE-Issue-Mgmt-Sys/GUI/assets/67683170/07c5673b-7e57-4ae3-8794-d01112e0e0af)
+  > ![image](https://github.com/SE-Issue-Mgmt-Sys/Issue-Station-GUI/assets/67683170/5227818e-ef91-42d9-9d60-b526d44fe216)
+
 
   >> 이슈를 추가한 모습이다.
 
@@ -156,7 +159,8 @@
   
   >> Click!
 
-  > ![image](https://github.com/SE-Issue-Mgmt-Sys/GUI/assets/67683170/d5e10e6a-c5ec-40b4-9771-87c850e6fe8c)
+  > ![image](https://github.com/SE-Issue-Mgmt-Sys/Issue-Station-GUI/assets/67683170/bcebd9a6-b9ba-428d-ba8a-598626b0105e)
+
 
   >> 이슈 상세 정보
 
@@ -179,8 +183,39 @@
 
     멤버에 developer로 지정한 developer1을 배정한 모습입니다. 
     이슈의 상태는 "ASSIGNED"로 바뀌며 Assignee 값 또한 developer1로 바뀐 모습입니다.
+
+------------------------------------------------------------------------------------------
+## 코멘트 추가
     
+    > ![image](https://github.com/SE-Issue-Mgmt-Sys/Issue-Station-GUI/assets/67683170/85668767-28de-4ca7-aab4-d21859babb4c)
+
+        코멘트 내용을 작성하고 태그를 하나 선택하여 코멘트를 추가할 수 있습니다.
+        
+## 이슈 해결
+
+**- FIXED** 
+        Fix 버튼을 누르면 개발자가 이슈가 해결했음을 의미합니다. Fix 버튼을 눌러 이슈 상태를 'FIXED'         상태로 바꿀 수 있는 것은 현재 이슈에 배정된 개발자만 할 수 있습니다.
+
+    > ![image](https://github.com/SE-Issue-Mgmt-Sys/Issue-Station-GUI/assets/67683170/7477a33a-f5ac-40c2-bf81-edc300fe963e)
+
+      배정된 개발자 계정으로 Fix 버튼을 누른 후 모습입니다.다. Status가 FIXED, Fixer 값은 개발자 이       름으로 된 것을 볼 수 있습니다.  
+
+
+**- RESOLVED**
+        Resolved 버튼을 누르면 이슈 **생성자(reporter)** 가 이슈가 해결됐다고 알리는 것을 의미합니다. 
+
+        >![image](https://github.com/SE-Issue-Mgmt-Sys/Issue-Station-GUI/assets/67683170/9f265f26-ad8b-4008-92f2-1d7420615e88)
+
+        버튼을 누르면 이슈의 상태가 RESOLVED로 바뀌게 됩니다.
+
+## 이슈 닫기
+
+**- CLOSED**
+    이슈가 RESOLVED 상태가 됐을 때 프로젝트 멤버 주 **PL 멤버**가 이슈를 닫을 수 있습니다. 
+    이슈 탭에서 닫고 싶은 이슈의 Status 열을 클릭 하면 CLOSED로 바뀌게 됩니다.  
+      
 -------------------------------------------------------
+---------------------------------------
   
 ## 팀 페이지
 
