@@ -1,0 +1,32 @@
+{
+  "name": "First issue",
+  "issueid": 1,
+  "description": "This is the first issue",
+  "comments": [
+    {
+      "id": 1,
+      "issueid": 1,
+      "comment": "This is the first comment",
+      "commenter": "PROME LEE",
+      "initdate": "2024-01-01 00:00:00"
+    },
+    {
+      "id": 2,
+      "issueid": 1,
+      "comment": "This is the second comment",
+      "commenter": "PROME LEE",
+      "initdate": "2024-01-01 00:00:00"
+    },
+    {
+      "id": 3,
+      "issueid": 1,
+      "comment": "This is the third comment",
+      "commenter": "PROME LEE",
+      "initdate": "2024-01-01 00:00:00"
+    }
+  ],
+  "status": "NEW",
+  "reporter": "PROME LEE",
+  "assignee": "PROME LEE",
+  "initdate": "2024-01-01 00:00:00"
+}
