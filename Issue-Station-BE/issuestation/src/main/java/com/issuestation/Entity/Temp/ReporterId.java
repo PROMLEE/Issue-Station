@@ -1,0 +1,30 @@
+package com.issuestation.Entity.Temp;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+import java.util.Objects;
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class ReporterId implements Serializable {
+    private int userid;
+    private int issueid;
+    private int pid;
+    private int stateid;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ReporterId reporterId = (ReporterId) o;
+        return (userid == reporterId.userid) && (issueid == reporterId.issueid);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userid, issueid);
+    }
+}
